@@ -1,17 +1,15 @@
-import { useState } from "react";
-import reactLogo from "./assets/react.svg";
-import viteLogo from "/vite.svg";
-import "./App.css";
-import { Button } from "@mui/base";
+import * as React from 'react';
+import NavBar from './components/Navbar';
+
+
 
 function App() {
-  const [count, setCount] = useState(0);
 
   return (
     <>
-      <Button />
+    <NavBar/>
+    <div>Hej</div>
     </>
   );
-}
-
+} 
 export default App;
