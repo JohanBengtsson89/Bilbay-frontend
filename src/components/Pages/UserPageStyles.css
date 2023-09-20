@@ -24,12 +24,26 @@
 }
 
 .favourites {
-    background-color: green;
-    margin-top: 50px;
-    margin-bottom: 50px;
+    display: flex;
+    flex-direction: row; 
+    justify-content: center;
+    width: 600px;
+    height: 335px;
+    margin-top: 30px;
+    margin-bottom: 69px;
     border-bottom: 1px solid black;      
+}
+.card {
+    margin: 43px;
+    background-color: green;
+    width: 150px;
+    height: 185px;
 }
 
 .reviews {
+    margin-top: 35px;
+    margin-bottom: 52px;
     background-color: red;
+    width: 717px;
+    height: 283px;
 }

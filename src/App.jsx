@@ -9,8 +9,9 @@ function App() {
 
   return (
     <>
-    <NavBar className="navbar"/>
-    <UserPage></UserPage>
+    
+    {/* <NavBar /> */}
+      <UserPage></UserPage>
     {/* <User></User> */}
     </>
   );
