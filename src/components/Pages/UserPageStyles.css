@@ -1,0 +1,35 @@
+.flex-container {
+    display: flex;
+    flex-direction: row;
+    background-color: blanchedalmond;
+    margin-left: 79px;
+    margin-right: 65px;
+    margin-top: 37px;
+    min-height: 708px;
+    max-height: 720px;
+}
+
+.user-left {
+    background-color: black;
+    width: 30%;
+}
+
+.user-right {
+    display: flex;
+    flex-direction: column;
+    width: 70%;
+    margin-left: 107px;
+    align-items: center;
+    
+}
+
+.favourites {
+    background-color: green;
+    margin-top: 50px;
+    margin-bottom: 50px;
+    border-bottom: 1px solid black;      
+}
+
+.reviews {
+    background-color: red;
+}
