@@ -8,8 +8,8 @@ const UserPage = () => {
             <div className="user-right">
                 <div style={{fontSize:"40px"}}>Favorites</div>
                 <div className="favourites">
-                    <div className="card"></div>
-                    <div className="card"></div>
+                    <div className="card">Card 1</div>
+                    <div className="card">Card 2</div>
                 </div>
                 <div style={{fontSize:"40px"}}>Reviews</div>
                 <div className="reviews">Content</div>
