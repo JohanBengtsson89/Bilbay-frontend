@@ -13,6 +13,7 @@ import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import AdbIcon from '@mui/icons-material/Adb';
 import DirectionsCarIcon from '@mui/icons-material/DirectionsCar';
+import { CssBaseline } from '@mui/material';
 
 const isLoggedIn = true;
 const pages = ['Home', 'Auctions', 'Submit auction', 'About us'];
@@ -45,7 +46,9 @@ function NavBar() {
   };
 
   return (
-    <AppBar >
+    <>
+    <CssBaseline />
+    <AppBar position='sticky' style={{ margin: 0 }}>
       <Container maxWidth="xxl" style={colorStyle}>
         <Toolbar disableGutters>
         
@@ -167,6 +170,8 @@ function NavBar() {
         </Toolbar>
       </Container>
     </AppBar>
+    </>
   );
+  
 }
 export default NavBar;
