@@ -1,0 +1,12 @@
+.product-specs {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+}
+
+.picture {
+    min-width: 600px;
+    min-height: 600px;
+    border: 2px solid ;
+}
