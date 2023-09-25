@@ -1,26 +1,56 @@
 import React from 'react'
 import axios from 'axios';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import Cookies from 'js-cookie';
+const apiUrl = import.meta.env.VITE_API_URL;
 
 function LoginPage() {
 
   let navigate = useNavigate();
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
+  const [login, setLogin] = useState({username: "", password: ""});
+  const {username, password} = login;
 
+  const handleChange = (e) => {
+    setLogin({ ...login, [e.target.name]: e.target.value });
+  };
+  
   const handleSubmit = async (e) => {
     e.preventDefault();
-    
-      const response = await axios.post('http://localhost:8080/api/auth/signin', {
-        username,
-        password,
-      });
+    try {
+      const response = await axios.post(`${apiUrl}/api/auth/signin`, login);
+      console.log('Response Data:', response.data); //for test
 
-      if (response.status === 200)
-      console.log("You are logged in")
+      if (response.status === 200) {
+        //create cookie from the response after logged in
+        const jwt = Cookies.set("user", JSON.stringify(response.data));
+        console.log(jwt) //for test
         navigate("/")
+      }
+      else {
+        console.log("Login failed");
+      }
+    } catch (error) {
+      console.error('Error:', error.message);
+    }
   };
+
+  //get cookie first and parsing JSON to an object
+  const getUserData = () => {
+    const userDataToString = Cookies.get("user"); 
+    return userDataToString ? JSON.parse(userDataToString) : null;
+  };
+
+  const handleUserData = () => {
+    const userData = getUserData();
+    if (userData) {
+      console.log("User is logged in with email : ", userData.email);
+    } else {
+      console.log("User not logged in or cookie not found");
+    }
+  };
+  //check if user has cookie
+  useEffect(handleUserData, []);
 
     return (
       <form>
@@ -35,7 +65,7 @@ function LoginPage() {
                 name="username"
                 placeholder="Username *"
                 value={username}
-                onChange={(e) => setUsername(e.target.value)}
+                onChange={handleChange}
               />
   
               <input
@@ -44,7 +74,7 @@ function LoginPage() {
                 name="password"
                 placeholder="Password"
                 value={password}
-                onChange={(e) => setPassword(e.target.value)}
+                onChange={handleChange}
               />
   
               
