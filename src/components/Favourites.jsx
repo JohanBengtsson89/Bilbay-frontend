@@ -38,21 +38,8 @@ function Favorite() {
 
   return (
     <div>
-      <h2>Favorite Products</h2>
-      <ul>
-        {favorites.map((product, index) => (
-          <li key={index}>
-            {product} 
-            <FontAwesomeIcon
-              icon={faHeartSolid}
-              onClick={() => removeFromFavorites(product)}
-              className="heart-icon red"
-            />
-          </li>
-        ))}
-      </ul>
-
-      <h2>Products</h2>
+      
+      <h1 className='products' >Products</h1>
       <ul>
         {products.map((product, index) => (
           <li key={index}>
@@ -70,6 +57,20 @@ function Favorite() {
                 className="heart-icon"
               />
             )}
+          </li>
+        ))}
+      </ul>
+
+      <h1 className='favorite'>Favorite Products</h1>
+      <ul>
+        {favorites.map((product, index) => (
+          <li key={index}>
+            {product} 
+            <FontAwesomeIcon
+              icon={faHeartSolid}
+              onClick={() => removeFromFavorites(product)}
+              className="heart-icon red"
+            />
           </li>
         ))}
       </ul>

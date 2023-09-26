@@ -1,0 +1,23 @@
+.product-specs {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+}
+
+.picture {
+    min-width: 600px;
+    min-height: 600px;
+    border: 2px solid ;
+}
+
+.product-info {
+    height: 375px;
+    width: 351px;
+    background-color: aquamarine;
+}
+.bids-info {
+    background-color: bisque;
+    height: 315px;
+    width: 351px;
+}
