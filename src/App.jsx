@@ -4,6 +4,7 @@ import HomePage from "./components/Pages/HomePage";
 import Auctions from "./components/Pages/Auctions";
 import AuctionDetailsPage from "./components/Pages/AuctionDetailsPage";
 import RegisterPage from "./components/Pages/RegisterPage";
+import SubmitAuctionPage from "./components/Pages/SubmitAuctionPage";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 function App() {
@@ -16,6 +17,7 @@ function App() {
         <Route path="/" exact element={<HomePage />} />
         <Route path="/auctions" element={<Auctions />} />
         <Route path="/auction/:auctionId" element={<AuctionDetailsPage />} />
+        <Route path="/submit" element={<SubmitAuctionPage />} />
       </Routes>
       <Footer />
     </BrowserRouter>
