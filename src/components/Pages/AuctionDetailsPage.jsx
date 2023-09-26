@@ -1,7 +1,10 @@
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import "./AuctionDetailsStyles.css";
+import picture from "/src/assets/robert-bye-tG36rvCeqng-unsplash.jpg"
+
 import Axios from "axios";
+import { fontSize } from "@mui/system";
 
 const apiUrl = import.meta.env.VITE_API_URL;
 
@@ -11,6 +14,7 @@ const AuctionDetails = () => {
   const [auction, setAuction] = useState({});
   const [product, setProduct] = useState({});
   const [productSpecification, setProductSpecification] = useState({})
+  const [bids, setBids] = useState([])
   const [error, setError] = useState(null);
 
 
@@ -19,8 +23,15 @@ const AuctionDetails = () => {
         
         setProduct(response.data.product);
         setProductSpecification(response.data.product.productSpecification);
+        setBids(response.data.bids)
     })
-}
+    .catch((error) => {
+                setError(error);
+                console.log("Halloj error")
+              });
+          }
+
+
 
 useEffect(() => {
     getAuction();
@@ -29,12 +40,21 @@ useEffect(() => {
   return (
     <>
         <div className="product-specs">
-        <img className="picture" src={productSpecification.productPhoto} alt="Picture not found" />
+        <div className="left-side" >
+        <img className="picture" src={picture} alt="picture not found" />
+        <div style={{fontSize:"32px"}}>Name: {product.productName}</div>
+        </div>
+        <div className="right-side">
         <div className="product-info">
-            <div>Name: {product.productName}</div>
             <div>HorsePower: {productSpecification.enginePower}</div>
             <div>Mileage: {productSpecification.mileage}</div>
             <div>Gear: {productSpecification.gear}</div>
+        </div>
+        <div className="bids-info" >
+           {bids.map(bid => (
+            <div key={bid.id}>{bid.bidAmount}</div>
+           ))}
+        </div>
         </div>
         </div>
     </>
