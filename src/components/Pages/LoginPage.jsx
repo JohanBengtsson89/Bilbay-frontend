@@ -18,14 +18,16 @@ function LoginPage() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post(`${apiUrl}/api/auth/signin`, login);
+      const axiosInstance = axios.create({withCredentials:true});
+      const response = await axiosInstance.post(`${apiUrl}/api/auth/signin`, login);
       console.log('Response Data:', response.data); //for test
 
       if (response.status === 200) {
-        //create cookie from the response after logged in
+        /* //create cookie from the response after logged in
         const jwt = Cookies.set("user", JSON.stringify(response.data));
-        console.log(jwt) //for test
-        navigate("/")
+        console.log(jwt) */
+        navigate("/");
+        console.log(response.data.email , " = You are now logged in.")
       }
       else {
         console.log("Login failed");
@@ -35,13 +37,13 @@ function LoginPage() {
     }
   };
 
-  //get cookie first and parsing JSON to an object
+  /* //get cookie first and parsing JSON to an object
   const getUserData = () => {
     const userDataToString = Cookies.get("user"); 
     return userDataToString ? JSON.parse(userDataToString) : null;
-  };
+  }; */
 
-  const handleUserData = () => {
+/*   const handleUserData = () => {
     const userData = getUserData();
     if (userData) {
       console.log("User is logged in with email : ", userData.email);
@@ -50,7 +52,7 @@ function LoginPage() {
     }
   };
   //check if user has cookie
-  useEffect(handleUserData, []);
+  useEffect(handleUserData, []); */
 
     return (
       <form>
