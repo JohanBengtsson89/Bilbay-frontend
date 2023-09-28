@@ -2,30 +2,31 @@ import React from 'react'
 import axios from 'axios';
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import Cookies from 'js-cookie';
+import { useAuth } from '../../context/AuthContext';
 const apiUrl = import.meta.env.VITE_API_URL;
 
 function LoginPage() {
 
   let navigate = useNavigate();
-  const [login, setLogin] = useState({username: "", password: ""});
+ 
+  
+  const { login } = useAuth();
+  const [loginData, setLoginData] = useState({username: "", password: ""});
   const {username, password} = login;
 
   const handleChange = (e) => {
-    setLogin({ ...login, [e.target.name]: e.target.value });
+    setLoginData({ ...loginData, [e.target.name]: e.target.value });
   };
   
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
       const axiosInstance = axios.create({withCredentials:true});
-      const response = await axiosInstance.post(`${apiUrl}/api/auth/signin`, login);
+      const response = await axiosInstance.post(`${apiUrl}/api/auth/signin`, loginData);
       console.log('Response Data:', response.data); //for test
 
       if (response.status === 200) {
-        /* //create cookie from the response after logged in
-        const jwt = Cookies.set("user", JSON.stringify(response.data));
-        console.log(jwt) */
+        login();
         navigate("/");
         console.log(response.data.email , " = You are now logged in.")
       }
@@ -36,23 +37,6 @@ function LoginPage() {
       console.error('Error:', error.message);
     }
   };
-
-  /* //get cookie first and parsing JSON to an object
-  const getUserData = () => {
-    const userDataToString = Cookies.get("user"); 
-    return userDataToString ? JSON.parse(userDataToString) : null;
-  }; */
-
-/*   const handleUserData = () => {
-    const userData = getUserData();
-    if (userData) {
-      console.log("User is logged in with email : ", userData.email);
-    } else {
-      console.log("User not logged in or cookie not found");
-    }
-  };
-  //check if user has cookie
-  useEffect(handleUserData, []); */
 
     return (
       <form>
