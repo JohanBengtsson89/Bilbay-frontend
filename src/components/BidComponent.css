@@ -1,0 +1,30 @@
+.button {
+  border-radius: 8px;
+  border: 1px solid transparent;
+  padding: 3px;
+  font-size: 14px;
+  font-family: inherit;
+  background-color: #c89090;
+  cursor: pointer;
+}
+
+.input {
+  width: 35%;
+  border: solid 1px;
+  margin-right: 35%;
+  margin-left: 9px;
+  border-radius: 8px;
+  margin-bottom: 4%;
+}
+
+.container {
+  background-color: #bfc3cc;
+  height:auto;
+  margin-right: 50%;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  position: relative;
+}
+
