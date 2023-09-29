@@ -1,28 +1,60 @@
-import { createContext, useContext, useState } from 'react';
+import { createContext, useEffect, useReducer } from "react";
+import axios from "axios";
+
+const initialState = {
+  user: null,
+};
+
+const rootReducer = (state, action) => {
+  switch (action.type) {
+    case "LOGIN":
+      return { ...state, user: action.payload };
+    case "LOGOUT":
+      return { ...state, user: null };
+    default:
+      return state;
+  }
+};
 
 const AuthContext = createContext();
 
-export const AuthProvider = ({ children }) => {
-  const [isLoggedIn, setLoggedIn] = useState(false);
+const AuthProvider = ({ children }) => {
+  const [state, dispatch] = useReducer(rootReducer, initialState);
 
-  const login = () => {
-    setLoggedIn(true);
-    //localStorage.setItem('isLoggedIn', JSON.stringify(true));
-  };
+  useEffect(() => {dispatch({
+      type: "LOGIN",
+      payload: JSON.parse(window.localStorage.getItem("user")),
+    });
+  }, []);
 
-  const logout = () => {
-    setLoggedIn(false);
-    //localStorage.removeItem('isLoggedIn');
+  //.......................................................
+  const logout = async () => {
+    try {
+      const apiUrl = import.meta.env.VITE_API_URL;
+      const response = await axios.post(`${apiUrl}/api/auth/logout`);
+
+      const cookies = response.headers['set-cookie'];
+      if (cookies) {
+        cookies.forEach(cookie => {
+          document.cookie = cookie;
+        });
+      }
+
+      dispatch({
+        type: "LOGOUT",
+      });
+
+      window.localStorage.removeItem("user");
+    } catch (error) {
+      console.error('Error during logout:', error.message);
+    }
   };
 
   return (
-    <AuthContext.Provider value={{ isLoggedIn, login, logout }}>
+    <AuthContext.Provider value={{ state, dispatch, logout}}>
       {children}
     </AuthContext.Provider>
   );
 };
 
-export const useAuth = () => {
-
-    return useContext(AuthContext);
-  };
+export {AuthContext, AuthProvider};

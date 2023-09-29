@@ -1,45 +1,53 @@
-import React from 'react'
-import { useEffect } from 'react';
-import axios from 'axios';
-import { useAuth } from '../../context/AuthContext';
-const apiUrl = import.meta.env.VITE_API_URL;
-
+import React from "react";
+import { AuthContext } from "../../context/AuthContext";
+import { useContext } from "react";
+import { useNavigate } from "react-router-dom";
 
 const HomePage = () => {
+  const { state: { user }, logout } = useContext(AuthContext);
+  const navigate = useNavigate();
 
-  const { isLoggedIn, logout } = useAuth();
-
-  useEffect(() => {
-    
-    const checkLoginStatus = async () => {
-      try {
-        const axiosInstance = axios.create({withCredentials:true});
-        const response = await axiosInstance.get(`${apiUrl}/api/auth/check-login`);
-        console.log(response);
-
-        if (response.status !== 200) {
-          logout();
-        }
-      } catch (error) {
-        console.error('Error:', error.message);
-      }
-    };
-
-    checkLoginStatus();
-    console.log('isLoggedIn:', isLoggedIn);
-  }, [logout]);
+//retrieve user data from localstorage and use the id
+function getUserInfo() {
+  try {
+    const userInfoJSON = window.localStorage.getItem("user");
+    const userInfo = JSON.parse(userInfoJSON);
+    return userInfo;
+  } catch (error) {
+    console.error("Error retrieving user information:", error);
+    return null;
+  }
+};
+  
+  //Logout function from AuthContext
+  const handleLogout = () => {
+    logout();
+    console.log("You are logged out")
+      return navigate("/loginpage");
+  };
 
   return (
     <div>
-    {isLoggedIn ? (
-      //authenticated users
-      <p>Welcome, you are logged in!</p>
-    ) : (
-      //non-authenticated users
-      <p>You need to log in.</p>
-    )}
-  </div>
+      Home page
+      <br />
+      {user ? (
+        // Authenticated user
+        <div>
+          <p>Welcome, You are logged in with ID:  {getUserInfo().id}</p>
+          <button
+            type="button"
+            onClick={handleLogout}
+            className="ml-2 no-underline border-b border-blue text-blue"
+          >
+            Logout
+          </button>
+        </div>
+      ) : (
+        // Non-authenticated user
+        <p>You need to log in.</p>
+      )}
+    </div>
   );
-}
+};
 
 export default HomePage;
