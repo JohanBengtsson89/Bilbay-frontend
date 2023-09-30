@@ -56,14 +56,7 @@ const BidComponent = () => {
   };
 
   return (
-    <div style={{ display: "flex",
-     justifyContent: "center",
-      alignItems: "center",
-       height: "120vh",
-        width: "60vh",
-        marginLeft:"60%"
-        }}>
-      <div className="container">
+    <div className="bg-[#bfc3cc] w-fit px-5 absolute bottom-0 mb-40 right-0 mr-20 rounded-lg ">
         <div style={{padding:"15px"}}>
           <ul>
             {bids.map((bid, index) => (
@@ -88,9 +81,7 @@ const BidComponent = () => {
             Add bid
           </button>
         </div>
-
       </div>
-    </div>
   );
 };
 
