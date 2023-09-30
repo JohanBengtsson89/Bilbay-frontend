@@ -1,5 +1,9 @@
 import * as React from "react";
 import { Link } from "react-router-dom";
+import { useState } from "react";
+import { useContext } from "react";
+import { AuthContext } from "../context/AuthContext";
+import { useNavigate } from "react-router-dom";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
@@ -16,8 +20,8 @@ import AdbIcon from "@mui/icons-material/Adb";
 import DirectionsCarIcon from "@mui/icons-material/DirectionsCar";
 import { CssBaseline } from "@mui/material";
 
-const isLoggedIn = true;
 
+/* const isLoggedIn = false; */
 const pages = [
   { name: "Home", page: "/" },
   { name: "Auctions", page: "/auctions" },
@@ -25,18 +29,19 @@ const pages = [
   { name: "About us", page: "/about" },
 ];
 
-const settings = [
-  "Profile",
-  "Account",
-  "Dashboard",
-  isLoggedIn ? "Logout" : "Login",
-];
+
 
 // pages.map((page) => console.log(page.name, page.page));
 
 function NavBar() {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
+  const[isLoggedIn, setIsLoggedIn]  = useState(false);
+
+  const settings = ["Profile","Logout"];
+  
+  const { state: { user }, logout } = useContext(AuthContext);
+  const navigate = useNavigate();
 
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
@@ -55,6 +60,19 @@ function NavBar() {
 
   const colorStyle = {
     backgroundColor: "#506081",
+  };
+
+  const handleSettingsClick = (setting) => {
+    if (setting === "Logout") {
+      logout();
+
+      setIsLoggedIn(false);
+
+    } else if (setting === "Login") {
+
+    setIsLoggedIn(true);
+    }
+    handleCloseUserMenu();
   };
 
   return (
@@ -154,7 +172,8 @@ function NavBar() {
               ))}
             </Box>
 
-            <Box sx={{ flexGrow: 0 }}>
+            {user ? (
+              <Box sx={{ flexGrow: 0 }}>
               <Tooltip title="Open settings">
                 <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
                   <Avatar alt="Alireza" src="/static/images/avatar/2.jpg" />
@@ -177,12 +196,20 @@ function NavBar() {
                 onClose={handleCloseUserMenu}
               >
                 {settings.map((setting) => (
-                  <MenuItem key={setting} onClick={handleCloseUserMenu}>
+                  <MenuItem key={setting} onClick={() => handleSettingsClick(setting)}>
                     <Typography textAlign="center">{setting}</Typography>
                   </MenuItem>
                 ))}
               </Menu>
             </Box>
+            ) : (
+              <div className="flex gap-5">
+              <div><a href="loginpage">Login</a></div>
+              <div><a href="register">Register</a></div>
+              </div>
+            )}
+
+            
           </Toolbar>
         </Container>
       </AppBar>

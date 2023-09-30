@@ -74,7 +74,7 @@ function LoginPage() {
               <div className="text-grey-dark">
                 Dont't have any account?
                 <a
-                  className="ml-1 no-underline border-b border-blue text-blue" href="../Signup/">
+                  className="ml-1 no-underline border-b border-blue text-blue" href="register">
                    Sign up
                 </a>
               </div>
