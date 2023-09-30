@@ -1,4 +1,3 @@
-// Initialization for ES Users
 import { Carousel, initTE } from "tw-elements";
 
 initTE({ Carousel });
@@ -8,41 +7,58 @@ import image2 from "../../assets/Luxury2.png";
 import image3 from "../../assets/Luxury3.png";
 import image4 from "../../assets/Luxury4.png";
 import image5 from "../../assets/Luxury5.png";
+import { useEffect, useState } from "react";
 
 export default function AboutUsPage() {
+  useEffect(() => {
+    const carousel = document.querySelector("[data-te-carousel-init]");
+    if (carousel) {
+      const carouselInstance = new Carousel(carousel);
+      carouselInstance.to(0);
+    }
+  }, []);
+
   return (
     <div className="grid grid-cols-2 mr-10 lg:mr-0 items-center pt-[150px] lg:grid-cols-1 lg:pt-5">
       <div
         id="carouselExampleSlidesOnly"
-        class="relative  mx-auto"
+        className="relative  mx-auto"
         data-te-carousel-init
         data-te-ride="carousel"
       >
-        <div class="relative w-full overflow-hidden after:clear-both after:block after:content-['']">
+        <div className="relative w-full overflow-hidden after:clear-both after:block after:content-['']">
           <div
-            class="relative float-left -mr-[100%] hidden w-[350px] transition-transform duration-[600ms] ease-in-out motion-reduce:transition-none"
+            className={`relative float-left -mr-[100%] hidden w-[350px] transition-transform duration-[600ms] ease-in-out motion-reduce:transition-none 
+            `}
             data-te-carousel-item
             data-te-carousel-active
           >
-            <img src={image2} class="" alt="Camera" />
+            <img src={image1} className="" alt="Camera" />
           </div>
           <div
-            class="relative float-left -mr-[100%] hidden w-[350px] transition-transform duration-[600ms] ease-in-out motion-reduce:transition-none"
+            className={`relative float-left -mr-[100%] hidden w-[350px] transition-transform duration-[600ms] ease-in-out motion-reduce:transition-none 
+            `}
             data-te-carousel-item
           >
-            <img src={image3} class="" alt="Camera" />
+            <img src={image2} className="" alt="Camera" />
           </div>
           <div
-            class="relative float-left -mr-[100%] hidden w-[350px] transition-transform duration-[600ms] ease-in-out motion-reduce:transition-none"
+            className="relative float-left -mr-[100%] hidden w-[350px] transition-transform duration-[600ms] ease-in-out motion-reduce:transition-none"
             data-te-carousel-item
           >
-            <img src={image4} class="" alt="Camera" />
+            <img src={image3} className="" alt="Camera" />
           </div>
           <div
-            class="relative float-left -mr-[100%] hidden w-[350px] transition-transform duration-[600ms] ease-in-out motion-reduce:transition-none"
+            className="relative float-left -mr-[100%] hidden w-[350px] transition-transform duration-[600ms] ease-in-out motion-reduce:transition-none"
             data-te-carousel-item
           >
-            <img src={image5} class="" alt="Camera" />
+            <img src={image4} className="" alt="Camera" />
+          </div>
+          <div
+            className="relative float-left -mr-[100%] hidden w-[350px] transition-transform duration-[600ms] ease-in-out motion-reduce:transition-none"
+            data-te-carousel-item
+          >
+            <img src={image5} className="" alt="Camera" />
           </div>
         </div>
       </div>
