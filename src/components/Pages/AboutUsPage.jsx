@@ -11,7 +11,7 @@ import image5 from "../../assets/Luxury5.png";
 
 export default function AboutUsPage() {
   return (
-    <div className="grid grid-cols-2 items-center pt-[150px] lg:grid-cols-1 lg:pt-5">
+    <div className="grid grid-cols-2 mr-10 lg:mr-0 items-center pt-[150px] lg:grid-cols-1 lg:pt-5">
       <div
         id="carouselExampleSlidesOnly"
         class="relative  mx-auto"
@@ -20,16 +20,9 @@ export default function AboutUsPage() {
       >
         <div class="relative w-full overflow-hidden after:clear-both after:block after:content-['']">
           <div
-            class="relative float-left -mr-[100%] hidden w-52 transition-transform duration-[600ms] ease-in-out motion-reduce:transition-none"
-            data-te-carousel-item
-            data-te-carousel-active
-          >
-            <img src={image1} class="" alt="Wild Landscape" />
-          </div>
-
-          <div
             class="relative float-left -mr-[100%] hidden w-[350px] transition-transform duration-[600ms] ease-in-out motion-reduce:transition-none"
             data-te-carousel-item
+            data-te-carousel-active
           >
             <img src={image2} class="" alt="Camera" />
           </div>
