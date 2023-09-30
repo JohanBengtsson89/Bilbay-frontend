@@ -7,6 +7,7 @@ import Favorite from "./components/Favourites";
 import AuctionDetailsPage from "./components/Pages/AuctionDetailsPage";
 import RegisterPage from "./components/Pages/RegisterPage";
 import { AuthProvider } from "./context/AuthContext";
+import AboutUsPage from "./components/Pages/AboutUsPage";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 function App() {
@@ -22,6 +23,7 @@ function App() {
           <Route path="/favourite" element={<Favorite />} />
           <Route path="/auctions" element={<Auctions />} />
           <Route path="/auction/:auctionId" element={<AuctionDetailsPage />} />
+          <Route path="/about" element={<AboutUsPage />} />
         </Routes>
         <Footer />
       </BrowserRouter>

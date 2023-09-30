@@ -1,7 +1,10 @@
-import React, { useState } from 'react';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faHeart as faHeartSolid, faHeart as faHeartOutline } from '@fortawesome/free-solid-svg-icons';
-import './Favourite.css';
+import React, { useState } from "react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faHeart as faHeartSolid,
+  faHeart as faHeartOutline,
+} from "@fortawesome/free-solid-svg-icons";
+import "./Favourite.css";
 
 const products = [
   {
@@ -13,24 +16,19 @@ const products = [
     name: "Product 2",
     price: 29.99,
     description: "Somthing",
-  }
-  
+  },
 ];
 
 function Favorite() {
-  
   const [favorites, setFavorites] = useState([]);
-  
-  
+
   const addToFavorites = (product) => {
     if (!favorites.includes(product)) {
-      
       const newFavorites = [...favorites, product];
       setFavorites(newFavorites);
     }
   };
 
-  
   const removeFromFavorites = (product) => {
     const newFavorites = favorites.filter((item) => item !== product);
     setFavorites(newFavorites);
@@ -38,8 +36,7 @@ function Favorite() {
 
   return (
     <div>
-      
-      <h1 className='products' >Products</h1>
+      <h1 className="products">Products</h1>
       <ul>
         {products.map((product, index) => (
           <li key={index}>
@@ -61,11 +58,11 @@ function Favorite() {
         ))}
       </ul>
 
-      <h1 className='favorite'>Favorite Products</h1>
+      <h1 className="favorite">Favorite Products</h1>
       <ul>
         {favorites.map((product, index) => (
           <li key={index}>
-            {product} 
+            {product}
             <FontAwesomeIcon
               icon={faHeartSolid}
               onClick={() => removeFromFavorites(product)}
