@@ -26,7 +26,7 @@ const HomePage = () => {
   return (
     <div>
     <h2 className='title'>Bilbay auction</h2>
-    <div className="container">
+    <div className="container1">
       <div className="card-grid">
         {cardsData.map((card) => (
           <div key={card.id} className="card">
