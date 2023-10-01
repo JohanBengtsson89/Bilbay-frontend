@@ -2,6 +2,8 @@ import { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
+const apiUrl = import.meta.env.VITE_API_URL;
+
 export default function RegisterPage() {
   let navigate = useNavigate();
   const [register, setRegister] = useState({
@@ -32,7 +34,7 @@ export default function RegisterPage() {
 
   const onSubmit = async (e) => {
     e.preventDefault();
-    await axios.post("http://localhost:8080/api/test/adduser", register);
+    await axios.post(`${apiUrl}/api/test/register`, register);
     navigate("/");
   };
 
