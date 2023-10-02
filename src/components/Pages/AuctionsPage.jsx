@@ -1,5 +1,6 @@
 import axios from "axios";
 import { useState, useEffect } from "react";
+import {Link} from "react-router-dom";
 
 const AuctionsPage = () => {
   const [auctions, setAuctions] = useState([]);
@@ -32,31 +33,55 @@ const AuctionsPage = () => {
 
   return (
     <>
-    <div>Auctions</div>
-    <div
-      style={{
-        display: "flex",
-        flexWrap: "wrap",
-        justifyContent: "space-evenly"
-        // marginLeft: "25%",
-        // marginRight: "25%"
-      
-      }}
-    >
-      <div className="mx-auto" style={{display: "flex",
-        flexWrap: "wrap", alignSelf: "center"}}>
-      {auctions.map((auction) => (
-        <div key={auction.id} style={{ padding: "10px", width: "30%", display: "flex", flexDirection: "column", border: "solid black" }}>
-          <h3>ID: {auction.id}</h3>
-          <p>User: {auction.user}</p>
-          <p>Product: {auction.product.productName}</p>
+      <div
+        className="auctionsContainer"
+        // style={{
+        //   display: "flex",
+        //   flexWrap: "wrap",
+        //   justifyContent: "space-evenly",
+        //   // marginLeft: "25%",
+        //   // marginRight: "25%"
+        // }}
+      >
+        <div>Sidemenu</div>
+        <div
+          className="auctionsMain m-0"
+          // style={{ display: "flex", flexWrap: "wrap", alignSelf: "center" }}
+        >
+          {auctions.map((auction) => (
+            <div
+              key={auction.id}
+              className="h-96 w-72 content-center"
+              style={{
+                margin: "15px",
+                // width: "33.33%",
+                // minHeight: "200px",
+                // display: "flex",
+                // flexDirection: "column",
+
+                backgroundColor: "#BFC3CC",
+              }}
+            >
+            <Link to={`/auction/${auction.id}`}>
+              <div
+                style={{
+                  backgroundImage: `url(${auction.product.productSpecification.productPhoto})`, 
+                  borderRadius: "10px",
+                  backgroundSize: "cover",
+                  backgroundRepeat: "no-repeat",
+                  minHeight: "50%",
+                }}
+              ></div>
+              </Link>
+              <h3>ID: {auction.id}</h3>
+              <p>User: {auction.user}</p>
+              <p>Product: {auction.product.productName}</p>
+            </div>
+          ))}
         </div>
-      ))}
       </div>
-    </div>
-    </> 
+    </>
   );
-  
 };
 
 export default AuctionsPage;
