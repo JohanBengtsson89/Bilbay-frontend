@@ -1,12 +1,8 @@
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import "./AuctionDetailsStyles.css";
-
 import picture from "/src/assets/robert-bye-tG36rvCeqng-unsplash.jpg"
 import { Button } from "@mui/base";
-
-
-
 import Axios from "axios";
 import { fontSize } from "@mui/system";
 
