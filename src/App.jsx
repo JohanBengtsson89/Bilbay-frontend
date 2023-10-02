@@ -5,6 +5,7 @@ import LoginPage from "./components/Pages/LoginPage";
 import Favorite from "./components/Favourites";
 import AuctionDetailsPage from "./components/Pages/AuctionDetailsPage";
 import RegisterPage from "./components/Pages/RegisterPage";
+import BidComponent from "./components/BidComponent";
 import AuctionsPage from "./components/Pages/AuctionsPage"
 import { AuthProvider } from "./context/AuthContext";
 import AboutUsPage from "./components/Pages/AboutUsPage";
@@ -24,6 +25,7 @@ function App() {
           <Route path="/auctions" element={<AuctionsPage />} />
           <Route path="/auction/:auctionId" element={<AuctionDetailsPage />} />
           <Route path="/about" element={<AboutUsPage />} />
+          <Route path="/bid" element={<BidComponent />} />
         </Routes>
         <Footer />
       </BrowserRouter>
