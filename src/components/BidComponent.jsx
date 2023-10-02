@@ -25,7 +25,8 @@ const BidComponent = () => {
       .get(`http://localhost:8080/api/1/all-bids`)
       .then((response) => {
         console.log("Bids:", response.data);
-        setBids(response.data);
+        const sortedBids = response.data.sort((a, b) =>  b.bidAmount - a.bidAmount);
+        setBids(sortedBids);
       })
       .catch((error) => {
         console.error("Error fetching bids:", error);
@@ -43,6 +44,11 @@ const BidComponent = () => {
       bidAmount: parseInt(bidAmount),
     };
 
+    if (bids.length > 0 && newBid.bidAmount <= bids[0].bidAmount) {
+      alert("OOOOPPPSS: Bid amount must be higher than the latest bid.");
+      return;
+    }
+
     axios
       .post("http://localhost:8080/api/bid", newBid)
       .then((response) => {
@@ -58,7 +64,7 @@ const BidComponent = () => {
   return (
     <div className="bg-[#bfc3cc] w-fit px-5 absolute bottom-0 mb-40 right-0 mr-20 rounded-lg ">
         <div style={{padding:"15px"}}>
-          <ul>
+          <ul>       
             {bids.map((bid, index) => (
               <li key={index}>
                 {index + 1} - $ {bid.bidAmount}{" "}
