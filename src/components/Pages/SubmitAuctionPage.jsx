@@ -6,11 +6,11 @@ const apiUrl = import.meta.env.VITE_API_URL;
 
 export default function SubmitAuctionPage() {
   const [errorMessage, setErrorMessage] = useState("");
-  const [fileInputText, setFileInputText] = useState("Choose Images");
+
   let navigate = useNavigate();
 
   const [productDetails, setProductDetails] = useState({
-    photo: "",
+    url: "",
     productName: "",
     category: "",
     modelYear: "",
@@ -24,6 +24,7 @@ export default function SubmitAuctionPage() {
   });
 
   const {
+    url,
     productName,
     category,
     modelYear,
@@ -47,30 +48,22 @@ export default function SubmitAuctionPage() {
   };
 
   return (
-    <div className="grid grid-cols-2 pt-20 h-[calc(100vh-theme(spacing.24))] bg-[#EFECEC] lg:pt-5 lg:grid-cols-1 ">
+    <div className="grid grid-cols-2 pt-10 h-[calc(100vh-theme(spacing.24))] bg-[#EFECEC] lg:pt-5 lg:grid-cols-1 ">
       <form onSubmit={(e) => onSubmit(e)}>
         <div>
           <div className="container max-w-lg mx-24 flex-1 flex flex-col items-center justify-center lg:px-8 lg:mx-0">
             <div className="bg-[#BFC3CC] px-6 py-8 rounded-xl shadow-md text-black w-full">
               <h1 className="mb-8 text-3xl text-center">Product details</h1>
 
-              {/* <label
-                htmlFor="images"
-                className="bg-white inline-block border-2 border-[#575757] w-full p-1 rounded-lg mb-4 mr-10 cursor-pointer"
-                >
-                <div className="flex items-center justify-center">
-                <span>{fileInputText}</span>
-                <input
-                type="file"
-                id="images"
-                className="hidden"
-                accept=".jpg,.png,.jpeg"
-                multiple
-                required
+              <input
+                type="url"
+                className="block border-2 border-[#575757] w-full p-1 rounded-lg mb-4"
+                name="url"
+                placeholder="Url *"
+                value={url}
                 onChange={(e) => onInputChange(e)}
-                />
-                </div>
-            </label> */}
+                required
+              />
 
               <input
                 type="text"
