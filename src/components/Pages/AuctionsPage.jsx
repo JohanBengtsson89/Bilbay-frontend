@@ -1,14 +1,13 @@
 import axios from "axios";
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+import { useAuctions } from "../../context/Context";
+import Auctions from "./Auctions";
 
 const AuctionsPage = () => {
-  const [auctions, setAuctions] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
-  const [isOpen, setIsOpen] = useState(false);
+  const { auctions, loading, error } = useAuctions();
 
-  const apiUrl = import.meta.env.VITE_API_URL;
+  const [isOpen, setIsOpen] = useState(false);
   const [filters, setFilters] = useState({
     modelYear: [],
     gear: [],
@@ -16,35 +15,11 @@ const AuctionsPage = () => {
     mileage: [],
     color: [],
   });
-
-  useEffect(() => {
-    axios
-      .get(`${apiUrl}/api/auctions`)
-      .then((response) => {
-        setAuctions(response.data);
-        setLoading(false);
-        setError(null);
-      })
-      .catch((err) => {
-        setLoading(false);
-        setError(err);
-      });
-  }, [apiUrl]);
-
-  if (loading) {
-    return <p>Loading...</p>;
-  }
-
-  if (error) {
-    return <p>Error: {error.message}</p>;
-  }
-
   const handleFilterChange = (filterType, value) => {
     let parsedCheckedOption = value;
     if (filterType === "modelYear") {
       parsedCheckedOption = parseInt(parsedCheckedOption, 10);
     }
-    console.log(parsedCheckedOption);
     setFilters((prevFilters) => {
       // Clone the previous filters object
       const updatedFilters = { ...prevFilters };
@@ -143,74 +118,9 @@ const AuctionsPage = () => {
             </div>
           </div>
         </div>
-        {console.log(filteredAuctions)}
-        <Auctions filter={filteredAuctions} />
-        {/* <div className="auctionsMain m-0">
-          {filteredAuctions.map((auction) => (
-            <div
-              key={auction.id}
-              className="h-96 w-72 content-center"
-              style={{
-                margin: "15px",
-                backgroundColor: "#BFC3CC",
-              }}
-            >
-              <Link to={`/auction/${auction.id}`}>
-                <div
-                  style={{
-                    backgroundImage: `url(${auction.product.productSpecification.productPhoto})`,
-                    borderRadius: "10px",
-                    backgroundSize: "cover",
-                    backgroundRepeat: "no-repeat",
-                    minHeight: "50%",
-                    width: "100%",
-                  }}
-                ></div>
-              </Link>
-              <p>User: {auction.user}</p>
-              <p>Product: {auction.product.productName}</p>
-              <p>
-                Model Year: {auction.product.productSpecification.modelYear}
-              </p>
-            </div>
-          ))}
-        </div> */}
+        <Auctions filteredAuctions={filteredAuctions} />
       </div>
     </>
-  );
-};
-
-export function Auctions ({filter}) {
-
-  return (
-    <div className="auctionsMain m-0">
-      {filter.map((auction) => (
-        <div
-          key={auction.id}
-          className="h-96 w-72 content-center"
-          style={{
-            margin: "15px",
-            backgroundColor: "#BFC3CC",
-          }}
-        >
-          <Link to={`/auction/${auction.id}`}>
-            <div
-              style={{
-                backgroundImage: `url(${auction.product.productSpecification.productPhoto})`,
-                borderRadius: "10px",
-                backgroundSize: "cover",
-                backgroundRepeat: "no-repeat",
-                minHeight: "50%",
-                width: "100%",
-              }}
-            ></div>
-          </Link>
-          <p>User: {auction.user}</p>
-          <p>Product: {auction.product.productName}</p>
-          <p>Model Year: {auction.product.productSpecification.modelYear}</p>
-        </div>
-      ))}
-    </div>
   );
 };
 
