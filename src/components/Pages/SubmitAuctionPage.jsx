@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
@@ -6,44 +6,59 @@ const apiUrl = import.meta.env.VITE_API_URL;
 
 export default function SubmitAuctionPage() {
   const [errorMessage, setErrorMessage] = useState("");
+  const [user, setUser] = useState(null);
+
+  useEffect(() => {
+    const storedUser = JSON.parse(localStorage.getItem("user"));
+
+    setUser(storedUser.id);
+    console.log(user);
+  }, []);
 
   let navigate = useNavigate();
 
   const [productDetails, setProductDetails] = useState({
-    url: "",
-    productName: "",
+    user,
     category: "",
-    modelYear: "",
-    gearBox: "",
-    enginePower: "",
-    mileAge: "",
-    color: "",
-    vinNumber: "",
+    productSpecification: {
+      productPhoto: "",
+      modelYear: "",
+      gear: "",
+      enginePower: "",
+      mileAge: "",
+      color: "",
+      vinNr: "",
+    },
+
+    productName: "",
+    productDescription: "",
     orginalPrice: "",
-    description: "",
+    isAvailable: true,
   });
 
-  const {
-    url,
-    productName,
-    category,
-    modelYear,
-    gearBox,
-    enginePower,
-    mileAge,
-    color,
-    vinNumber,
-    orginalPrice,
-    description,
-  } = productDetails;
-
   const onInputChange = (e) => {
-    setProductDetails({ ...productDetails, [e.target.name]: e.target.value });
+    const { name, value } = e.target;
+
+    if (name.startsWith("productSpecification.")) {
+      // If the input name starts with "productSpecification.",
+      // update the nested object accordingly
+      setProductDetails({
+        ...productDetails,
+        productSpecification: {
+          ...productDetails.productSpecification,
+          [name.split(".")[1]]: value,
+        },
+      });
+    } else {
+      // For non-nested fields, update them directly
+      setProductDetails({ ...productDetails, [name]: value });
+    }
   };
 
   const onSubmit = async (e) => {
     e.preventDefault();
-    await axios.post(`${apiUrl}/api/test/product`, productDetails);
+    productDetails.user = user;
+    await axios.post(`${apiUrl}/api/product`, productDetails, user);
     navigate("/");
   };
 
@@ -58,9 +73,9 @@ export default function SubmitAuctionPage() {
               <input
                 type="url"
                 className="block border-2 border-[#575757] w-full p-1 rounded-lg mb-4"
-                name="url"
+                name="productSpecification.productPhoto"
                 placeholder="Url *"
-                value={url}
+                value={productDetails.productSpecification.productPhoto}
                 onChange={(e) => onInputChange(e)}
                 required
               />
@@ -70,7 +85,7 @@ export default function SubmitAuctionPage() {
                 className="block border-2 border-[#575757] w-full p-1 rounded-lg mb-4"
                 name="category"
                 placeholder="Category *"
-                value={category}
+                value={productDetails.category}
                 onChange={(e) => onInputChange(e)}
                 required
               />
@@ -79,7 +94,7 @@ export default function SubmitAuctionPage() {
                 className="block border-2 border-[#575757] w-full p-1 rounded-lg mb-4"
                 name="productName"
                 placeholder="Product name *"
-                value={productName}
+                value={productDetails.productName}
                 onChange={(e) => onInputChange(e)}
                 required
               />
@@ -87,9 +102,9 @@ export default function SubmitAuctionPage() {
               <input
                 type="text"
                 className="block border-2 border-[#575757] w-full p-1 rounded-lg mb-4"
-                name="modelYear"
+                name="productSpecification.modelYear"
                 placeholder="Model year *"
-                value={modelYear}
+                value={productDetails.productSpecification.modelYear}
                 onChange={(e) => onInputChange(e)}
                 required
               />
@@ -97,9 +112,9 @@ export default function SubmitAuctionPage() {
               <input
                 type="text"
                 className="block border-2 border-[#575757] w-full p-1 rounded-lg mb-4"
-                name="gearBox"
-                placeholder="Gear box *"
-                value={gearBox}
+                name="productSpecification.gear"
+                placeholder="Gear *"
+                value={productDetails.productSpecification.gear}
                 onChange={(e) => onInputChange(e)}
                 required
               />
@@ -107,8 +122,8 @@ export default function SubmitAuctionPage() {
               <input
                 className="block border-2 border-[#575757] w-full p-1 rounded-lg mb-4"
                 type="text"
-                name="enginePower"
-                value={enginePower}
+                name="productSpecification.enginePower"
+                value={productDetails.productSpecification.enginePower}
                 onChange={(e) => onInputChange(e)}
                 placeholder="Engine power *"
                 required
@@ -120,9 +135,9 @@ export default function SubmitAuctionPage() {
               <input
                 type="text"
                 className="block border-2 border-[#575757] w-full p-1 rounded-lg mb-4"
-                name="mileAge"
+                name="productSpecification.mileAge"
                 placeholder="Mileage * "
-                value={mileAge}
+                value={productDetails.productSpecification.mileAge}
                 onChange={(e) => onInputChange(e)}
                 required
               />
@@ -130,9 +145,9 @@ export default function SubmitAuctionPage() {
               <input
                 type="text"
                 className="block border-2 border-[#575757] w-full p-1 rounded-lg mb-4"
-                name="color"
+                name="productSpecification.color"
                 placeholder="Color * "
-                value={color}
+                value={productDetails.productSpecification.color}
                 onChange={(e) => onInputChange(e)}
                 required
               />
@@ -140,9 +155,9 @@ export default function SubmitAuctionPage() {
               <input
                 type="text"
                 className="block border-2 border-[#575757] w-full p-1 rounded-lg mb-4"
-                name="vinNumber"
+                name="productSpecification.vinNr"
                 placeholder="VIN number * "
-                value={vinNumber}
+                value={productDetails.productSpecification.vinNr}
                 onChange={(e) => onInputChange(e)}
                 required
               />
@@ -152,16 +167,16 @@ export default function SubmitAuctionPage() {
                 className="block border-2 border-[#575757] w-full p-1 rounded-lg mb-4"
                 name="orginalPrice"
                 placeholder="Original price *"
-                value={orginalPrice}
+                value={productDetails.orginalPrice}
                 onChange={(e) => onInputChange(e)}
                 required
               />
               <input
                 type="text"
                 className="block border-2 border-[#575757] w-full p-1 rounded-lg mb-4"
-                name="description"
+                name="productDescription"
                 placeholder="Description *"
-                value={description}
+                value={productDetails.productDescription}
                 onChange={(e) => onInputChange(e)}
                 required
                 rows="3"
