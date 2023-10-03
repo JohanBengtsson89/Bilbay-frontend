@@ -1,0 +1,56 @@
+
+
+.product-specs {
+    margin-top: 50px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+.picture {
+    display: flex;
+    margin-right: 135px;
+    width: 745px;
+    
+}
+
+.product-info {
+    border-radius: 10px;
+    font-size: 16px;
+    height: 375px;
+    width: 351px;
+    background-color: #BFC3CC;
+}
+.bids-info {
+    border-radius: 10px;
+    margin-top: 15px;
+    background-color: #BFC3CC;
+    height: 315px;
+    width: 351px;
+}
+
+.place-bid {
+    margin-top: 170px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: row;
+    
+}
+
+.input-bid {
+    margin-right: 30px;
+    height: 40px;
+    width: 150px
+}
+
+.place-bid-btn {
+    border-radius: 10px;
+    padding: 10px 30px;
+    font-weight: bolder;
+    border: 1px solid #BFC3CC;
+}
+
+.place-bid-btn:hover {
+    border: 1px solid black;
+}
