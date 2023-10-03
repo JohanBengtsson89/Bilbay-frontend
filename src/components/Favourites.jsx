@@ -21,14 +21,23 @@ function Favorite() {
   
   const [favorites, setFavorites] = useState([]);
   const [userId, setUserId] = useState(null);
+  const [productId, setProductId] = useState(null);
   const [products, setProducts] = useState([]);
 
+  useEffect(() => {
+    const storedUser = JSON.parse(localStorage.getItem('user'));
+
+    if (storedUser) {
+      setUserId(storedUser.id);
+    }
+  }, []);
   
 
   useEffect(() => {
+    // Jag tänker att vi ska hämta auction istället för product, även i backenden
     const fetchProducts = async () => {
       try {
-        const response = await axios.get('https://api.example.com/products');
+        const response = await axios.get('api/get-all-products');
         setProducts(response.data);
       } catch (error) {
         console.error('Error fetching products:', error);
@@ -41,8 +50,7 @@ function Favorite() {
   useEffect(() => {
     const fetchFavorites = async () => {
       try {
-        // Include the user ID when fetching favorites
-        const response = await axios.get(`https://api.example.com/favorites?userId=${userId}`);
+        const response = await axios.get(`api/auth/favorite/{user_id}`);
         setFavorites(response.data);
       } catch (error) {
         console.error('Error fetching favorites:', error);
@@ -54,23 +62,21 @@ function Favorite() {
     }
   }, [userId]);
 
-  const addToFavorites = async (productId) => {
+  //Ska vi byta product mot auction?
+  const addToFavorites = async () => {
     try {
-      // Include the user ID and product ID when adding to favorites
-      await axios.post('https://api.example.com/add-to-favorites', { userId, productId });
-      const newFavorites = [...favorites, productId];
+      const response = await axios.post('api/auth/favorite/{user_id}/{product_id}', { userId, productId });
+      const newFavorites = [...favorites, response.data];
       setFavorites(newFavorites);
     } catch (error) {
       console.error('Error adding to favorites:', error);
     }
   };
-  
-  const removeFromFavorites = async (productId) => {
+  //Ska vi byta product mot auction?
+  //Vi ska också fixa remove endpoint i backenden
+  const removeFromFavorites = async () => {
     try {
-      // Include the user ID and product ID when removing from favorites
-      await axios.delete('https://api.example.com/remove-from-favorites', {
-        data: { userId, productId },
-      });
+      await axios.delete('api/auth/favorite/{id}');
 
       const newFavorites = favorites.filter((item) => item !== productId);
       setFavorites(newFavorites);
@@ -78,19 +84,6 @@ function Favorite() {
       console.error('Error removing from favorites:', error);
     }
   };
-  /* const addToFavorites = (product) => {
-    if (!favorites.includes(product)) {
-      
-      const newFavorites = [...favorites, product];
-      setFavorites(newFavorites);
-    }
-  };
-
-  
-  const removeFromFavorites = (product) => {
-    const newFavorites = favorites.filter((item) => item !== product);
-    setFavorites(newFavorites);
-  }; */
 
   return (
     <div>
