@@ -204,8 +204,8 @@ function NavBar() {
             </Box>
             ) : (
               <div className="flex gap-5">
-              <div><a href="loginpage">Login</a></div>
-              <div><a href="register">Register</a></div>
+              <div><a href="/loginpage">Login</a></div>
+              <div><a href="/register">Register</a></div>
               </div>
             )}
 
