@@ -1,0 +1,20 @@
+.button {
+  border-radius: 8px;
+  border: 1px solid transparent;
+  padding-right: 20px;
+  padding-left: 20px;
+  font-size: 14px;
+  font-family: inherit;
+  background-color: #c89090;
+  cursor: pointer;
+}
+
+.input {
+  width: 35%;
+  border: solid 1px;
+  margin-right: 28%;
+  margin-left: 9px;
+  border-radius: 8px;
+  margin-bottom: 4%;
+}
+
