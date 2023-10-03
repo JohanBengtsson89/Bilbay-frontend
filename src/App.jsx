@@ -10,6 +10,7 @@ import AuctionsPage from "./components/Pages/AuctionsPage"
 import { AuthProvider } from "./context/AuthContext";
 import AboutUsPage from "./components/Pages/AboutUsPage";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import UserPage from "./components/Pages/UserPage";
 
 
 function App() {
@@ -27,6 +28,7 @@ function App() {
           <Route path="/auction/:auctionId" element={<AuctionDetailsPage />} />
           <Route path="/about" element={<AboutUsPage />} />
           <Route path="/bid" element={<BidComponent />} />
+          <Route path="/userpage" element={<UserPage/>} />
         </Routes>
         <Footer />
       </BrowserRouter>
