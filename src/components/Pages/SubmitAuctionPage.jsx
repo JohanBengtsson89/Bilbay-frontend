@@ -1,24 +1,30 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import AuctionsPage from "./AuctionsPage";
 
 const apiUrl = import.meta.env.VITE_API_URL;
 
 export default function SubmitAuctionPage() {
   const [errorMessage, setErrorMessage] = useState("");
-  const [user, setUser] = useState(null);
+  const [user, setUser] = useState({});
 
   useEffect(() => {
-    const storedUser = JSON.parse(localStorage.getItem("user"));
+    const fetchData = async () => {
+      const storedUser = JSON.parse(localStorage.getItem("user"));
+      setUser(storedUser.id);
+      console.log(user); // This will log the updated value of user
+    };
 
-    setUser(storedUser.id);
-    console.log(user);
+    fetchData();
   }, []);
 
   let navigate = useNavigate();
 
   const [productDetails, setProductDetails] = useState({
-    user,
+    user: {
+      id: user.id,
+    },
     category: "",
     productSpecification: {
       productPhoto: "",
@@ -40,8 +46,6 @@ export default function SubmitAuctionPage() {
     const { name, value } = e.target;
 
     if (name.startsWith("productSpecification.")) {
-      // If the input name starts with "productSpecification.",
-      // update the nested object accordingly
       setProductDetails({
         ...productDetails,
         productSpecification: {
@@ -50,24 +54,23 @@ export default function SubmitAuctionPage() {
         },
       });
     } else {
-      // For non-nested fields, update them directly
       setProductDetails({ ...productDetails, [name]: value });
     }
   };
 
-  const onSubmit = async (e) => {
+  const onSubmit = (e) => {
     e.preventDefault();
-    productDetails.user = user;
-    await axios.post(`${apiUrl}/api/product`, productDetails, user);
+    productDetails.user = { id: user };
+    axios.post(`${apiUrl}/api/product`, productDetails, user);
     navigate("/");
   };
 
   return (
-    <div className="grid grid-cols-2 pt-10 h-[calc(100vh-theme(spacing.24))] bg-[#EFECEC] lg:pt-5 lg:grid-cols-1 ">
+    <div className="grid grid-cols-2 pt-10 h-[calc(100vh-theme(spacing.24))] bg-[#EFECEC] lg:pt-5 lg:grid-cols-1">
       <form onSubmit={(e) => onSubmit(e)}>
         <div>
-          <div className="container max-w-lg mx-24 flex-1 flex flex-col items-center justify-center lg:px-8 lg:mx-0">
-            <div className="bg-[#BFC3CC] px-6 py-8 rounded-xl shadow-md text-black w-full">
+          <div className="container max-w-lg mx-24 lg:px-8 lg:mx-0">
+            <div className="bg-[#BFC3CC] px-6 py-8 rounded-xl shadow-md text-black">
               <h1 className="mb-8 text-3xl text-center">Product details</h1>
 
               <input
@@ -192,7 +195,9 @@ export default function SubmitAuctionPage() {
           </div>
         </div>
       </form>
-      <div className="xl:pl-40">product card</div>
+      <div className="xl:pl-40 w-96 h-96 border border-black mx-auto pt-14 ">
+        asdadsa
+      </div>
     </div>
   );
 }
