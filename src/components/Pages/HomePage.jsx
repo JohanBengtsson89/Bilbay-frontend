@@ -1,6 +1,6 @@
 
 import { useAuctions } from "../../context/Context";
-import { Auctions } from "./Auctions";
+import { Auctions } from "../Auctions";
 
 const HomePage = () => {
   const { auctions, loading, error } = useAuctions();
