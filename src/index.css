@@ -2,6 +2,99 @@
 @tailwind components;
 @tailwind utilities;
 
+body {
+  background-color: #EFECEC;
+}
+
 .navbar {
   background-color: black;
+}
+
+.main {
+  min-height: 100vh;
+}
+
+.auctionsContainer {
+  padding: 0;
+  min-height: 100vh;
+  display: grid;
+  grid-template-columns: 1fr 5fr 1fr;
+}
+.auctionsMain {
+  margin: 0 auto;
+  padding-top: 20px;
+  display: grid;
+
+  grid-template-rows: max-content;
+  grid-template-columns: 3fr 3fr 3fr;
+}
+
+.auctionsMain > div {
+  border: 0;
+  border-radius: 20px;
+  padding: 15px;
+}
+
+.auctionsMain > div > image {
+  border-radius: 20px;
+}
+
+/* Style the dropdown button */
+.dropdown-trigger {
+  background-color: #007bff;
+  color: white;
+  padding: 10px;
+  border: none;
+  cursor: pointer;
+}
+
+/* Style the dropdown content */
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #f1f1f1;
+  min-width: 200px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  padding: 10px;
+  z-index: 1;
+}
+
+/* Style the checkboxes */
+.dropdown-content input[type="checkbox"] {
+  margin-right: 5px;
+}
+
+/* Show the dropdown when the button is hovered or clicked */
+/* .dropdown:hover .dropdown-content {
+  display: block;
+} */
+
+.open {
+  display: block;
+}
+
+.closed {
+  display: none;
+}
+
+@media screen and (max-width: 375px) {
+  .auctionsContainer {
+    margin-top: 50px;
+    padding: 0;
+    /* min-height: 100vh; */
+    display: grid;
+    grid-template-columns: 1fr;
+    /* grid-template-rows: auto 1fr auto; */
+    /* grid-template-areas:
+      "header header header"
+      "main main main"
+      "footer footer footer"; */
+  }
+  .auctionsMain {
+    margin: 0 auto;
+    display: grid;
+    align-content: center;
+    grid-template-columns: 1fr;
+  }
 }
