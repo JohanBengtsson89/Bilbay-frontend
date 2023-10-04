@@ -8,6 +8,7 @@ const apiUrl = import.meta.env.VITE_API_URL;
 export default function SubmitAuctionPage() {
   const [errorMessage, setErrorMessage] = useState("");
   const [user, setUser] = useState({});
+  const [product, setProduct] = useState({});
 
   useEffect(() => {
     const fetchData = async () => {
@@ -42,6 +43,20 @@ export default function SubmitAuctionPage() {
     isAvailable: true,
   });
 
+  const [productAuction, setProductAuction] = useState({
+    user: {
+      id: user,
+    },
+    product: {
+      id: product.id,
+    },
+    reservePrice: "",
+    startPrice: "",
+    startTime: "",
+    endTime: "",
+    active: false,
+  });
+
   const onInputChange = (e) => {
     const { name, value } = e.target;
 
@@ -58,11 +73,25 @@ export default function SubmitAuctionPage() {
     }
   };
 
+  const auctionInputChange = (e) => {
+    const { name, value } = e.target;
+    setProductAuction({ ...productAuction, [name]: value });
+  };
+
   const onSubmit = (e) => {
     e.preventDefault();
     productDetails.user = { id: user };
     axios.post(`${apiUrl}/api/product`, productDetails, user);
-    navigate("/");
+  };
+
+  const auctionSubmit = (e) => {
+    e.preventDefault();
+    productAuction.product = { id: product };
+    axios.post(`${apiUrl}/api/auth/post-auction`, {
+      ...productAuction,
+      user,
+    });
+    navigate("/auctions");
   };
 
   return (
@@ -195,9 +224,31 @@ export default function SubmitAuctionPage() {
           </div>
         </div>
       </form>
-      <div className="xl:pl-40 w-96 h-96 border border-black mx-auto pt-14 ">
-        asdadsa
-      </div>
+      <form onSubmit={(e) => auctionSubmit(e)}>
+        <div className="xl:pl-40 w-[500px] h-[500px] border border-black mx-auto pt-14">
+          <input
+            type="number"
+            className="block border-2 border-[#575757] w-full p-1 rounded-lg mb-4"
+            placeholder="start price"
+            name="startPrice"
+            value={productAuction.startPrice}
+            onChange={(e) => auctionInputChange(e)}
+          />
+
+          <div className="text-center">
+            <button
+              type="submit"
+              className="mx-auto  text-center py-3 border-2 border-[#575757] rounded-lg bg-[#C89090] text-black hover:bg-green-dark focus:outline-none my-1"
+            >
+              Create auction
+            </button>
+            <h1 className="">or</h1>
+            <button className="text-center py-3 border-2 border-[#575757] rounded-lg bg-[#C89090] text-black hover:bg-green-dark focus:outline-none my-1">
+              Go to my auction
+            </button>
+          </div>
+        </div>
+      </form>
     </div>
   );
 }
