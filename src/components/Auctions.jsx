@@ -1,6 +1,4 @@
-import React from 'react'
 import {Link} from "react-router-dom"
-import { useAuctions } from '../../context/Context';
 
 export function Auctions({ filteredAuctions }) {
 
@@ -28,6 +26,8 @@ export function Auctions({ filteredAuctions }) {
               }}
             ></div>
           </Link>
+          <p>ID: {auction.product.productSpecification.id}</p>
+          <p>Gear: {auction.product.productSpecification.gear}</p>
           <p>User: {auction.user}</p>
           <p>Product: {auction.product.productName}</p>
           <p>Model Year: {auction.product.productSpecification.modelYear}</p>
