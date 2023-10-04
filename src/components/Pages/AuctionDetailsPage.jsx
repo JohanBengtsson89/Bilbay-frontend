@@ -56,10 +56,11 @@ const AuctionDetails = () => {
       bidAmount: parseInt(bidAmount),
     };
 
-    if (bids.length > 0 && newBid.bidAmount <= bids[0].bidAmount) {
+    if (bids.length > 0 && newBid.bidAmount <= bids[0].bidAmount || isNaN(newBid.bidAmount)) {
       alert("OOOOPPPSS: Bid amount must be higher than the latest bid.");
       return;
     }
+    console.log(newBid)
 
     Axios.post(`${apiUrl}/api/bid`, newBid)
       .then((response) => {
@@ -83,7 +84,7 @@ const AuctionDetails = () => {
           <img
             className="picture"
             src={productSpecification.productPhoto}
-            alt={picture}
+            alt="Error loading picture"
           />
           <div style={{ fontSize: "32px" }}>Name: {product.productName}</div>
           <div style={{ width: "745px" }}>{product.productDescription}</div>
