@@ -43,15 +43,24 @@
 //   )
 // }
 
-import { useAuctions } from "../../context/Context";
-import { Auctions } from "./Auctions";
+ import { useAuctions } from "../../context/Context";
+ import { Auctions } from "./Auctions";
+ import './HomePage.css'
 
-const HomePage = () => {
-  const { auctions, loading, error } = useAuctions();
+ const HomePage = () => {
+   const { auctions, loading, error } = useAuctions();
 
-  return (
-    <Auctions filteredAuctions={auctions}/> 
-  )
-};
+   return (
+    <>
+    <div style={{position:"relative", left:"40%", marginTop:"100px", fontSize:"40px"}}>Bilbay Auction</div>
+    <div style={{marginTop: "100px", justifyContent:"center", display:"flex", flexWrap:"wrap"}}>
+        <Auctions filteredAuctions={auctions}/> 
+    </div>
+    <button className='button1'>More Auction</button>
+    </>
+    
+    
+   )
+ };
 
-export default HomePage;
+ export default HomePage;
