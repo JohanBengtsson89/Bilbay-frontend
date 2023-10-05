@@ -6,7 +6,7 @@ const HomePage = () => {
   const { auctions, loading, error } = useAuctions();
 
   return (
-    <Auctions filteredAuctions={auctions}/> 
+    <Auctions filteredAuctions={auctions}/>
   )
 };
 
