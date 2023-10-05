@@ -1,84 +1,251 @@
-import axios from "axios";
-import { useState, useEffect } from "react";
-import {Link} from "react-router-dom";
+import { useState } from "react";
+import { useAuctions } from "../../context/Context";
+import Auctions from "../Auctions";
+import { stringify } from "postcss";
 
 const AuctionsPage = () => {
-  const [auctions, setAuctions] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
+  const { auctions, loading, error } = useAuctions();
+  const [dropdownStates, setDropdownStates] = useState({
+    modelYear: false,
+    gear: false,
+    enginePower: false,
+    mileage: false,
+    color: false
+  });
 
-  useEffect(() => {
-    const apiUrl = "http://localhost:8080/api/auctions";
+  const toggleDropdown = (dropdownName) => {
+    setDropdownStates((prevState) => ({
+      ...prevState,
+      [dropdownName]: !prevState[dropdownName],
+    }));
+  };
 
-    axios
-      .get(apiUrl)
-      .then((response) => {
-        setAuctions(response.data);
-        setLoading(false);
-        setError(null);
-      })
-      .catch((err) => {
-        setLoading(false);
-        setError(err);
-      });
-  }, []);
+  const [filters, setFilters] = useState({
+    modelYear: [],
+    gear: [],
+    enginePower: [],
+    mileage: [],
+    color: [],
+  });
 
-  if (loading) {
-    return <p>Loading...</p>;
+  const handleFilterChange = (filterType, value) => {
+    let parsedCheckedOption = `${value}`;
+    if (filterType === "modelYear" || filterType === "mileage") {
+      parsedCheckedOption = parseInt(parsedCheckedOption, 10);
+    }
+
+    setFilters((prevFilters) => {
+      // Clone the previous filters object
+      const updatedFilters = { ...prevFilters };
+
+      if (filterType === "modelYear") {
+        // If it's modelYear, set it as a new array with the clicked value
+        updatedFilters[filterType] = [parsedCheckedOption];
+      } else {
+        // Check if the option is already in the filter array
+        const optionIndex =
+          updatedFilters[filterType].indexOf(parsedCheckedOption);
+
+        if (optionIndex === -1) {
+          // If not found, add it to the filter array
+          updatedFilters[filterType] = [
+            ...updatedFilters[filterType],
+            parsedCheckedOption,
+          ];
+        } else {
+          // If found, remove it from the filter array
+          updatedFilters[filterType] = updatedFilters[filterType].filter(
+            (selectedOption) => selectedOption !== parsedCheckedOption
+          );
+        }
+      }
+      // setFilters(updatedFilters)
+      console.log(updatedFilters);
+      return updatedFilters;
+    });
+  };
+  console.log(filters);
+
+  const filterAuctions = () => {
+    return auctions.filter((auction) => {
+      const modelYearMatch =
+        filters.modelYear.length === 0 ||
+        filters.modelYear.includes(
+          auction.product.productSpecification.modelYear
+        );
+      const gearMatch =
+        filters.gear.length === 0 ||
+        filters.gear.includes(auction.product.productSpecification.gear);
+      const mileageMatch =
+        filters.mileage.length === 0 ||
+        filters.mileage.includes(auction.product.productSpecification.mileage);
+      const colorMatch =
+        filters.color.length === 0 ||
+        filters.color.includes(auction.product.productSpecification.color);
+      const enginePowerMatch =
+        filters.enginePower.length === 0 ||
+        filters.enginePower.includes(
+          auction.product.productSpecification.enginePower
+        );
+
+      // Check if all filter criteria match
+      return (
+        modelYearMatch &&
+        gearMatch &&
+        mileageMatch &&
+        colorMatch &&
+        enginePowerMatch
+      );
+    });
+  };
+
+  const clearFilter = () => {
+    return setFilters({
+      modelYear: [],
+      gear: [],
+      enginePower: [],
+      mileage: [],
+      color: [],
+    });
+  };
+
+  function FilterDropdown({
+    attribute,
+    auctions,
+    filters,
+    handleFilterChange,
+    toggleDropdown,
+    isOpen,
+    singleOption,
+    clearFilter,
+  }) {
+    // Extract unique values for the specified attribute from auctions
+    const attributeValues = Array.from(
+      new Set(
+        auctions.map(
+          (auction) => auction.product.productSpecification[attribute]
+        )
+      )
+    );
+
+    const handleSelectChange = (e) => {
+      handleFilterChange(attribute, e.target.value);
+      toggleDropdown(); // Close the dropdown after selection
+    };
+
+    return (
+      <div className="dropdown">
+        {attribute !== "modelYear" && (
+          <button
+            className="dropdown-trigger"
+            id="filterButton"
+            onClick={toggleDropdown}
+          >
+            {attribute}
+            {/* Customize button label */}
+          </button>
+        )}
+        {singleOption ? (
+          <div>
+            <select value="Model Year" onChange={handleSelectChange}>
+              <option value="Model Year">Select Model Year</option>
+              {attributeValues.map((value, i) => (
+                <option key={i} value={value}>
+                  {value}
+                </option>
+              ))}
+            </select>
+          </div>
+        ) : (
+          <div className={`dropdown-content ${isOpen ? "open" : "closed"}`}>
+            <ul>
+              {attributeValues.map((value, i) => (
+                <div key={value}>
+                  <li>
+                    <input
+                      type="checkbox"
+                      id={`${i}`}
+                      value={value}
+                      checked={filters[attribute].includes(value)}
+                      onChange={(e) =>
+                        handleFilterChange(attribute, e.target.value)
+                      }
+                    />
+                    <label htmlFor={`${attribute}-${value}`}>{value}</label>
+                  </li>
+                </div>
+              ))}
+            </ul>
+          </div>
+        )}
+      </div>
+    );
   }
 
-  if (error) {
-    return <p>Error: {error.message}</p>;
-  }
+  const filteredAuctions = filterAuctions();
+
+  // console.log('filtered ' + filteredAuctions);
 
   return (
     <>
-      <div
-        className="auctionsContainer"
-        // style={{
-        //   display: "flex",
-        //   flexWrap: "wrap",
-        //   justifyContent: "space-evenly",
-        //   // marginLeft: "25%",
-        //   // marginRight: "25%"
-        // }}
-      >
-        <div>Sidemenu</div>
-        <div
-          className="auctionsMain m-0"
-          // style={{ display: "flex", flexWrap: "wrap", alignSelf: "center" }}
-        >
-          {auctions.map((auction) => (
-            <div
-              key={auction.id}
-              className="h-96 w-72 content-center"
-              style={{
-                margin: "15px",
-                // width: "33.33%",
-                // minHeight: "200px",
-                // display: "flex",
-                // flexDirection: "column",
-
-                backgroundColor: "#BFC3CC",
-              }}
+      <div className="auctionsContainer">
+        <div>
+          <FilterDropdown
+            attribute="modelYear"
+            auctions={auctions}
+            filters={filters}
+            handleFilterChange={handleFilterChange}
+            isOpen={dropdownStates.modelYear}
+            toggleDropdown={() => toggleDropdown("modelYear")}
+            singleOption={true}
+          />
+          <FilterDropdown
+            attribute="gear"
+            auctions={auctions}
+            filters={filters}
+            handleFilterChange={handleFilterChange}
+            isOpen={dropdownStates.gear}
+            toggleDropdown={() => toggleDropdown("gear")}
+            singleOption={false}
+          />
+          <FilterDropdown
+            attribute="enginePower"
+            auctions={auctions}
+            filters={filters}
+            handleFilterChange={handleFilterChange}
+            isOpen={dropdownStates.enginePower}
+            toggleDropdown={() => toggleDropdown("enginePower")}
+            singleOption={false}
+          />
+          <FilterDropdown
+            attribute="mileage"
+            auctions={auctions}
+            filters={filters}
+            handleFilterChange={handleFilterChange}
+            isOpen={dropdownStates.mileage}
+            toggleDropdown={() => toggleDropdown("mileage")}
+            singleOption={false}
+          />
+          <FilterDropdown
+            attribute="color"
+            auctions={auctions}
+            filters={filters}
+            handleFilterChange={handleFilterChange}
+            isOpen={dropdownStates.color}
+            toggleDropdown={() => toggleDropdown("color")}
+            singleOption={false}
+          />
+          <div>
+            <button
+              className="dropdown-trigger"
+              id="filterButton"
+              onClick={clearFilter}
             >
-            <Link to={`/auction/${auction.id}`}>
-              <div
-                style={{
-                  backgroundImage: `url(${auction.product.productSpecification.productPhoto})`, 
-                  borderRadius: "10px",
-                  backgroundSize: "cover",
-                  backgroundRepeat: "no-repeat",
-                  minHeight: "50%",
-                }}
-              ></div>
-              </Link>
-              <h3>ID: {auction.id}</h3>
-              <p>User: {auction.user}</p>
-              <p>Product: {auction.product.productName}</p>
-            </div>
-          ))}
+              Clear Filter
+            </button>
+          </div>
         </div>
+        <Auctions filteredAuctions={filteredAuctions} />
       </div>
     </>
   );

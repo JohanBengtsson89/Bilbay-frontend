@@ -1,13 +1,13 @@
-import React from "react";
+
+import { useAuctions } from "../../context/Context";
+import { Auctions } from "../Auctions";
 
 const HomePage = () => {
-  
+  const { auctions, loading, error } = useAuctions();
 
   return (
-    <div>
-      Home page
-    </div>
-  );
+    <Auctions filteredAuctions={auctions}/> 
+  )
 };
 
 export default HomePage;
