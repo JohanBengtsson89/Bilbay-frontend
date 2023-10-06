@@ -21,6 +21,8 @@
 //     description: 'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Dolores magni delectus ex quo.',
 //   },
 // ];
+// import { useAuctions } from "../../context/Context";
+// import { Auctions } from "../Auctions";
 
 // const HomePage = () => {
 //   return (
