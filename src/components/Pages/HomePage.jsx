@@ -1,68 +1,62 @@
-// import React from 'react'
-// import './HomePage.css'; 
+import React, { useEffect, useState } from "react";
+import { useAuctions } from "../../context/Context";
+import { Auctions } from "../Auctions";
+import { Link } from "react-router-dom";
 
-// const cardsData = [
-//   {
-//     id: 1,
-//     photo: 'https://www.adobe.com/content/dam/cc/us/en/creativecloud/photography/discover/car-photography/car-photography_fb-img_1200x800.jpg',
-//     name: 'Lamporgini Avenatdor',
-//     description: 'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Dolores magni delectus ex quo.',
-//   },
-//   {
-//     id: 2,
-//     photo: 'https://www.usnews.com/object/image/00000187-05a8-d67e-a38f-2ff8100b0000/2023-chevrolet-corvette-z06-13.jpg?update-time=1679427111996&size=responsive640',
-//     name: 'Cls MacLauren',
-//     description: 'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Dolores magni delectus ex quo.',
-//   },
-//   {
-//     id: 3,
-//     photo: 'https://images.unsplash.com/photo-1494976388531-d1058494cdd8?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8Y2Fyc3xlbnwwfHwwfHx8MA%3D%3D&w=1000&q=80',
-//     name: 'Ford Mustang GT',
-//     description: 'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Dolores magni delectus ex quo.',
-//   },
-// ];
-// import { useAuctions } from "../../context/Context";
-// import { Auctions } from "../Auctions";
+const HomePage = () => {
+  const { auctions} = useAuctions();
+  const [randomAuctions, setRandomAuctions] = useState([]);
 
-// const HomePage = () => {
-//   return (
-//     <div>
-//     <h2 className='title'>Bilbay auction</h2>
-//     <div className="container1">
-//       <div className="card-grid">
-//         {cardsData.map((card) => (
-//           <div key={card.id} className="card">
-//             <img src={card.photo} alt={card.name} className="card-photo" />
-//             <h2 className="card-name">{card.name}</h2>
-//             <p className="card-description">{card.description}</p>
-//           </div>
-//         ))}
-//       </div>
-//     </div>
-//     <button className='button1'>More Auction</button>
-    
-//     </div>
-//   )
-// }
+  const getRandomAuctions = (arr, count) => {
+    const shuffled = arr.sort(() => 0.5 - Math.random());
+    return shuffled.slice(0, count);
+  };
 
- import { useAuctions } from "../../context/Context";
- import { Auctions } from "./Auctions";
- import './HomePage.css'
+  useEffect(() => {
+    const numberOfRandomAuctions = 3;
+    setRandomAuctions(getRandomAuctions(auctions, numberOfRandomAuctions));
+  }, [auctions]);
 
- const HomePage = () => {
-   const { auctions, loading, error } = useAuctions();
-
-   return (
+  return (
     <>
-    <div style={{position:"relative", left:"40%", marginTop:"100px", fontSize:"40px"}}>Bilbay Auction</div>
-    <div style={{marginTop: "100px", justifyContent:"center", display:"flex", flexWrap:"wrap"}}>
-        <Auctions filteredAuctions={auctions}/> 
-    </div>
-    <button className='button1'>More Auction</button>
+      <p
+        style={{
+          textAlign: "center",
+          marginTop: "50px",
+          fontSize: "30px",
+          fontWeight: "bold",
+        }}
+      >
+        Bilbay Auction
+      </p>
+      <div
+        style={{
+          marginTop: "100px",
+          justifyContent: "center",
+          display: "flex",
+          flexWrap: "wrap",
+        }}
+      >
+        <Auctions filteredAuctions={randomAuctions} />
+      </div>
+      <Link to={`/auctions`}>
+      <div style={{ textAlign: "center", marginTop: "20px" }}>
+        <button
+          className="button1"
+          style={{
+            border: "1px solid transparent",
+            backgroundColor: "#c89090",
+            fontSize: "medium",
+            borderRadius: "8px",
+            padding: "10px 20px",
+          }}
+        >
+          More Auction
+        </button>
+      </div>
+      </Link>
     </>
-    
-    
-   )
- };
+  );
+};
 
- export default HomePage;
+export default HomePage;
