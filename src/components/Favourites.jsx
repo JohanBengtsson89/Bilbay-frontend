@@ -1,78 +1,170 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faHeart as faHeartSolid,
   faHeart as faHeartOutline,
 } from "@fortawesome/free-solid-svg-icons";
-import "./Favourite.css";
-
-const products = [
-  {
-    name: "Product 1",
-    price: 19.99,
-    description: "Something",
-  },
-  {
-    name: "Product 2",
-    price: 29.99,
-    description: "Somthing",
-  },
-];
+import axios from "axios";
 
 function Favorite() {
   const [favorites, setFavorites] = useState([]);
+  const [userId, setUserId] = useState(null);
+  const [auctions, setAuctions] = useState([]);
 
-  const addToFavorites = (product) => {
-    if (!favorites.includes(product)) {
-      const newFavorites = [...favorites, product];
+  useEffect(() => {
+    const storedUser = JSON.parse(localStorage.getItem("user"));
+    if (storedUser) {
+      setUserId(storedUser.id);
+
+      const storedFavorites = JSON.parse(localStorage.getItem("favorites"));
+      setFavorites(storedFavorites);
+
+      // axios
+      //   .get(`http://localhost:8080/api/getFavorites`)
+      //   .then((response) => {
+      //     setFavorites(response.data);
+      //     localStorage.setItem("favorites", JSON.stringify(response.data));
+      //   })
+      //   .catch((error) => {
+      //     console.error("Error fetching favorites:", error);
+      //   });
+
+      axios
+        .get("http://localhost:8080/api/auctions")
+        .then((response) => {
+          setAuctions(response.data);
+        })
+        .catch((error) => {
+          console.error("Error fetching auctions:", error);
+        });
+    }
+  }, []);
+
+  // const addToFavorites = (auctionId) => {
+  //   axios
+  //     .post(`http://localhost:8080/api/favorite/${userId}/${auctionId}`)
+  //     .then((response) => {
+  //       if (response.status === 200) {
+  //         const newFavorites = [...favorites, auctionId];
+  //         setFavorites(newFavorites);
+  //         localStorage.setItem("favorites", JSON.stringify(newFavorites));
+  //       }
+  //     })
+  //     .catch((error) => {
+  //       console.error("Error adding to favorites:", error);
+  //     });
+  // };
+
+  const addToFavorites = (auctionId) => {
+    try {
+      const newFavorites = [...favorites, auctionId];
       setFavorites(newFavorites);
+      localStorage.setItem("favorites", JSON.stringify(newFavorites));
+    } catch (error) {
+      console.error("Error adding to favorites:", error);
     }
   };
 
-  const removeFromFavorites = (product) => {
-    const newFavorites = favorites.filter((item) => item !== product);
-    setFavorites(newFavorites);
+  function removeFromLocalStorage(auctionId, setFavorites) {
+    try {
+      const storedFavorites =
+        JSON.parse(localStorage.getItem("favorites")) || [];
+      const updatedFavorites = storedFavorites.filter((id) => id !== auctionId);
+      localStorage.setItem("favorites", JSON.stringify(updatedFavorites));
+      if (setFavorites) {
+        setFavorites(updatedFavorites);
+      }
+    } catch (error) {
+      console.error("Error removing from favorites:", error);
+    }
+  }
+
+  // const removeFromFavorites = (auctionId) => {
+  //   axios
+  //     .delete(
+  //       `http://localhost:8080/api/delete-favorite/${userId}/${auctionId}`
+  //     )
+  //     .then((response) => {
+  //       if (response.status === 200) {
+  //         const newFavorites = favorites.filter((item) => item !== auctionId);
+
+  //         removeFromLocalStorage(auctionId);
+  //         setFavorites(newFavorites);v
+  //       }
+  //     })
+  //     .catch((error) => {
+  //       console.error("Error removing from favorites:", error);
+  //     });
+  // };
+
+  const getAuctionDetails = (favoritesAuctionId) => {
+    const auction = auctions.find(
+      (auction) => auction.id === favoritesAuctionId
+    );
+    return auction ? auction.product : null;
   };
 
   return (
     <div>
-      <h1 className="products">Products</h1>
+      <h1 style={{fontWeight:"bold", fontSize:"20px"}}>Favorite</h1>
       <ul>
-        {products.map((product, index) => (
-          <li key={index}>
-            {product.name}
-            {favorites.includes(product.name) ? (
+        {favorites.map((favoritesAuctionId, index) => {
+          const productAuction = getAuctionDetails(favoritesAuctionId);
+          // const favoriteAuction = auctions.find(
+          //   (auction) => auction.id === favoritesAuctionId
+          // );
+          return (
+            <li key={index}>
+              <p>Auction ID: {favoritesAuctionId}</p>
+              {productAuction ? (
+                <div>
+                  <p>User: {productAuction.user}</p>
+                  <p>Auction Name: {productAuction.productName}</p>
+                  <p>
+                    Model Year {productAuction.productSpecification.modelYear}
+                  </p>
+                </div>
+              ) : (
+                <p>Auction details not found</p>
+              )}
               <FontAwesomeIcon
                 icon={faHeartSolid}
-                onClick={() => removeFromFavorites(product.name)}
-                className="heart-icon red"
+                onClick={() =>
+                  removeFromLocalStorage(favoritesAuctionId, setFavorites)
+                }
+                style={{color:"red"}}
+              />
+            </li>
+          );
+        })}
+      </ul>
+
+      <h1 style={{fontWeight:"bold", fontSize:"20px"}}>Auctions</h1>
+      <ul>
+        {auctions.map((auction, index) => (
+          <li key={index}>
+            <p>Auction ID: {auction.id}</p>
+            <p>User: {auction.user}</p>
+            <p>Product name: {auction.product.productName}</p>
+            <p>Model Year {auction.product.productSpecification.modelYear}</p>
+
+            {favorites.includes(auction.id) ? (
+              <FontAwesomeIcon
+                icon={faHeartSolid}
+                onClick={() => removeFromLocalStorage(auction.id, setFavorites)}
+                style={{color:"red"}}
               />
             ) : (
               <FontAwesomeIcon
                 icon={faHeartOutline}
-                onClick={() => addToFavorites(product.name)}
+                onClick={() => addToFavorites(auction.id)}
                 className="heart-icon"
               />
             )}
           </li>
         ))}
       </ul>
-
-      <h1 className="favorite">Favorite Products</h1>
-      <ul>
-        {favorites.map((product, index) => (
-          <li key={index}>
-            {product}
-            <FontAwesomeIcon
-              icon={faHeartSolid}
-              onClick={() => removeFromFavorites(product)}
-              className="heart-icon red"
-            />
-          </li>
-        ))}
-      </ul>
     </div>
   );
 }
-
 export default Favorite;
