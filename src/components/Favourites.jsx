@@ -5,7 +5,6 @@ import {
   faHeart as faHeartOutline,
 } from "@fortawesome/free-solid-svg-icons";
 import axios from "axios";
-import "./Favourite.css";
 
 function Favorite() {
   const [favorites, setFavorites] = useState([]);
@@ -107,7 +106,7 @@ function Favorite() {
 
   return (
     <div>
-      <h1 className="favorite">Favorite</h1>
+      <h1 style={{fontWeight:"bold", fontSize:"20px"}}>Favorite</h1>
       <ul>
         {favorites.map((favoritesAuctionId, index) => {
           const productAuction = getAuctionDetails(favoritesAuctionId);
@@ -133,14 +132,14 @@ function Favorite() {
                 onClick={() =>
                   removeFromLocalStorage(favoritesAuctionId, setFavorites)
                 }
-                className="heart-icon red"
+                style={{color:"red"}}
               />
             </li>
           );
         })}
       </ul>
 
-      <h1 className="auctions">Auctions</h1>
+      <h1 style={{fontWeight:"bold", fontSize:"20px"}}>Auctions</h1>
       <ul>
         {auctions.map((auction, index) => (
           <li key={index}>
@@ -153,7 +152,7 @@ function Favorite() {
               <FontAwesomeIcon
                 icon={faHeartSolid}
                 onClick={() => removeFromLocalStorage(auction.id, setFavorites)}
-                className="heart-icon red"
+                style={{color:"red"}}
               />
             ) : (
               <FontAwesomeIcon
