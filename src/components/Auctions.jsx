@@ -1,11 +1,17 @@
-import {Link} from "react-router-dom"
-
-export function Auctions({ filteredAuctions }) {
+import { Link } from "react-router-dom";
+import FavoriteButton from "./FavoriteButton";
+import {
+  useFavoriteContext,
+  FavoriteProvider,
+} from "../context/FavoriteContext";
+import { useAuctions } from "../context/Context";
+//Jag var tvungen att ändra filteredAuction till auction tillfälligt.
+export function Auctions() {
+  const { auctions } = useAuctions();
 
   return (
-    
     <div className="auctionsMain m-0">
-      {filteredAuctions.map((auction) => (
+      {auctions.map((auction) => (
         <div
           key={auction.id}
           className="h-96 w-72 content-center"
@@ -31,10 +37,17 @@ export function Auctions({ filteredAuctions }) {
           <p>User: {auction.user}</p>
           <p>Product: {auction.product.productName}</p>
           <p>Model Year: {auction.product.productSpecification.modelYear}</p>
+          <FavoriteButton auctionId={auction.id} />
         </div>
       ))}
     </div>
   );
 }
 
-export default Auctions
+const FavoriteWithContext = () => (
+  <FavoriteProvider>
+    <Auctions />
+  </FavoriteProvider>
+);
+
+export default FavoriteWithContext;
