@@ -31,7 +31,7 @@ const HomePage = () => {
         Bilbay Auction
       </p>
       
-      {auctions.length > 3 ? (
+      {auctions.length > 2 ? (
         <>
           <div
             style={{
