@@ -1,78 +1,79 @@
-import React, { useState } from "react";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faHeart as faHeartSolid,
-  faHeart as faHeartOutline,
-} from "@fortawesome/free-solid-svg-icons";
-import "./Favourite.css";
+// import React from "react";
+// import FavoriteButton from "./FavoriteButton";
+// import {
+//   useFavoriteContext,
+//   FavoriteProvider,
+// } from "../context/FavoriteContext";
 
-const products = [
-  {
-    name: "Product 1",
-    price: 19.99,
-    description: "Something",
-  },
-  {
-    name: "Product 2",
-    price: 29.99,
-    description: "Somthing",
-  },
-];
+import { Link } from "react-router-dom";
+import { useAuctions } from "../context/Context";
+import { FavoriteButton } from "./FavoriteButton";
 
-function Favorite() {
-  const [favorites, setFavorites] = useState([]);
-
-  const addToFavorites = (product) => {
-    if (!favorites.includes(product)) {
-      const newFavorites = [...favorites, product];
-      setFavorites(newFavorites);
-    }
-  };
-
-  const removeFromFavorites = (product) => {
-    const newFavorites = favorites.filter((item) => item !== product);
-    setFavorites(newFavorites);
-  };
+export default function Favorite() {
+  const { auctions, favorites, setFavorites } = useAuctions();
+  // const {userId, favorites, getAuctionDetails } = useFavoriteContext();
+  // const validFavorites = favorites.filter((favorite) => favorite.userId === userId);
 
   return (
-    <div>
-      <h1 className="products">Products</h1>
-      <ul>
-        {products.map((product, index) => (
-          <li key={index}>
-            {product.name}
-            {favorites.includes(product.name) ? (
-              <FontAwesomeIcon
-                icon={faHeartSolid}
-                onClick={() => removeFromFavorites(product.name)}
-                className="heart-icon red"
-              />
-            ) : (
-              <FontAwesomeIcon
-                icon={faHeartOutline}
-                onClick={() => addToFavorites(product.name)}
-                className="heart-icon"
-              />
-            )}
-          </li>
-        ))}
-      </ul>
+    <div className="auctionsMain m-0">
+      {favorites.map((favorite, index) => {
+        {
+          /* const productAuction = getAuctionDetails(favorite.auctionId); */
+        }
+        {
+          /* console.log("Auction Details:", productAuction); */
+        }
+        const matchingAuction = auctions.find(
+          (auction) => auction.id === favorite.id
+        );
+        return (
+          <div
+            className="h-96 w-72 content-center"
+            key={index}
+            style={{ margin: "15px", backgroundColor: "#BFC3CC" }}
+          >
+            <p>Auction ID: {favorite.id}</p>
 
-      <h1 className="favorite">Favorite Products</h1>
-      <ul>
-        {favorites.map((product, index) => (
-          <li key={index}>
-            {product}
-            <FontAwesomeIcon
-              icon={faHeartSolid}
-              onClick={() => removeFromFavorites(product)}
-              className="heart-icon red"
-            />
-          </li>
-        ))}
-      </ul>
+            <Link to={`/auction/${favorite.auctionId}`}>
+              <div
+                style={{
+                  // backgroundImage: `url(${productAuction.productSpecification.productPhoto})`,
+                  borderRadius: "10px",
+                  backgroundSize: "cover",
+                  backgroundRepeat: "no-repeat",
+                  minHeight: "50%",
+                  width: "100%",
+                }}
+              ></div>
+            </Link>
+            <div>
+              {console.log("Favorites: ", favorites)}
+              {console.log("Auctions: ", auctions)}
+
+              {matchingAuction && ( // Use && to conditionally render when matchingAuction is truthy
+                <div key={matchingAuction.id}>
+                  <p>User: {matchingAuction.user}</p>
+                  <p>Auction Name: {matchingAuction.product.productName}</p>
+                  <p>
+                    Model Year:{" "}
+                    {matchingAuction.product.productSpecification.modelYear}
+                  </p>
+                  <FavoriteButton auctionId={favorite.id} favorites={favorites} setFavorites={setFavorites} />
+                </div>
+              )}
+              
+            </div>
+          </div>
+        );
+      })}
     </div>
   );
 }
 
-export default Favorite;
+// const FavoriteWithContext = () => (
+//   <FavoriteProvider>
+//     <Favorite />
+//   </FavoriteProvider>
+// );
+
+// export default FavoriteWithContext;
