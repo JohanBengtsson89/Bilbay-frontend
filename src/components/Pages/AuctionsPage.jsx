@@ -1,16 +1,15 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useAuctions } from "../../context/Context";
 import Auctions from "../Auctions";
-import { stringify } from "postcss";
 
 const AuctionsPage = () => {
-  const { auctions, loading, error } = useAuctions();
+  const { auctions } = useAuctions();
   const [dropdownStates, setDropdownStates] = useState({
     modelYear: false,
     gear: false,
     enginePower: false,
     mileage: false,
-    color: false
+    color: false,
   });
 
   const toggleDropdown = (dropdownName) => {
@@ -60,11 +59,9 @@ const AuctionsPage = () => {
         }
       }
       // setFilters(updatedFilters)
-      console.log(updatedFilters);
       return updatedFilters;
     });
   };
-  console.log(filters);
 
   const filterAuctions = () => {
     return auctions.filter((auction) => {
@@ -117,7 +114,6 @@ const AuctionsPage = () => {
     toggleDropdown,
     isOpen,
     singleOption,
-    clearFilter,
   }) {
     // Extract unique values for the specified attribute from auctions
     const attributeValues = Array.from(
@@ -147,7 +143,7 @@ const AuctionsPage = () => {
         )}
         {singleOption ? (
           <div>
-            <select value="Model Year" onChange={handleSelectChange}>
+            <select id="model" value="Model Year" onChange={handleSelectChange}>
               <option value="Model Year">Select Model Year</option>
               {attributeValues.map((value, i) => (
                 <option key={i} value={value}>
@@ -163,15 +159,16 @@ const AuctionsPage = () => {
                 <div key={value}>
                   <li>
                     <input
+                      name={`${value}`}
                       type="checkbox"
-                      id={`${i}`}
+                      id={`${value}`}
                       value={value}
                       checked={filters[attribute].includes(value)}
                       onChange={(e) =>
                         handleFilterChange(attribute, e.target.value)
                       }
                     />
-                    <label htmlFor={`${attribute}-${value}`}>{value}</label>
+                    <label htmlFor={`${value}`}>{value}</label>
                   </li>
                 </div>
               ))}
@@ -183,8 +180,6 @@ const AuctionsPage = () => {
   }
 
   const filteredAuctions = filterAuctions();
-
-  // console.log('filtered ' + filteredAuctions);
 
   return (
     <>
