@@ -1,9 +1,7 @@
 import { Link } from "react-router-dom";
-import { useAuctions } from "../context/Context";
 import { FavoriteButton } from "./FavoriteButton";
 
 export function Auctions({ filteredAuctions }) {
-  const { favorites, setFavorites } = useAuctions();
 
   return (
     <div className="auctionsMain m-0">
@@ -34,8 +32,7 @@ export function Auctions({ filteredAuctions }) {
           <p>User: {auction.user}</p>
           <p>Product: {auction.product.productName}</p>
           <p>Model Year: {auction.product.productSpecification.modelYear}</p>
-          {/* <div>{favorites.includes(auction.id) ? "Favorit" : "Ej Favorit"}</div> */}
-          <FavoriteButton auctionId={auction.id} favorites={favorites} setFavorites={setFavorites} />
+          <FavoriteButton auctionId={auction.id} />
         </div>
       ))}
     </div>

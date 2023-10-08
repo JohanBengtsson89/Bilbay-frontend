@@ -9,7 +9,9 @@ import { useEffect } from "react";
 
 const apiUrl = import.meta.env.VITE_API_URL;
 
-export function FavoriteButton({ auctionId, favorites, setFavorites }) {
+export function FavoriteButton({ auctionId }) {
+  const { favorites, setFavorites } = useAuctions();
+
   let userId = null;
   
   // useEffect(() => {
