@@ -7,11 +7,12 @@ import { useAuctions } from "../context/Context";
 //I added a ternary to make sure auction runs wether filteredAuction or the main auction
 export function Auctions({ filteredAuctions }) {
   // const {auctions } = useAuctions([]);
-  const { auctions } = filteredAuctions ? { auctions: filteredAuctions } : useAuctions([]);
+  // const { auctions } = filteredAuctions ? { auctions: filteredAuctions } : useAuctions([]);
 
   return (
+    <FavoriteProvider>
     <div className="auctionsMain m-0">
-      {auctions.map((auction) => (
+      {filteredAuctions.map((auction) => (
         <div
           key={auction.id}
           className="h-96 w-72 content-center"
@@ -41,13 +42,14 @@ export function Auctions({ filteredAuctions }) {
         </div>
       ))}
     </div>
+    </FavoriteProvider>
   );
 }
 
-const FavoriteWithContext = () => (
-  <FavoriteProvider>
-    <Auctions />
-  </FavoriteProvider>
-);
+// const FavoriteWithContext = () => (
+  
+//     <Auctions />
+  
+// );
 
-export default FavoriteWithContext;
+export default Auctions;
