@@ -16,7 +16,7 @@ export const FavoriteProvider = ({ children }) => {
       setUserId(storedUser.id);
 
       const storedFavorites = JSON.parse(localStorage.getItem("favorites"));
-      setFavorites(storedFavorites);
+      setFavorites(storedFavorites || []);
       console.log(storedFavorites);
     }
   }, []);

@@ -1,13 +1,13 @@
 import { Link } from "react-router-dom";
 import FavoriteButton from "./FavoriteButton";
 import {
-  useFavoriteContext,
   FavoriteProvider,
 } from "../context/FavoriteContext";
 import { useAuctions } from "../context/Context";
-//Jag var tvungen att ändra filteredAuction till auction tillfälligt.
-export function Auctions() {
-  const { auctions } = useAuctions();
+//I added a ternary to make sure auction runs wether filteredAuction or the main auction
+export function Auctions({ filteredAuctions }) {
+  // const {auctions } = useAuctions([]);
+  const { auctions } = filteredAuctions ? { auctions: filteredAuctions } : useAuctions([]);
 
   return (
     <div className="auctionsMain m-0">

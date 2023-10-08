@@ -1,10 +1,14 @@
 import React, { useEffect, useState } from "react";
-import { useAuctions } from "../../context/Context";
+import { useAuctions, AuctionsProvider } from "../../context/Context";
 import { Auctions } from "../Auctions";
 import { Link } from "react-router-dom";
 import Lambo from'../../assets/Lamboo.png';
+import {
+  useFavoriteContext,
+  FavoriteProvider,
+} from "../../context/FavoriteContext";
 
-const HomePage = () => {
+export const HomePage = () => {
   const { auctions } = useAuctions();
   const [randomAuctions, setRandomAuctions] = useState([]);
 
@@ -31,7 +35,7 @@ const HomePage = () => {
         Bilbay Auction
       </p>
       
-      {auctions.length > 3 ? (
+      {auctions.length > 2 ? (
         <>
           <div
             style={{
@@ -95,5 +99,10 @@ const HomePage = () => {
     </>
   );
 };
+const FavoriteWithContext = () => (
+  <FavoriteProvider>
+    <HomePage />
+  </FavoriteProvider>
+);
 
-export default HomePage;
+export default FavoriteWithContext;

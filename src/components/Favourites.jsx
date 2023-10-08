@@ -8,11 +8,13 @@ import { Link } from "react-router-dom";
 
 export function Favorite() {
   const { favorites, getAuctionDetails } = useFavoriteContext();
+  const validFavorites = favorites ? favorites.filter(id => id !== null && id !== undefined) : [];
 
   return (
     <div className="auctionsMain m-0">
-      {favorites.map((favoritesAuctionId, index) => {
+      {validFavorites.map((favoritesAuctionId, index) => {
         const productAuction = getAuctionDetails(favoritesAuctionId);
+
         return (
           <div
             className="h-96 w-72 content-center"
