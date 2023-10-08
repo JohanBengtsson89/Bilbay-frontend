@@ -1,19 +1,19 @@
 import React from "react";
 import FavoriteButton from "./FavoriteButton";
-import {
-  useFavoriteContext,
-  FavoriteProvider,
-} from "../context/FavoriteContext";
+import {useFavoriteContext,FavoriteProvider,} from "../context/FavoriteContext";
 import { Link } from "react-router-dom";
 
 export function Favorite() {
-  const { favorites, getAuctionDetails } = useFavoriteContext();
-  const validFavorites = favorites ? favorites.filter(id => id !== null && id !== undefined) : [];
+  const {userId, favorites, getAuctionDetails } = useFavoriteContext();
+  const validFavorites = favorites.filter((favorite) => favorite.userId === userId);
 
   return (
     <div className="auctionsMain m-0">
-      {validFavorites.map((favoritesAuctionId, index) => {
-        const productAuction = getAuctionDetails(favoritesAuctionId);
+      {validFavorites.map((favorite, index) => {
+        const productAuction = getAuctionDetails(favorite.auctionId);
+        console.log("Auction Details:", productAuction);
+
+        
 
         return (
           <div
@@ -21,10 +21,10 @@ export function Favorite() {
             key={index}
             style={{ margin: "15px", backgroundColor: "#BFC3CC" }}
           >
-            <p>Auction ID: {favoritesAuctionId}</p>
+            <p>Auction ID: {favorite.auctionId}</p>
             {productAuction ? (
               <>
-                <Link to={`/auction/${favoritesAuctionId}`}>
+                <Link to={`/auction/${favorite.auctionId}`}>
                   <div
                     style={{
                       backgroundImage: `url(${productAuction.productSpecification.productPhoto})`,
@@ -47,7 +47,7 @@ export function Favorite() {
             ) : (
               <p>Auction details not found</p>
             )}
-            <FavoriteButton auctionId={favoritesAuctionId} />
+            <FavoriteButton auctionId={favorite.auctionId} />
           </div>
         );
       })}

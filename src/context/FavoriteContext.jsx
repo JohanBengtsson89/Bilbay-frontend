@@ -15,9 +15,8 @@ export const FavoriteProvider = ({ children }) => {
     if (storedUser) {
       setUserId(storedUser.id);
 
-      const storedFavorites = JSON.parse(localStorage.getItem("favorites"));
-      setFavorites(storedFavorites || []);
-      console.log(storedFavorites);
+      const storedFavorites = JSON.parse(localStorage.getItem("favorites")) || [];
+      setFavorites(storedFavorites.filter(fav => fav.userId === storedUser.id));
     }
   }, []);
 
@@ -35,7 +34,8 @@ export const FavoriteProvider = ({ children }) => {
 
   const addToFavorites = (auctionId) => {
     try {
-      const newFavorites = [...favorites, auctionId];
+      const newFavorite = { userId, auctionId };
+      const newFavorites = [...favorites, newFavorite];
       setFavorites(newFavorites);
       localStorage.setItem("favorites", JSON.stringify(newFavorites));
     } catch (error) {
@@ -45,7 +45,7 @@ export const FavoriteProvider = ({ children }) => {
 
   const removeFromFavorites = (auctionId) => {
     try {
-      const updatedFavorites = favorites.filter((id) => id !== auctionId);
+      const updatedFavorites = favorites.filter((fav) => fav.auctionId !== auctionId);
       setFavorites(updatedFavorites);
       localStorage.setItem("favorites", JSON.stringify(updatedFavorites));
     } catch (error) {
@@ -54,13 +54,15 @@ export const FavoriteProvider = ({ children }) => {
   };
 
   const getAuctionDetails = (favoritesAuctionId) => {
-    const auction = auctionList.find(
-      (auction) => auction.id === favoritesAuctionId
-    );
-    return auction ? auction.product : null;
+    const favorite = favorites.find((fav) => fav.auctionId === favoritesAuctionId);
+    if (favorite) {
+      const auction = auctionList.find((auction) => auction.id === favorite.auctionId);
+      return auction ? auction.product : null;
+    }
   };
 
   const contextValue = {
+    userId,
     auctionList,
     favorites,
     addToFavorites,

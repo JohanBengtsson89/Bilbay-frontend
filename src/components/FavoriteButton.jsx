@@ -1,17 +1,19 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faHeart as faHeartSolid,
   faHeart as faHeartOutline,
 } from "@fortawesome/free-solid-svg-icons";
 import { useFavoriteContext } from "../context/FavoriteContext";
-import { useState } from "react";
 
 function FavoriteButton({ auctionId }) {
-  const { favorites, addToFavorites, removeFromFavorites } =
-    useFavoriteContext();
+  const { favorites, addToFavorites, removeFromFavorites } = useFavoriteContext();
 
-  const [isFavorited, setIsFavorited] = useState(favorites.includes(auctionId));
+  const [isFavorited, setIsFavorited] = useState(false);
+
+  useEffect(() => {
+    setIsFavorited(favorites.some(favorite => favorite.auctionId === auctionId));
+  }, [favorites, auctionId]);
 
   const handleClick = () => {
     if (isFavorited) {
