@@ -34,32 +34,34 @@ export function AuctionsProvider({ children }) {
         setLoading(false); // Set loading to false in case of error
         setError(err); // Set the error message
       });
-    axios
+      axios
       .get(`${apiUrl}/api/auth/favorite/${userId}`)
       .then((response) => {
-        console.log(response.data)
-        const id = Array.isArray(response.data)
-          ? response.data.map((item) => item.id)
-          : response.data.id;
-
-        // Set the 'id' or array of 'id's as favorites
-        setFavorites(Array.isArray(id) ? id : [id]);
-
-        console.log("Favorite ID(s):", id);
-
-        // console.log("response.data.id: ", response.data.id)
+        const data = Array.isArray(response.data)
+          ? response.data
+          : [response.data];
+    
+        // Create an array of objects with each object containing an ID
+        const favoritesArray = data.map((item) => ({ id: item.id }));
+    
+        // Set the favorites array in state
+        setFavorites(favoritesArray);
+    
+        console.log("Favorite Array:", favoritesArray);
       })
       .catch((err) => {
         setError(err);
       });
   }, []);
 
-  useEffect(() => {
-    console.log("Favorites Updated:", favorites);
-  }, [favorites]);
+  // useEffect(() => {
+  //   console.log("Favorites Updated:", favorites);
+  // }, [favorites]);
 
   return (
-    <AuctionsContext.Provider value={{ auctions, setAuctions, loading, error, favorites, setFavorites }}>
+    <AuctionsContext.Provider
+      value={{ auctions, setAuctions, loading, error, favorites, setFavorites }}
+    >
       {children}
     </AuctionsContext.Provider>
   );

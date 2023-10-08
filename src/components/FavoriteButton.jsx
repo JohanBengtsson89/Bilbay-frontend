@@ -28,7 +28,7 @@ export function FavoriteButton({ auctionId, favorites, setFavorites }) {
     await axios
       .post(`${apiUrl}/api/favorite/${userId}/${auctionId}`)
       .then((response) => {
-        this.setFavorites([...favorites, auctionId]);
+        setFavorites((prevFavorites) => [...prevFavorites, { id: auctionId }]);
         console.log(response);
       })
       .catch((err) => {
@@ -56,7 +56,7 @@ export function FavoriteButton({ auctionId, favorites, setFavorites }) {
   };
   return (
     <div>
-      {favorites.includes(auctionId) ? (
+      {favorites.some((favorite) => favorite.id === auctionId) ? (
         <FontAwesomeIcon
           icon={faHeartSolid}
           onClick={() => removeFromFavorites(auctionId)}

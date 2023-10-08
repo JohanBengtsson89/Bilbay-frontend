@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useAuctions } from "../../context/Context";
 import Auctions from "../Auctions";
 
