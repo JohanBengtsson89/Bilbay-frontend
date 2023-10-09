@@ -82,8 +82,8 @@ function LoginPage() {
             >
               Login
             </button>
-            {error && <p className="text-red-500">{error}</p>}
-            {successMessage && <p className="text-green-700">{successMessage}</p>}
+            {error && <p className="text-red-500 text-lg">{error}</p>}
+            {successMessage && <p className="text-green-700 text-lg">{successMessage}</p>}
 
             <div className="text-grey-dark">
               Dont't have any account?
