@@ -5,7 +5,9 @@ import { useNavigate } from "react-router-dom";
 const apiUrl = import.meta.env.VITE_API_URL;
 
 export default function SubmitAuctionPage() {
-  const [errorMessage, setErrorMessage] = useState("");
+  const [productErrorMessage, setProductErrorMessage] = useState("");
+  const [auctionErrorMessage, setAuctionErrorMessage] = useState("");
+  const [priceErrorMessage, setPriceErrorMessage] = useState("");
   const [user, setUser] = useState({});
   const [product, setProduct] = useState({});
 
@@ -28,14 +30,14 @@ export default function SubmitAuctionPage() {
       modelYear: "",
       gear: "",
       enginePower: "",
-      mileAge: "",
+      mileage: "",
       color: "",
       vinNr: "",
     },
 
     productName: "",
     productDescription: "",
-    orginalPrice: "",
+    originalPrice: "",
     isAvailable: true,
   });
 
@@ -46,10 +48,10 @@ export default function SubmitAuctionPage() {
     product: {
       id: product,
     },
-    reservePrice: "30000",
+    reservePrice: "",
     startPrice: "",
-    startTime: "2023-11-11",
-    endTime: "2023-12-11",
+    startTime: "",
+    endTime: "",
     active: true,
   });
 
@@ -89,29 +91,49 @@ export default function SubmitAuctionPage() {
         id: createdProduct,
       }));
 
+      const currentDate = new Date();
+      const formattedDate = `${currentDate.getFullYear()}-${(
+        currentDate.getMonth() + 1
+      )
+        .toString()
+        .padStart(2, "0")}-${currentDate
+        .getDate()
+        .toString()
+        .padStart(2, "0")}`;
+
       setProductAuction((prevAuction) => ({
         ...prevAuction,
         user: { id: user },
         product: {
           id: createdProduct,
         },
+        startTime: formattedDate,
       }));
+      setProductErrorMessage("");
     } catch (error) {
       console.error(error.response);
-      setErrorMessage("Error submitting product");
+      setProductErrorMessage("Error submitting product");
     }
   };
 
   const auctionSubmit = async (e) => {
     e.preventDefault();
+    
     try {
+        if (parseFloat(productAuction.startPrice) <= parseFloat(productAuction.reservePrice || 0)) {
+            setPriceErrorMessage("Start Price must be higher than Reserve Price");
+            return;
+          }
       await axios.post(`${apiUrl}/api/post-auction`, {
         ...productAuction,
       });
       navigate("/auctions");
+      setAuctionErrorMessage("");
+      setPriceErrorMessage("");
     } catch (error) {
       console.error(error.response);
-      setErrorMessage("Error submitting auction");
+      setAuctionErrorMessage("Error submitting auction");
+      setPriceErrorMessage("Start Price must be higher than Reserve Price");
     }
   };
 
@@ -181,16 +203,13 @@ export default function SubmitAuctionPage() {
                 placeholder="Engine power *"
                 required
               />
-              {errorMessage && (
-                <div className="text-red-500">{errorMessage}</div>
-              )}
 
               <input
-                type="text"
+                type="number"
                 className="block border-2 border-[#575757] w-full p-1 rounded-lg mb-4"
-                name="productSpecification.mileAge"
+                name="productSpecification.mileage"
                 placeholder="Mileage * "
-                value={productDetails.productSpecification.mileAge}
+                value={productDetails.productSpecification.mileage}
                 onChange={(e) => onInputChange(e)}
                 required
               />
@@ -216,11 +235,11 @@ export default function SubmitAuctionPage() {
               />
 
               <input
-                type="text"
+                type="number"
                 className="block border-2 border-[#575757] w-full p-1 rounded-lg mb-4"
-                name="orginalPrice"
+                name="originalPrice"
                 placeholder="Original price *"
-                value={productDetails.orginalPrice}
+                value={productDetails.originalPrice}
                 onChange={(e) => onInputChange(e)}
                 required
               />
@@ -241,6 +260,7 @@ export default function SubmitAuctionPage() {
               >
                 Register
               </button>
+              {productErrorMessage && (<div className="text-red-500">{productErrorMessage}</div>)}
             </div>
           </div>
         </div>
@@ -254,6 +274,28 @@ export default function SubmitAuctionPage() {
             name="startPrice"
             value={productAuction.startPrice}
             onChange={(e) => auctionInputChange(e)}
+            required
+          />
+
+          <input
+            type="number"
+            className="block border-2 border-[#575757] w-full p-1 rounded-lg mb-4"
+            placeholder="Reserve Price"
+            name="reservePrice"
+            value={productAuction.reservePrice}
+            onChange={(e) => auctionInputChange(e)}
+            required
+          />
+          
+          <p>End time</p>
+          <input
+            type="date"
+            className="block border-2 border-[#575757] w-full p-1 rounded-lg mb-4"
+            placeholder="End Time"
+            name="endTime"
+            value={productAuction.endTime}
+            onChange={(e) => auctionInputChange(e)}
+            required
           />
 
           <div className="text-center">
@@ -267,6 +309,8 @@ export default function SubmitAuctionPage() {
             <button className="text-center py-3 border-2 border-[#575757] rounded-lg bg-[#C89090] text-black hover:bg-green-dark focus:outline-none my-1">
               Go to my auction
             </button>
+            {auctionErrorMessage && <div className="text-red-500">{auctionErrorMessage}</div>}
+            {priceErrorMessage && (<div className="text-red-500">{priceErrorMessage}</div>)}
           </div>
         </div>
       </form>
