@@ -1,5 +1,4 @@
 import { Link } from "react-router-dom";
-import { useAuctions } from "../context/Context";
 import { FavoriteButton } from "./FavoriteButton";
 
 export function Auctions({ filteredAuctions }) {
