@@ -5,7 +5,6 @@ import {
   faHeart as faHeartOutline,
 } from "@fortawesome/free-solid-svg-icons";
 import axios from "axios";
-import { useEffect } from "react";
 
 const apiUrl = import.meta.env.VITE_API_URL;
 
@@ -13,12 +12,6 @@ export function FavoriteButton({ auctionId }) {
   const { favorites, setFavorites } = useAuctions();
 
   let userId = null;
-  
-  // useEffect(() => {
-  //   return () => {
-  //     console.log("Favorites Button Effect: ", favorites);
-  //   };
-  // }, [favorites]);
 
   try {
     userId = JSON.parse(window.localStorage.getItem("user")).id;
@@ -56,7 +49,9 @@ export function FavoriteButton({ auctionId }) {
     console.log("After Removal:", favorites);
 
   };
-  return (
+  return (<>
+
+  { userId && 
     <div>
       {favorites.some((favorite) => favorite.id === auctionId) ? (
         <FontAwesomeIcon
@@ -73,5 +68,7 @@ export function FavoriteButton({ auctionId }) {
         />
       )}
     </div>
+    }
+    </>
   );
 }

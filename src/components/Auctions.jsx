@@ -1,8 +1,12 @@
 import { Link } from "react-router-dom";
 import { FavoriteButton } from "./FavoriteButton";
+import { useEffect } from "react";
 
 export function Auctions({ filteredAuctions }) {
 
+
+useEffect(() => {
+  
   return (
     <div className="auctionsMain m-0">
       {filteredAuctions.map((auction) => (
@@ -37,6 +41,9 @@ export function Auctions({ filteredAuctions }) {
       ))}
     </div>
   );
+}, [filteredAuctions])
+
+  
 }
 
 export default Auctions;
