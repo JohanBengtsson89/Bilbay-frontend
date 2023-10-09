@@ -1,10 +1,14 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 const apiUrl = import.meta.env.VITE_API_URL;
 
 export default function SubmitAuctionPage() {
+  const [showCreateAuctionButton, setShowCreateAuctionButton] = useState(true);
+  const [productSuccessMessage, setProductSuccessMessage] = useState("");
+  const [auctionSuccessMessage, setAuctionSuccessMessage] = useState("");
   const [productErrorMessage, setProductErrorMessage] = useState("");
   const [auctionErrorMessage, setAuctionErrorMessage] = useState("");
   const [priceErrorMessage, setPriceErrorMessage] = useState("");
@@ -109,6 +113,7 @@ export default function SubmitAuctionPage() {
         },
         startTime: formattedDate,
       }));
+      setProductSuccessMessage("Product submitted successfully!");
       setProductErrorMessage("");
     } catch (error) {
       console.error(error.response);
@@ -118,18 +123,23 @@ export default function SubmitAuctionPage() {
 
   const auctionSubmit = async (e) => {
     e.preventDefault();
-    
+
     try {
-        if (parseFloat(productAuction.startPrice) <= parseFloat(productAuction.reservePrice || 0)) {
-            setPriceErrorMessage("Start Price must be higher than Reserve Price");
-            return;
-          }
+      if (
+        parseFloat(productAuction.startPrice) <=
+        parseFloat(productAuction.reservePrice || 0)
+      ) {
+        setPriceErrorMessage("Start Price must be higher than Reserve Price");
+        return;
+      }
       await axios.post(`${apiUrl}/api/post-auction`, {
         ...productAuction,
       });
-      navigate("/auctions");
+      // navigate("/auctions");
+      setAuctionSuccessMessage("Auction created successfully!");
       setAuctionErrorMessage("");
       setPriceErrorMessage("");
+      setShowCreateAuctionButton(false);
     } catch (error) {
       console.error(error.response);
       setAuctionErrorMessage("Error submitting auction");
@@ -260,7 +270,12 @@ export default function SubmitAuctionPage() {
               >
                 Register
               </button>
-              {productErrorMessage && (<div className="text-red-500">{productErrorMessage}</div>)}
+              {productSuccessMessage && (
+                <div className="text-green-700">{productSuccessMessage}</div>
+              )}
+              {productErrorMessage && (
+                <div className="text-red-500">{productErrorMessage}</div>
+              )}
             </div>
           </div>
         </div>
@@ -286,7 +301,7 @@ export default function SubmitAuctionPage() {
             onChange={(e) => auctionInputChange(e)}
             required
           />
-          
+
           <p>End time</p>
           <input
             type="date"
@@ -299,18 +314,33 @@ export default function SubmitAuctionPage() {
           />
 
           <div className="text-center">
+          {showCreateAuctionButton && (
             <button
               type="submit"
               className="mx-auto  text-center py-3 border-2 border-[#575757] rounded-lg bg-[#C89090] text-black hover:bg-green-dark focus:outline-none my-1"
             >
               Create auction
             </button>
-            <h1 className="">or</h1>
+          )}
+            
+            {/* <h1 className=""></h1> */}
+
+            {auctionSuccessMessage && (
+              <>
+              <Link to={`/auctions`}>
             <button className="text-center py-3 border-2 border-[#575757] rounded-lg bg-[#C89090] text-black hover:bg-green-dark focus:outline-none my-1">
-              Go to my auction
+              Go to auctions
             </button>
-            {auctionErrorMessage && <div className="text-red-500">{auctionErrorMessage}</div>}
-            {priceErrorMessage && (<div className="text-red-500">{priceErrorMessage}</div>)}
+            </Link>
+            <div className="text-green-700">{auctionSuccessMessage}</div>
+              </>
+            )}
+            {auctionErrorMessage && (
+              <div className="text-red-500">{auctionErrorMessage}</div>
+            )}
+            {priceErrorMessage && (
+              <div className="text-red-500">{priceErrorMessage}</div>
+            )}
           </div>
         </div>
       </form>
