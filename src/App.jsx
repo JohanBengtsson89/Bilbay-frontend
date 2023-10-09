@@ -31,7 +31,7 @@ function App() {
             />
             <Route path="/about" element={<AboutUsPage />} />
             <Route path="/bid" element={<BidComponent />} />
-            <Route path="/userpage" element={<UserPage/ >}/>
+            <Route path="/userpage" element={<UserPage />}/>
           </Routes>
           <Footer />
         </BrowserRouter>

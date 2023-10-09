@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
-import { Paper, TextField, Button } from "@mui/material";
+import { TextField, Button } from "@mui/material";
 import axios from "axios";
+import { Link } from "react-router-dom";
 
 import "./UserPageStyles.css";
 
@@ -8,38 +9,34 @@ const UserPage = () => {
   const [favourites, setFavourites] = useState([]);
   const [user, setUser] = useState("");
   const [error, setError] = useState("");
+  const [reviews, setReviews] = useState([]);
 
   useEffect(() => {
-    getFavorites();
+    const fetchData = async () => {
+      try {
+        const storedUser = JSON.parse(localStorage.getItem("user"));
+        if (storedUser) {
+          const userId = storedUser.id;
+          const response = await axios.get(
+            `http://localhost:8082/api/test/user/${userId}`
+          );
+          setFavourites(response.data.favorites);
+          setReviews(response.data.reviewsFor);
+          console.log(response.data);
+        }
+      } catch (error) {
+        setError(error);
+        console.log("Error fetching user data: " + error);
+      }
+    };
+
+    fetchData();
   }, []);
 
-  const getFavorites = () => {
-    const storedUser = JSON.parse(localStorage.getItem("user"));
-    setUser(storedUser.id);
-    // if (storedUser) {
-    //   setUser(storedUser.id);
-    // }
+  console.log(favourites);
+  console.log(reviews);
 
-    axios
-      .get(`http://localhost:8082/api/auth/favorite/9`)
-      .then((response) => {
-        // setFavourites(response.data);
-        console.log(response.data.favorites);
-      })
-      .catch((error) => {
-        setError(error);
-        console.log("Halloj error" + error);
-      });
-  };
-
-  console.log(user);
-
-  // Tillfällig array för favourites
-  // const favourites = [
-  //     {id: 1, name: "car1"},
-  //     {id: 2, name: "car2"},
-  //     {id: 3, name: "car3"}
-  //     ];
+  useEffect(() => {}, [favourites, reviews]);
 
   return (
     <>
@@ -97,15 +94,23 @@ const UserPage = () => {
           <div style={{ fontSize: "40px" }}>Favorites</div>
 
           <div className="favourites">
-            {favourites.map((favourite) => (
+            {favourites.map((favourite, index) => (
               <div key={favourite.id}>
-                <div className="card">{favourite}</div>
+                <Link>
+                  <div className="card" key={index}>
+                    {favourite.id}
+                  </div>
+                </Link>
               </div>
             ))}
           </div>
 
           <div style={{ fontSize: "40px" }}>Reviews</div>
-          <div className="reviews">Content</div>
+          <div className="reviews">
+            {reviews.map((review, index) => (
+                <li key={index}>{review.id}</li>
+              ))} 
+          </div>
         </div>
       </div>
     </>
