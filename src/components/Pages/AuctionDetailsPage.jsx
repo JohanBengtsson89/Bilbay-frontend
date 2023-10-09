@@ -37,7 +37,9 @@ const AuctionDetails = () => {
           .sort((bidA, bidB) => bidB.bidAmount - bidA.bidAmount)
           .slice(0, 5);
 
-        setBids(sortedBids);
+          setBids(sortedBids);
+
+        
       })
       .catch((error) => {
         setError(error);
@@ -60,7 +62,7 @@ const AuctionDetails = () => {
       alert("OOOOPPPSS: Bid amount must be higher than the latest bid.");
       return;
     }
-    console.log(newBid)
+    
 
     Axios.post(`${apiUrl}/api/bid`, newBid)
       .then((response) => {
@@ -74,8 +76,12 @@ const AuctionDetails = () => {
   };
 
   useEffect(() => {
+    
+  }, [bids])
+
+  useEffect(() => {
     getAuction();
-  }, [bids]);
+  }, []);
 
   return (
     <>
