@@ -28,7 +28,7 @@ export default function Favorite() {
             <Link to={`/auction/${favorite.auctionId}`}>
               <div
                 style={{
-                  backgroundImage: `url(${productAuction.productSpecification.productPhoto})`,
+                  backgroundImage: `url(${matchingAuction.product.productSpecification.productPhoto})`,
                   borderRadius: "10px",
                   backgroundSize: "cover",
                   backgroundRepeat: "no-repeat",
