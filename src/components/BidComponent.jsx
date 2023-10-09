@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 import "./BidComponent.css";
 import axios from "axios";
 
+const apiUrl = import.meta.env.VITE_API_URL;
+
 const BidComponent = () => {
   const [bidAmount, setBidAmount] = useState("");
   const [bids, setBids] = useState([]);
@@ -9,20 +11,17 @@ const BidComponent = () => {
   const [auctionId, setAuctionId] = useState("1");
 
   useEffect(() => {
-    //we must have a dynamic id for user by checking localhost data and get the id there
+    
     axios
-      .get("http://localhost:8080/api/test/user/9")
+      .get(`${apiUrl}/api/test/user/${buyerId}`)
       .then((response) => {
-        //console.log(response);
-        //setBuyerId(response.data);
-        //setAuctionId(response.data.auctions.id)
       })
       .catch((error) => {
         console.error("error fetching IDs : ", error);
       });
-    //We must have dynamic auction-id instead of hard coding
+
     axios
-      .get(`http://localhost:8080/api/1/all-bids`)
+      .get(`${apiUrl}/api/${buyerId}/all-bids`)
       .then((response) => {
         console.log("Bids:", response.data);
         const sortedBids = response.data.sort((a, b) =>  b.bidAmount - a.bidAmount);
@@ -50,7 +49,7 @@ const BidComponent = () => {
     }
 
     axios
-      .post("http://localhost:8080/api/bid", newBid)
+      .post(`${apiUrl}/api/bid`, newBid)
       .then((response) => {
         setBids([...bids, response.data]);
       })
