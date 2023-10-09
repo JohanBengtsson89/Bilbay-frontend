@@ -11,13 +11,10 @@ export default function SubmitAuctionPage() {
   const [product, setProduct] = useState({});
 
   useEffect(() => {
-    const fetchData = async () => {
-      const storedUser = JSON.parse(localStorage.getItem("user"));
+    const storedUser = JSON.parse(localStorage.getItem("user"));
+    if (storedUser) {
       setUser(storedUser.id);
-      console.log(user); // This will log the updated value of user
-    };
-
-    fetchData();
+    }
   }, []);
 
   let navigate = useNavigate();
@@ -48,13 +45,13 @@ export default function SubmitAuctionPage() {
       id: user,
     },
     product: {
-      id: product.id,
+      id: product,
     },
-    reservePrice: "",
+    reservePrice: "30000",
     startPrice: "",
-    startTime: "",
-    endTime: "",
-    active: false,
+    startTime: "2023-11-11",
+    endTime: "2023-12-11",
+    active: true,
   });
 
   const onInputChange = (e) => {
@@ -78,20 +75,45 @@ export default function SubmitAuctionPage() {
     setProductAuction({ ...productAuction, [name]: value });
   };
 
-  const onSubmit = (e) => {
+  const onSubmit = async (e) => {
     e.preventDefault();
     productDetails.user = { id: user };
-    axios.post(`${apiUrl}/api/product`, productDetails, user);
+    try {
+      const response = await axios.post(
+        `${apiUrl}/api/product`,
+        productDetails
+      );
+      const createdProduct = response.data.id;
+
+      setProduct((prevProduct) => ({
+        ...prevProduct,
+        id: createdProduct,
+      }));
+
+      setProductAuction((prevAuction) => ({
+        ...prevAuction,
+        user: { id: user },
+        product: {
+          id: createdProduct,
+        },
+      }));
+    } catch (error) {
+      console.error(error.response);
+      setErrorMessage("Error submitting product");
+    }
   };
 
-  const auctionSubmit = (e) => {
+  const auctionSubmit = async (e) => {
     e.preventDefault();
-    productAuction.product = { id: product };
-    axios.post(`${apiUrl}/api/auth/post-auction`, {
-      ...productAuction,
-      user,
-    });
-    navigate("/auctions");
+    try {
+      await axios.post(`${apiUrl}/api/post-auction`, {
+        ...productAuction,
+      });
+      navigate("/auctions");
+    } catch (error) {
+      console.error(error.response);
+      setErrorMessage("Error submitting auction");
+    }
   };
 
   return (
