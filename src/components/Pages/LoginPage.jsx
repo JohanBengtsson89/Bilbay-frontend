@@ -8,6 +8,8 @@ const apiUrl = import.meta.env.VITE_API_URL;
 function LoginPage() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
+  const [successMessage, setSuccessMessage] = useState("");
 
   const navigate = useNavigate();
 
@@ -18,9 +20,11 @@ function LoginPage() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setError("");
+    setSuccessMessage("");
 
     if (!username || !password) {
-      alert("Fill in your username and password!");
+      setError("Fill in your username and password!");
       return;
     }
     try {
@@ -37,9 +41,13 @@ function LoginPage() {
       window.localStorage.setItem("user", JSON.stringify(data));
       const userId = data.id;
       console.log("User logged in with ID:", userId);
-      return navigate("/");
+      setSuccessMessage("Login successful!");
+      setTimeout(() => {
+        navigate("/");
+      }, 3000);
     } catch (error) {
       console.log("Error from react:", error.message);
+      setError("Invalid credentials. Please try again.");
     }
   };
 
@@ -74,6 +82,8 @@ function LoginPage() {
             >
               Login
             </button>
+            {error && <p className="text-red-500">{error}</p>}
+            {successMessage && <p className="text-green-700">{successMessage}</p>}
 
             <div className="text-grey-dark">
               Dont't have any account?
