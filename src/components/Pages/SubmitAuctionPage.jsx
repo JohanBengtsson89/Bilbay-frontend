@@ -271,10 +271,10 @@ export default function SubmitAuctionPage() {
                 Register
               </button>
               {productSuccessMessage && (
-                <div className="text-green-700">{productSuccessMessage}</div>
+                <div className="text-green-700 text-lg">{productSuccessMessage}</div>
               )}
               {productErrorMessage && (
-                <div className="text-red-500">{productErrorMessage}</div>
+                <div className="text-red-500 text-lg">{productErrorMessage}</div>
               )}
             </div>
           </div>
@@ -332,14 +332,14 @@ export default function SubmitAuctionPage() {
               Go to auctions
             </button>
             </Link>
-            <div className="text-green-700">{auctionSuccessMessage}</div>
+            <div className="text-green-700 text-lg">{auctionSuccessMessage}</div>
               </>
             )}
             {auctionErrorMessage && (
-              <div className="text-red-500">{auctionErrorMessage}</div>
+              <div className="text-red-500 text-lg">{auctionErrorMessage}</div>
             )}
             {priceErrorMessage && (
-              <div className="text-red-500">{priceErrorMessage}</div>
+              <div className="text-red-500 text-lg">{priceErrorMessage}</div>
             )}
           </div>
         </div>
