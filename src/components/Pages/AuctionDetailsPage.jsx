@@ -64,7 +64,10 @@ const AuctionDetails = () => {
 
     Axios.post(`${apiUrl}/api/bid`, newBid)
       .then((response) => {
-        setBids([...bids, response.data]);
+        const sortedBids = [...bids, response.data].sort((bidA, bidB) => bidB.bidAmount - bidA.bidAmount)
+        .slice(0, 5);
+        setBids(sortedBids);
+        console.log(bids)
       })
       .catch((error) => {
         console.error("Error creating bid:", error);
@@ -75,7 +78,7 @@ const AuctionDetails = () => {
 
   useEffect(() => {
     getAuction();
-  }, [bids]);
+  }, [params.auctionId]);
 
   return (
     <>
