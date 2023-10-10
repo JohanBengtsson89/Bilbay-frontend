@@ -1,0 +1,64 @@
+body {
+    background-color: #EFECEC;
+}
+
+.flex-container {
+    display: flex;
+    flex-direction: row;
+    
+    margin-left: 79px;
+    margin-right: 65px;
+    margin-top: 100px;
+    min-height: 708px;
+    max-height: 720px;
+}
+
+.user-left {
+    background-color: #BFC3CC;
+    width: 30%;
+    border-radius: 10px;
+    justify-content: center;
+    align-items: center;
+}
+
+.user-right {
+    display: flex;
+    flex-direction: column;
+    width: 70%;
+    margin-left: 107px;
+    align-items: center;
+    
+}
+
+.favourites {
+    display: flex;
+    flex-direction: row; 
+    justify-content: center;
+    width: 600px;
+    height: 335px;
+    margin-top: 30px;
+    margin-bottom: 69px;
+    border-bottom: 1px solid black;      
+}
+.card {
+    margin: 43px;
+    background-color: #BFC3CC;
+    width: 150px;
+    height: 185px;
+    border-radius: 10px;
+}
+
+.reviews {
+    margin-top: 35px;
+    margin-bottom: 52px;
+    background-color: #BFC3CC;
+    width: 717px;
+    height: 283px;
+    border-radius: 10px;
+}
+
+#outlined-basic {
+    padding: 5px;
+    height: 25px;
+    width: 100%;
+}

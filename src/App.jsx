@@ -12,6 +12,7 @@ import { AuthProvider } from "./context/AuthContext";
 import AboutUsPage from "./components/Pages/AboutUsPage";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { AuctionsProvider } from "./context/Context";
+import UserPage from "./components/Pages/UserPage";
 
 function App() {
   return (
@@ -31,6 +32,7 @@ function App() {
             />
             <Route path="/about" element={<AboutUsPage />} />
             <Route path="/bid" element={<BidComponent />} />
+            <Route path="/userpage" element={<UserPage />}/>
             <Route path="/submit" element={<SubmitAuctionPage />} />
           </Routes>
           <Footer />
