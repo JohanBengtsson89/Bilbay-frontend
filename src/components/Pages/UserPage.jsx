@@ -6,6 +6,7 @@ import { Link } from "react-router-dom";
 import Favorite from "../Favourites";
 
 import "./UserPageStyles.css";
+import { color } from "style-value-types";
 
 const apiUrl = import.meta.env.VITE_API_URL;
 
@@ -14,27 +15,34 @@ const UserPage = () => {
   const [user, setUser] = useState("");
   //const [error, setError] = useState("");
   const [reviews, setReviews] = useState([]);
-  //const { favorites, setFavorites } = useAuctions();
+  const { favorites, setFavorites } = useAuctions();
   
   useEffect(() => {
     const storedUser = JSON.parse(localStorage.getItem("user"));
         if (storedUser) {
           setUser(storedUser.id);
+          // fetchFavourites(user)
     };   
   }, []);
+
+  // const fetchFavourites = async (id) => {
+  //   const response = await axios.get(`${apiUrl}/api/auth/favorite/${id}`)
+  //       setFavourites(response.data); 
+  //       console.log("new favourites" + favourites)   
+  //   }
 
   const fetchReviews = async () => {
     const response = await axios.get(`${apiUrl}/api/getAllReviews`)
         setReviews(response.data); 
-        console.log(reviews)   
+        // console.log(reviews)   
     }
 
-  
-  console.log(favourites);
-  console.log(reviews);
+  //console.log(favourites);
 
   useEffect(() => {
     fetchReviews();
+    // console.log(user)
+    // fetchFavourites(user.id);
   }, []);
 
   return (
@@ -92,8 +100,9 @@ const UserPage = () => {
         <div className="user-right">
           <div style={{ fontSize: "40px" }}>Favorites</div>
 
-          <div className="favourites" style={{height:"60px"}}>
-            <Favorite />
+          <div className="favourites">
+      
+            <Favorite style={{color:"red", height:"10px"}} />
             {/* {favourites.map((favourite, index) => (
               <div key={favourite.id}>
                 <Link>
@@ -103,6 +112,7 @@ const UserPage = () => {
                 </Link>
               </div>
             ))} */}
+            
           </div>
 
           <div style={{ fontSize: "40px" }}>Reviews</div>
