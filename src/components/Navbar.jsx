@@ -65,6 +65,9 @@ function NavBar() {
   const handleSettingsClick = (setting) => {
     if (setting === "Logout") {
       logout();
+      setTimeout(() => {
+        navigate("loginpage");
+      }, 2000);
 
       setIsLoggedIn(false);
 
