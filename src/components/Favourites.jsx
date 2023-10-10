@@ -1,18 +1,9 @@
-// import React from "react";
-// import FavoriteButton from "./FavoriteButton";
-// import {
-//   useFavoriteContext,
-//   FavoriteProvider,
-// } from "../context/FavoriteContext";
-
 import { Link } from "react-router-dom";
 import { useAuctions } from "../context/Context";
 import { FavoriteButton } from "./FavoriteButton";
 
 export default function Favorite() {
   const { auctions, favorites, setFavorites } = useAuctions();
-  // const {userId, favorites, getAuctionDetails } = useFavoriteContext();
-  // const validFavorites = favorites.filter((favorite) => favorite.userId === userId);
 
   return (
     <div className="auctionsMain m-0">
@@ -37,7 +28,7 @@ export default function Favorite() {
             <Link to={`/auction/${favorite.auctionId}`}>
               <div
                 style={{
-                  // backgroundImage: `url(${productAuction.productSpecification.productPhoto})`,
+                  backgroundImage: `url(${matchingAuction.product.productSpecification.productPhoto})`,
                   borderRadius: "10px",
                   backgroundSize: "cover",
                   backgroundRepeat: "no-repeat",
@@ -69,11 +60,3 @@ export default function Favorite() {
     </div>
   );
 }
-
-// const FavoriteWithContext = () => (
-//   <FavoriteProvider>
-//     <Favorite />
-//   </FavoriteProvider>
-// );
-
-// export default FavoriteWithContext;
