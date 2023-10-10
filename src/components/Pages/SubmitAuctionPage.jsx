@@ -126,10 +126,10 @@ export default function SubmitAuctionPage() {
 
     try {
       if (
-        parseFloat(productAuction.startPrice) <=
+        parseFloat(productAuction.startPrice) >=
         parseFloat(productAuction.reservePrice || 0)
       ) {
-        setPriceErrorMessage("Start Price must be higher than Reserve Price");
+        setPriceErrorMessage("Reserved Price must be higher than Start Price");
         return;
       }
       await axios.post(`${apiUrl}/api/post-auction`, {
@@ -143,7 +143,7 @@ export default function SubmitAuctionPage() {
     } catch (error) {
       console.error(error.response);
       setAuctionErrorMessage("Error submitting auction");
-      setPriceErrorMessage("Start Price must be higher than Reserve Price");
+      setPriceErrorMessage("Reserved Price must be higher than Start Price");
     }
   };
 
@@ -328,7 +328,7 @@ export default function SubmitAuctionPage() {
             {auctionSuccessMessage && (
               <>
               <Link to={`/auctions`}>
-            <button className="text-center py-3 border-2 border-[#575757] rounded-lg bg-[#C89090] text-black hover:bg-green-dark focus:outline-none my-1">
+            <button className="text-center py-3 border-2 border-[#575757] rounded-lg bg-[green] text-black hover:bg-green-dark focus:outline-none my-1">
               Go to auctions
             </button>
             </Link>
