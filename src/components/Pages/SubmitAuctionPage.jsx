@@ -6,6 +6,7 @@ import { Link } from "react-router-dom";
 const apiUrl = import.meta.env.VITE_API_URL;
 
 export default function SubmitAuctionPage() {
+  const [showAuctionForm, setShowAuctionForm] = useState(false);
   const [showCreateAuctionButton, setShowCreateAuctionButton] = useState(true);
   const [productSuccessMessage, setProductSuccessMessage] = useState("");
   const [auctionSuccessMessage, setAuctionSuccessMessage] = useState("");
@@ -115,6 +116,7 @@ export default function SubmitAuctionPage() {
       }));
       setProductSuccessMessage("Product submitted successfully!");
       setProductErrorMessage("");
+      setShowAuctionForm(true);
     } catch (error) {
       console.error(error.response);
       setProductErrorMessage("Error submitting product");
@@ -280,6 +282,7 @@ export default function SubmitAuctionPage() {
           </div>
         </div>
       </form>
+      {showAuctionForm && (
       <form onSubmit={(e) => auctionSubmit(e)}>
         <div className="xl:pl-40 w-[500px] h-[500px] border border-black mx-auto pt-14">
           <input
@@ -344,6 +347,7 @@ export default function SubmitAuctionPage() {
           </div>
         </div>
       </form>
+      )}
     </div>
   );
 }
