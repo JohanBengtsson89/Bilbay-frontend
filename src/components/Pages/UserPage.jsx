@@ -1,42 +1,41 @@
+import { useAuctions } from "../../context/Context";
 import { useState, useEffect } from "react";
 import { TextField, Button } from "@mui/material";
 import axios from "axios";
 import { Link } from "react-router-dom";
+import Favorite from "../Favourites";
 
 import "./UserPageStyles.css";
+
+const apiUrl = import.meta.env.VITE_API_URL;
 
 const UserPage = () => {
   const [favourites, setFavourites] = useState([]);
   const [user, setUser] = useState("");
-  const [error, setError] = useState("");
+  //const [error, setError] = useState("");
   const [reviews, setReviews] = useState([]);
-
+  //const { favorites, setFavorites } = useAuctions();
+  
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const storedUser = JSON.parse(localStorage.getItem("user"));
+    const storedUser = JSON.parse(localStorage.getItem("user"));
         if (storedUser) {
-          const userId = storedUser.id;
-          const response = await axios.get(
-            `http://localhost:8082/api/test/user/${userId}`
-          );
-          setFavourites(response.data.favorites);
-          setReviews(response.data.reviewsFor);
-          console.log(response.data);
-        }
-      } catch (error) {
-        setError(error);
-        console.log("Error fetching user data: " + error);
-      }
-    };
-
-    fetchData();
+          setUser(storedUser.id);
+    };   
   }, []);
 
+  const fetchReviews = async () => {
+    const response = await axios.get(`${apiUrl}/api/getAllReviews`)
+        setReviews(response.data); 
+        console.log(reviews)   
+    }
+
+  
   console.log(favourites);
   console.log(reviews);
 
-  useEffect(() => {}, [favourites, reviews]);
+  useEffect(() => {
+    fetchReviews();
+  }, []);
 
   return (
     <>
@@ -93,8 +92,9 @@ const UserPage = () => {
         <div className="user-right">
           <div style={{ fontSize: "40px" }}>Favorites</div>
 
-          <div className="favourites">
-            {favourites.map((favourite, index) => (
+          <div className="favourites" style={{height:"60px"}}>
+            <Favorite />
+            {/* {favourites.map((favourite, index) => (
               <div key={favourite.id}>
                 <Link>
                   <div className="card" key={index}>
@@ -102,13 +102,13 @@ const UserPage = () => {
                   </div>
                 </Link>
               </div>
-            ))}
+            ))} */}
           </div>
 
           <div style={{ fontSize: "40px" }}>Reviews</div>
           <div className="reviews">
             {reviews.map((review, index) => (
-                <li key={index}>{review.id}</li>
+                <li key={index}>{review.comment}</li>
               ))} 
           </div>
         </div>
@@ -116,5 +116,6 @@ const UserPage = () => {
     </>
   );
 };
+
 
 export default UserPage;
