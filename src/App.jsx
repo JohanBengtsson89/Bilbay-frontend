@@ -20,6 +20,8 @@ function App() {
     <AuthProvider>
       <AuctionsProvider>
         <BrowserRouter>
+        <div className="flex flex-col min-h-screen">
+          <div className="flex-grow">
           <NavBar />
           <Routes>
             <Route path="/" element={<HomePage />} />
@@ -36,7 +38,9 @@ function App() {
             <Route path="/submit" element={<PrivateRoute><SubmitAuctionPage /></PrivateRoute>} />
             <Route path="/userpage" element={<PrivateRoute><UserPage /></PrivateRoute>}/>
           </Routes>
-          <Footer />
+          </div>
+            <Footer />
+          </div>
         </BrowserRouter>
       </AuctionsProvider>
     </AuthProvider>
