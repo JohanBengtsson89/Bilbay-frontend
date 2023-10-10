@@ -74,6 +74,8 @@ function NavBar() {
     } else if (setting === "Login") {
 
     setIsLoggedIn(true);
+    } else if (setting === "Profile"){
+      navigate("userpage")
     }
     handleCloseUserMenu();
   };
