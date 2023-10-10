@@ -34,8 +34,7 @@ function App() {
             <Route path="/about" element={<AboutUsPage />} />
             <Route path="/bid" element={<BidComponent />} />
             <Route path="/submit" element={<PrivateRoute><SubmitAuctionPage /></PrivateRoute>} />
-            <Route path="/userpage" element={<UserPage />}/>
-            <Route path="/submit" element={<SubmitAuctionPage />} />
+            <Route path="/userpage" element={<PrivateRoute><UserPage /></PrivateRoute>}/>
           </Routes>
           <Footer />
         </BrowserRouter>
