@@ -52,7 +52,7 @@ export function AuctionsProvider({ children }) {
       .catch((err) => {
         setError(err);
       });
-  }, [auctions]); // la till auctions här för att slippa refresha auctions när ny auction skapas /Johan
+  }, []);
 
   // useEffect(() => {
   //   console.log("Favorites Updated:", favorites);
