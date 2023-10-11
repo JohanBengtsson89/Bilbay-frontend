@@ -18,7 +18,7 @@ body {
   padding: 0px;
   margin: auto;
   width: 100%;
-  min-height: 100vh;
+  min-height: 100%;
 }
 
 .auctionsLeft > div select {
