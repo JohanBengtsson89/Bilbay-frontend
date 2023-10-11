@@ -646,7 +646,6 @@ const UserPage = () => {
               <li className="review-list" key={index}>
                 {review.comment}
               </li>
-              <li className="review-list" key={index}>{review.comment}</li>
             ))}
           </div>
         </div>
