@@ -14,6 +14,18 @@
     width: 745px;
     
 }
+.price-favo {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-items: stretch;
+    
+}
+
+.favoBtn {
+    border: 2px solid black;
+    align-content: bottom;
+}
 
 .product-info {
     border-radius: 10px;
