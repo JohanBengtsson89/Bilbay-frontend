@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
+import successfull from "../../assets/successfull.png";
 
 const apiUrl = import.meta.env.VITE_API_URL;
 
@@ -150,8 +151,8 @@ export default function SubmitAuctionPage() {
   };
 
   return (
-    <div className="grid grid-cols-2 pt-10 h-[calc(100vh-theme(spacing.24))] bg-[#EFECEC] lg:pt-5 lg:grid-cols-1">
-      <form onSubmit={(e) => onSubmit(e)}>
+    <div className="grid grid-cols-2 pt-10  lg:pt-5 lg:grid-cols-1">
+      <form onSubmit={(e) => onSubmit(e)} className="md:mb-5 lg:mx-auto">
         <div>
           <div className="container max-w-lg mx-24 lg:px-8 lg:mx-0">
             <div className="bg-[#BFC3CC] px-6 py-8 rounded-xl shadow-md text-black">
@@ -268,85 +269,101 @@ export default function SubmitAuctionPage() {
 
               <button
                 type="submit"
-                className="w-full text-center py-3 border-2 border-[#575757] rounded-lg bg-[#C89090] text-black hover:bg-green-dark focus:outline-none my-1"
-              >
+                className="w-full text-center py-3 border-2 border-[#575757] rounded-lg bg-[#C89090] text-black hover:bg-green-dark focus:outline-none my-1">
                 Register
               </button>
               {productSuccessMessage && (
-                <div className="text-green-700 text-lg">{productSuccessMessage}</div>
+                <div className="text-green-700 text-lg">
+                  {productSuccessMessage}
+                </div>
               )}
               {productErrorMessage && (
-                <div className="text-red-500 text-lg">{productErrorMessage}</div>
+                <div className="text-red-500 text-lg">
+                  {productErrorMessage}
+                </div>
               )}
             </div>
           </div>
         </div>
+
+        {/* AUCTION FORM */}
       </form>
       {showAuctionForm && (
-      <form onSubmit={(e) => auctionSubmit(e)}>
-        <div className="xl:pl-40 w-[500px] h-[500px] border border-black mx-auto pt-14">
-          <input
-            type="number"
-            className="block border-2 border-[#575757] w-full p-1 rounded-lg mb-4"
-            placeholder="start price"
-            name="startPrice"
-            value={productAuction.startPrice}
-            onChange={(e) => auctionInputChange(e)}
-            required
-          />
+        <form onSubmit={(e) => auctionSubmit(e)}>
+          <div className="w-[75%] h-full bg-[#BFC3CC]  rounded-xl shadow-md  pt-14 xl:ml-[20%] lg:mx-auto lg:h-screen">
+            <div className=" max-w-lg mx-4 lg:px-8 lg:mx-0">
+              <img
+                src={successfull}
+                alt=""
+                className="w-96 mb-5 mx-auto rounded-xl"></img>
+              <input
+                type="number"
+                className="block border-2 border-[#575757] w-full p-1 rounded-lg mb-4"
+                placeholder="start price"
+                name="startPrice"
+                value={productAuction.startPrice}
+                onChange={(e) => auctionInputChange(e)}
+                required
+              />
 
-          <input
-            type="number"
-            className="block border-2 border-[#575757] w-full p-1 rounded-lg mb-4"
-            placeholder="Reserve Price"
-            name="reservePrice"
-            value={productAuction.reservePrice}
-            onChange={(e) => auctionInputChange(e)}
-            required
-          />
+              <input
+                type="number"
+                className="block border-2 border-[#575757] w-full p-1 rounded-lg mb-4"
+                placeholder="Reserve Price"
+                name="reservePrice"
+                value={productAuction.reservePrice}
+                onChange={(e) => auctionInputChange(e)}
+                required
+              />
 
-          <p>End time</p>
-          <input
-            type="date"
-            className="block border-2 border-[#575757] w-full p-1 rounded-lg mb-4"
-            placeholder="End Time"
-            name="endTime"
-            value={productAuction.endTime}
-            onChange={(e) => auctionInputChange(e)}
-            required
-          />
+              <p>End time</p>
+              <input
+                type="date"
+                className="block border-2 border-[#575757] w-full p-1 rounded-lg mb-4"
+                placeholder="End Time"
+                name="endTime"
+                value={productAuction.endTime}
+                onChange={(e) => auctionInputChange(e)}
+                required
+              />
 
-          <div className="text-center">
-          {showCreateAuctionButton && (
-            <button
-              type="submit"
-              className="mx-auto  text-center py-3 border-2 border-[#575757] rounded-lg bg-[#C89090] text-black hover:bg-green-dark focus:outline-none my-1"
-            >
-              Create auction
-            </button>
-          )}
-            
-            {/* <h1 className=""></h1> */}
+              <div className="text-center">
+                {showCreateAuctionButton && (
+                  <button
+                    type="submit"
+                    className="mx-auto  text-center py-3 border-2 border-[#575757] rounded-lg bg-[#C89090] text-black hover:bg-green-dark focus:outline-none my-1">
+                    Create auction
+                  </button>
+                )}
 
-            {auctionSuccessMessage && (
-              <>
-              <Link to={`/auctions`}>
-            <button className="text-center py-3 border-2 border-[#575757] rounded-lg bg-[green] text-black hover:bg-green-dark focus:outline-none my-1">
-              Go to auctions
-            </button>
-            </Link>
-            <div className="text-green-700 text-lg">{auctionSuccessMessage}</div>
-              </>
-            )}
-            {auctionErrorMessage && (
-              <div className="text-red-500 text-lg">{auctionErrorMessage}</div>
-            )}
-            {priceErrorMessage && (
-              <div className="text-red-500 text-lg">{priceErrorMessage}</div>
-            )}
+                {/* <h1 className=""></h1> */}
+
+                {auctionSuccessMessage && (
+                  <>
+                    <Link to={`/auctions`}>
+                      <button className="text-center py-3 border-2 border-[#575757] rounded-lg bg-[green] text-black hover:bg-green-dark focus:outline-none my-1">
+                        Go to auctions
+                      </button>
+                    </Link>
+                    <div className="text-green-700 text-lg">
+                      {auctionSuccessMessage}
+                    </div>
+                  </>
+                )}
+                {auctionErrorMessage && (
+                  <div className="text-red-500 text-lg">
+                    {auctionErrorMessage}
+                  </div>
+                )}
+                {priceErrorMessage && (
+                  <div className="text-red-500 text-lg">
+                    {priceErrorMessage}
+                  </div>
+                )}
+              </div>
+            </div>
           </div>
-        </div>
-      </form>
+        </form>
       )}
     </div>
   );
