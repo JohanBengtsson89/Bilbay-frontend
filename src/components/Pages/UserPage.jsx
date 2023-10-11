@@ -183,7 +183,7 @@ const UserPage = () => {
               style={{ display: isFormExpanded ? "block" : "none" }}
               onSubmit={(e) => onSubmit(e)}
             > 
-              <div className="container max-w-lg mx-auto flex-1 flex flex-col items-center justify-center lg:px-8">
+              {/* <div className="container max-w-lg mx-auto flex-1 flex flex-col items-center justify-center lg:px-8"> */}
                 <div className="bg-[#BFC3CC] px-6 py-10 rounded-xl shadow-md text-black w-full">
                   <h1 className="mb-8 text-3xl text-center">Update</h1>
 
@@ -262,7 +262,7 @@ const UserPage = () => {
                     <p className="text-green-700 text-lg">{successMessage}</p>
                   )}
                 </div>
-              </div>
+              {/* </div> */}
             </form>
           
 

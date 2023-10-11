@@ -25,7 +25,7 @@ export default function Favorite() {
           >
             <p>Auction ID: {favorite.id}</p>
 
-            <Link to={`/auction/${favorite.auctionId}`}>
+            <Link to={`/auction/${favorite.id}`}>
               <div
                 style={{
                   backgroundImage: `url(${matchingAuction.product.productSpecification.productPhoto})`,
