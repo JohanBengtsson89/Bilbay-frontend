@@ -9,9 +9,22 @@
 
 .picture {
     display: flex;
+    min-height: 490px;
     margin-right: 135px;
     width: 745px;
     
+}
+.price-favo {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-items: stretch;
+    
+}
+
+.favoBtn {
+    border: 2px solid black;
+    align-content: bottom;
 }
 
 .product-info {
@@ -22,15 +35,20 @@
     background-color: #BFC3CC;
 }
 .bids-info {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
     border-radius: 10px;
     margin-top: 15px;
     background-color: #BFC3CC;
-    height: 315px;
+    height: 310px;
     width: 351px;
 }
 
 .place-bid {
-    margin-top: 170px;
+    margin-top: auto;
+    margin-bottom: 10px;
+    width: 100%;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -39,6 +57,8 @@
 }
 
 .input-bid {
+    border-radius: 10px;
+    border: 1px solid black;
     margin-right: 30px;
     height: 40px;
     width: 150px

@@ -65,12 +65,17 @@ function NavBar() {
   const handleSettingsClick = (setting) => {
     if (setting === "Logout") {
       logout();
+      setTimeout(() => {
+        navigate("loginpage");
+      }, 2000);
 
       setIsLoggedIn(false);
 
     } else if (setting === "Login") {
 
     setIsLoggedIn(true);
+    } else if (setting === "Profile"){
+      navigate("userpage")
     }
     handleCloseUserMenu();
   };
@@ -206,8 +211,8 @@ function NavBar() {
             </Box>
             ) : (
               <div className="flex gap-5">
-              <div><a href="loginpage">Login</a></div>
-              <div><a href="register">Register</a></div>
+              <div><a href="/loginpage">Login</a></div>
+              <div><a href="/register">Register</a></div>
               </div>
             )}
 

@@ -17,6 +17,9 @@ export default function RegisterPage() {
     customerType: "Private",
   });
 
+  const [error, setError] = useState("");
+  const [successMessage, setSuccessMessage] = useState("");
+
   const {
     firstName,
     lastName,
@@ -34,13 +37,35 @@ export default function RegisterPage() {
 
   const onSubmit = async (e) => {
     e.preventDefault();
-    await axios.post(`${apiUrl}/api/test/register`, register);
-    navigate("/");
+    setError(""); 
+    setSuccessMessage("");
+    if (
+      !firstName ||
+      !lastName ||
+      !email ||
+      !username ||
+      !password
+    ) {
+      setError("Please fill in all required fields.");
+      return;
+    }
+
+     try{
+      await axios.post(`${apiUrl}/api/auth/signup`, register);
+      setSuccessMessage("Registration successful!");
+      setTimeout(() => {
+        navigate("/loginpage");
+      }, 3000);
+     }catch(error) {
+      console.error("Error from react:", error.message);
+      setError("Registration failed. Please try again.");
+     }
+    
   };
 
   return (
     <form onSubmit={(e) => onSubmit(e)}>
-      <div className="pt-28 h-[calc(100vh-theme(spacing.24))] bg-[#EFECEC] lg:pt-5">
+      <div className="pt-28 h-full lg:pt-25">
         <div className="container max-w-lg mx-auto flex-1 flex flex-col items-center justify-center lg:px-8">
           <div className="bg-[#BFC3CC] px-6 py-10 rounded-xl shadow-md text-black w-full">
             <h1 className="mb-8 text-3xl text-center">Sign up</h1>
@@ -52,7 +77,7 @@ export default function RegisterPage() {
               placeholder="First Name *"
               value={firstName}
               onChange={(e) => onInputChange(e)}
-              required
+              
             />
 
             <input
@@ -62,7 +87,7 @@ export default function RegisterPage() {
               placeholder="Last Name *"
               value={lastName}
               onChange={(e) => onInputChange(e)}
-              required
+              
             />
 
             <input
@@ -72,7 +97,7 @@ export default function RegisterPage() {
               placeholder="Email"
               value={email}
               onChange={(e) => onInputChange(e)}
-              required
+              
             />
 
             <input
@@ -82,7 +107,7 @@ export default function RegisterPage() {
               placeholder="Username *"
               value={username}
               onChange={(e) => onInputChange(e)}
-              required
+              
             />
 
             <input
@@ -92,7 +117,7 @@ export default function RegisterPage() {
               placeholder="Password"
               value={password}
               onChange={(e) => onInputChange(e)}
-              required
+              
             />
 
             <input
@@ -102,7 +127,7 @@ export default function RegisterPage() {
               placeholder="Company Name"
               value={companyName}
               onChange={(e) => onInputChange(e)}
-              required
+              
             />
 
             <input
@@ -112,7 +137,7 @@ export default function RegisterPage() {
               placeholder="Org-nr"
               value={orgNumber}
               onChange={(e) => onInputChange(e)}
-              required
+              
             />
 
             <select
@@ -120,7 +145,7 @@ export default function RegisterPage() {
               name="customerType"
               value={customerType}
               onChange={(e) => onInputChange(e)}
-              required
+              
             >
               <option value="Private">Private</option>
               <option value="Company">Company</option>
@@ -143,6 +168,8 @@ export default function RegisterPage() {
             >
               Sign up
             </button>
+            {error && <p className="text-red-500 text-lg">{error}</p>}
+            {successMessage && <p className="text-green-700 text-lg">{successMessage}</p>}
           </div>
         </div>
       </div>
