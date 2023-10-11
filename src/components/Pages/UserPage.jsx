@@ -13,9 +13,9 @@ const UserPage = () => {
   const [user, setUser] = useState("");
   const [error, setError] = useState("");
   const [reviews, setReviews] = useState([]);
-  const [isFormExpanded, setIsFormExpanded] = useState(false);
+  const [isFormExpanded, setIsFormExpanded] = useState(true);
   const [isCardFormExpanded, setIsCardFormExpanded] = useState(false);
-  const [isBankFormExpanded, setIsBankFormExpanded] = useState(true);
+  const [isBankFormExpanded, setIsBankFormExpanded] = useState(false);
   const [isAddressFormExpanded, setIsAddressFormExpanded] = useState(false);
 
   const [updateUser, setUpdate] = useState({

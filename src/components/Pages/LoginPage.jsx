@@ -53,7 +53,7 @@ function LoginPage() {
 
   return (
     <form onSubmit={handleSubmit}>
-      <div className="pt-28 h-[calc(100vh-theme(spacing.24))] bg-[#EFECEC] lg:pt-25">
+      <div className="pt-28 h-full lg:pt-25">
         <div className="container max-w-lg mx-auto flex-1 flex flex-col items-center justify-center lg:px-8">
           <div className="bg-[#BFC3CC] px-6 py-10 rounded-xl shadow-md text-black w-full">
             <h1 className="mb-8 text-3xl text-center">Login</h1>
