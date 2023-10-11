@@ -187,7 +187,7 @@ const UserPage = () => {
           <div style={{ fontSize: "40px" }}>Reviews</div>
           <div className="reviews">
             {reviews.map((review, index) => (
-              <li key={index}>{review.comment}</li>
+              <li className="review-list" key={index}>{review.comment}</li>
             ))}
           </div>
         </div>
