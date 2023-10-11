@@ -38,8 +38,8 @@ export default function Favorite() {
               ></div>
             </Link>
             <div>
-              {console.log("Favorites: ", favorites)}
-              {console.log("Auctions: ", auctions)}
+              {/* {console.log("Favorites: ", favorites)}
+              {console.log("Auctions: ", auctions)} */}
 
               {matchingAuction && ( // Use && to conditionally render when matchingAuction is truthy
                 <div key={matchingAuction.id}>
