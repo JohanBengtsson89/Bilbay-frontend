@@ -48,6 +48,11 @@ const UserPage = () => {
     country: "",
   });
 
+  useEffect(() => {
+    setSuccessMessage("");
+    setError("");
+  }, [isFormExpanded, isCardFormExpanded, isBankFormExpanded, isAddressFormExpanded]);
+
   const onCardInputChange = (e) => {
     setCardPayment({ ...cardPayment, [e.target.name]: e.target.value });
   };
