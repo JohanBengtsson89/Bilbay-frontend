@@ -12,6 +12,7 @@ import { AuthProvider } from "./context/AuthContext";
 import AboutUsPage from "./components/Pages/AboutUsPage";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { AuctionsProvider } from "./context/Context";
+import PrivateRoute from "./components/PrivateRoute";
 import UserPage from "./components/Pages/UserPage";
 
 function App() {
@@ -19,6 +20,8 @@ function App() {
     <AuthProvider>
       <AuctionsProvider>
         <BrowserRouter>
+        <div className="flex flex-col min-h-screen">
+          <div className="flex-grow">
           <NavBar />
           <Routes>
             <Route path="/" element={<HomePage />} />
@@ -32,10 +35,12 @@ function App() {
             />
             <Route path="/about" element={<AboutUsPage />} />
             <Route path="/bid" element={<BidComponent />} />
-            <Route path="/userpage" element={<UserPage />}/>
-            <Route path="/submit" element={<SubmitAuctionPage />} />
+            <Route path="/submit" element={<PrivateRoute><SubmitAuctionPage /></PrivateRoute>} />
+            <Route path="/userpage" element={<PrivateRoute><UserPage /></PrivateRoute>}/>
           </Routes>
-          <Footer />
+          </div>
+            <Footer />
+          </div>
         </BrowserRouter>
       </AuctionsProvider>
     </AuthProvider>
