@@ -24,52 +24,46 @@ export default function AboutUsPage() {
         id="carouselExampleSlidesOnly"
         className="relative  mx-auto"
         data-te-carousel-init
-        data-te-ride="carousel"
-      >
+        data-te-ride="carousel">
         <div className="relative w-full overflow-hidden after:clear-both after:block after:content-['']">
           <div
-            className={`relative float-left -mr-[100%] hidden w-[350px] transition-transform duration-[600ms] ease-in-out motion-reduce:transition-none 
+            className={`relative float-left -mr-[100%] hidden w-[600px] transition-transform duration-[600ms] ease-in-out motion-reduce:transition-none xl:w-[450px] md:w-[350px]
             `}
             data-te-carousel-item
-            data-te-carousel-active
-          >
+            data-te-carousel-active>
             <img src={image1} className="" alt="Camera" />
           </div>
           <div
-            className={`relative float-left -mr-[100%] hidden w-[350px] transition-transform duration-[600ms] ease-in-out motion-reduce:transition-none 
+            className={`relative float-left -mr-[100%] hidden w-[600px] transition-transform duration-[600ms] ease-in-out motion-reduce:transition-none xl:w-[450px] md:w-[350px] 
             `}
-            data-te-carousel-item
-          >
+            data-te-carousel-item>
             <img src={image2} className="" alt="Camera" />
           </div>
           <div
-            className="relative float-left -mr-[100%] hidden w-[350px] transition-transform duration-[600ms] ease-in-out motion-reduce:transition-none"
-            data-te-carousel-item
-          >
+            className="relative float-left -mr-[100%] hidden w-[600px] transition-transform duration-[600ms] ease-in-out motion-reduce:transition-none xl:w-[450px] md:w-[350px] "
+            data-te-carousel-item>
             <img src={image3} className="" alt="Camera" />
           </div>
           <div
-            className="relative float-left -mr-[100%] hidden w-[350px] transition-transform duration-[600ms] ease-in-out motion-reduce:transition-none"
-            data-te-carousel-item
-          >
+            className="relative float-left -mr-[100%] hidden w-[600px] transition-transform duration-[600ms] ease-in-out motion-reduce:transition-none xl:w-[450px] md:w-[350px] "
+            data-te-carousel-item>
             <img src={image4} className="" alt="Camera" />
           </div>
           <div
-            className="relative float-left -mr-[100%] hidden w-[350px] transition-transform duration-[600ms] ease-in-out motion-reduce:transition-none"
-            data-te-carousel-item
-          >
+            className="relative float-left -mr-[100%] hidden w-[600px] transition-transform duration-[600ms] ease-in-out motion-reduce:transition-none xl:w-[450px] md:w-[350px] "
+            data-te-carousel-item>
             <img src={image5} className="" alt="Camera" />
           </div>
         </div>
       </div>
-      <form className="lg:px-10">
+      <form className="lg:px-10  w-[350px] mx-auto lg:w-[400px]">
         <div>
-          <div className="items-center justify-center bg-[#BFC3CC] px-6 py-4 rounded-xl lg:mt-2 ">
+          <div className="items-center justify-center bg-[#BFC3CC] px-8 py-6 rounded-xl lg:mt-2 ">
             <h1 className="text-center font-semibold font-serif text-2xl ">
               About Bilbay
             </h1>
-            <div className="tracking-wider font-serif mt-4">
-              <h2>
+            <div className="tracking-wider font-serif mt-4 ">
+              <h2 className="font-serif text-md ">
                 We invite you to become a part of the Bilbay community – a
                 community of car enthusiasts, collectors, and individuals who
                 appreciate the artistry and craftsmanship of fine automobiles.
@@ -85,11 +79,9 @@ export default function AboutUsPage() {
           </div>
         </div>
       </form>
-      s
     </div>
   );
 }
 <script
   type="text/javascript"
-  src="../node_modules/tw-elements/dist/js/tw-elements.umd.min.js"
-></script>;
+  src="../node_modules/tw-elements/dist/js/tw-elements.umd.min.js"></script>;
