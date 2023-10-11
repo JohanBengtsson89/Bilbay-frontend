@@ -184,7 +184,7 @@ const AuctionsPage = () => {
   return (
     <>
       <div className="auctionsContainer">
-        <div>
+        <div className="auctionsLeft">
           <FilterDropdown
             attribute="modelYear"
             auctions={auctions}
