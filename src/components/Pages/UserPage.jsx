@@ -12,11 +12,21 @@ const UserPage = () => {
   const [successMessage, setSuccessMessage] = useState("");
   const [user, setUser] = useState("");
   const [error, setError] = useState("");
+  const [roles, setRoles] = useState("");
   const [reviews, setReviews] = useState([]);
   const [isFormExpanded, setIsFormExpanded] = useState(true);
   const [isCardFormExpanded, setIsCardFormExpanded] = useState(false);
   const [isBankFormExpanded, setIsBankFormExpanded] = useState(false);
   const [isAddressFormExpanded, setIsAddressFormExpanded] = useState(false);
+
+  useEffect(() => {
+    const storedUser = JSON.parse(localStorage.getItem("user"));
+
+    if (storedUser) {
+      setRoles(storedUser.roles);
+      console.log(storedUser.roles);
+    }
+  }, []);
 
   const [updateUser, setUpdate] = useState({
     firstName: "",
@@ -51,7 +61,12 @@ const UserPage = () => {
   useEffect(() => {
     setSuccessMessage("");
     setError("");
-  }, [isFormExpanded, isCardFormExpanded, isBankFormExpanded, isAddressFormExpanded]);
+  }, [
+    isFormExpanded,
+    isCardFormExpanded,
+    isBankFormExpanded,
+    isAddressFormExpanded,
+  ]);
 
   const onCardInputChange = (e) => {
     setCardPayment({ ...cardPayment, [e.target.name]: e.target.value });
@@ -73,18 +88,21 @@ const UserPage = () => {
     setIsCardFormExpanded((prev) => !prev);
     setIsFormExpanded(false);
     setIsBankFormExpanded(false);
+    setIsAddressFormExpanded(false);
   };
 
   const toggleFormExpansion = () => {
     setIsFormExpanded((prev) => !prev);
     setIsCardFormExpanded(false);
     setIsBankFormExpanded(false);
+    setIsAddressFormExpanded(false);
   };
 
   const toggleBankFormExpansion = () => {
     setIsBankFormExpanded((prev) => !prev);
     setIsCardFormExpanded(false);
     setIsFormExpanded(false);
+    setIsAddressFormExpanded(false);
   };
 
   const toggleAddressFormExpansion = () => {
@@ -293,6 +311,9 @@ const UserPage = () => {
                   placeholder={updateUser.companyName || "Company name"}
                   value={updateUser.companyName}
                   onChange={(e) => onInputChange(e)}
+                  style={{
+                    display: roles.includes("ROLE_COMPANY") ? "block" : "none",
+                  }}
                 />
 
                 <input
@@ -304,6 +325,9 @@ const UserPage = () => {
                   }
                   value={updateUser.organizationNumber}
                   onChange={(e) => onInputChange(e)}
+                  style={{
+                    display: roles.includes("ROLE_COMPANY") ? "block" : "none",
+                  }}
                 />
 
                 <button
