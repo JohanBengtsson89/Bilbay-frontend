@@ -65,12 +65,17 @@ function NavBar() {
   const handleSettingsClick = (setting) => {
     if (setting === "Logout") {
       logout();
+      setTimeout(() => {
+        navigate("loginpage");
+      }, 2000);
 
       setIsLoggedIn(false);
 
     } else if (setting === "Login") {
 
     setIsLoggedIn(true);
+    } else if (setting === "Profile"){
+      navigate("userpage")
     }
     handleCloseUserMenu();
   };
