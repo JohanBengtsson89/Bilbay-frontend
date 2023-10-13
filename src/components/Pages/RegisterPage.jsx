@@ -13,8 +13,8 @@ export default function RegisterPage() {
     username: "",
     password: "",
     companyName: "",
-    orgNumber: "",
-    customerType: "Private",
+    organizationNumber: "",
+    roles: ["Private"],
   });
 
   const [error, setError] = useState("");
@@ -27,12 +27,18 @@ export default function RegisterPage() {
     username,
     password,
     companyName,
-    orgNumber,
-    customerType,
+    organizationNumber,
+    roles,
   } = register;
 
   const onInputChange = (e) => {
-    setRegister({ ...register, [e.target.name]: e.target.value });
+    const {name, value} = e.target;
+
+    if(name==="roles") {
+      setRegister ({...register, roles, roles: [value]});
+    }else {
+      setRegister({...register, [name]: value});
+    }
   };
 
   const onSubmit = async (e) => {
@@ -133,22 +139,22 @@ export default function RegisterPage() {
             <input
               type="text"
               className="block border-2 border-[#575757] w-full p-1 rounded-lg mb-4"
-              name="orgNumber"
+              name="organizationNumber"
               placeholder="Org-nr"
-              value={orgNumber}
+              value={organizationNumber}
               onChange={(e) => onInputChange(e)}
               
             />
 
             <select
               className="block border-2 border-[#575757] w-full p-1 rounded-lg mb-4"
-              name="customerType"
-              value={customerType}
+              name="roles"
+              value={roles}
               onChange={(e) => onInputChange(e)}
               
             >
-              <option value="Private">Private</option>
-              <option value="Company">Company</option>
+              <option value="private">Private</option>
+              <option value="company">Company</option>
             </select>
 
             <div className="text-[#434343] inset-x-16">
