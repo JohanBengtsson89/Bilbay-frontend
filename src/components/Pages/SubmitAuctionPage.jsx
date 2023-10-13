@@ -162,21 +162,26 @@ export default function SubmitAuctionPage() {
                 type="url"
                 className="block border-2 border-[#575757] w-full p-1 rounded-lg mb-4"
                 name="productSpecification.productPhoto"
-                placeholder="Url *"
+                placeholder="Car Image *"
                 value={productDetails.productSpecification.productPhoto}
                 onChange={(e) => onInputChange(e)}
                 required
               />
 
-              <input
-                type="text"
+              <select
                 className="block border-2 border-[#575757] w-full p-1 rounded-lg mb-4"
                 name="category"
-                placeholder="Category *"
                 value={productDetails.category}
                 onChange={(e) => onInputChange(e)}
                 required
-              />
+              >
+                <option value="">Category *</option>
+                <option value="American">American</option>
+                <option value="German">German</option>
+                <option value="Italian">Italian</option>
+                <option value="Swedish">Swedish</option>
+                <option value="English">English</option>
+              </select>
               <input
                 type="text"
                 className="block border-2 border-[#575757] w-full p-1 rounded-lg mb-4"
@@ -197,15 +202,17 @@ export default function SubmitAuctionPage() {
                 required
               />
 
-              <input
-                type="text"
+              <select
                 className="block border-2 border-[#575757] w-full p-1 rounded-lg mb-4"
                 name="productSpecification.gear"
-                placeholder="Gear *"
                 value={productDetails.productSpecification.gear}
                 onChange={(e) => onInputChange(e)}
                 required
-              />
+              >
+                <option value="">Gear *</option>
+                <option value="automatic">Automatic</option>
+                <option value="manual">Manual</option>
+              </select>
 
               <input
                 className="block border-2 border-[#575757] w-full p-1 rounded-lg mb-4"
@@ -217,15 +224,33 @@ export default function SubmitAuctionPage() {
                 required
               />
 
-              <input
-                type="number"
-                className="block border-2 border-[#575757] w-full p-1 rounded-lg mb-4"
-                name="productSpecification.mileage"
-                placeholder="Mileage * "
-                value={productDetails.productSpecification.mileage}
-                onChange={(e) => onInputChange(e)}
-                required
-              />
+              <div className="mb-4">
+                <label htmlFor="mileage" className="block mb-2">
+                  Mileage: {productDetails.productSpecification.mileage} miles
+                </label>
+                <div className="flex items-center">
+                  <input
+                    type="number"
+                    className="block border-2 border-[#575757] w-1/2 p-1 rounded-lg mr-2"
+                    name="productSpecification.mileage"
+                    placeholder="Mileage"
+                    value={productDetails.productSpecification.mileage}
+                    onChange={(e) => onInputChange(e)}
+                    step="1"
+                    required
+                  />
+                  <input
+                    type="range"
+                    className="block w-1/2"
+                    name="productSpecification.mileage"
+                    min="0"
+                    max="10000"
+                    step="0"
+                    value={productDetails.productSpecification.mileage}
+                    onChange={(e) => onInputChange(e)}
+                  />
+                </div>
+              </div>
 
               <input
                 type="text"
@@ -246,16 +271,32 @@ export default function SubmitAuctionPage() {
                 onChange={(e) => onInputChange(e)}
                 required
               />
+              <div className="mb-4">
+                <label htmlFor="originalPrice" className="block mb-2">
+                  Original Price: ${productDetails.originalPrice}
+                </label>
+                <div className="flex items-center">
+                  <input
+                    type="number"
+                    className="block border-2 border-[#575757] w-1/2 p-1 rounded-lg mr-2"
+                    name="originalPrice"
+                    placeholder="Original Price"
+                    value={productDetails.originalPrice}
+                    onChange={(e) => onInputChange(e)}
+                  />
+                  <input
+                    type="range"
+                    className="block w-1/2"
+                    name="originalPrice"
+                    min="0"
+                    max="100000"
+                    step="1000"
+                    value={productDetails.originalPrice}
+                    onChange={(e) => onInputChange(e)}
+                  />
+                </div>
+              </div>
 
-              <input
-                type="number"
-                className="block border-2 border-[#575757] w-full p-1 rounded-lg mb-4"
-                name="originalPrice"
-                placeholder="Original price *"
-                value={productDetails.originalPrice}
-                onChange={(e) => onInputChange(e)}
-                required
-              />
               <input
                 type="text"
                 className="block border-2 border-[#575757] w-full p-1 rounded-lg mb-4"
@@ -269,7 +310,8 @@ export default function SubmitAuctionPage() {
 
               <button
                 type="submit"
-                className="w-full text-center py-3 border-2 border-[#575757] rounded-lg bg-[#C89090] text-black hover:bg-green-dark focus:outline-none my-1">
+                className="w-full text-center py-3 border-2 border-[#575757] rounded-lg bg-[#C89090] text-black hover:bg-green-dark focus:outline-none my-1"
+              >
                 Register
               </button>
               {productSuccessMessage && (
@@ -295,7 +337,8 @@ export default function SubmitAuctionPage() {
               <img
                 src={successfull}
                 alt=""
-                className="w-96 mb-5 mx-auto rounded-xl"></img>
+                className="w-96 mb-5 mx-auto rounded-xl"
+              ></img>
               <input
                 type="number"
                 className="block border-2 border-[#575757] w-full p-1 rounded-lg mb-4"
@@ -331,7 +374,8 @@ export default function SubmitAuctionPage() {
                 {showCreateAuctionButton && (
                   <button
                     type="submit"
-                    className="mx-auto  text-center py-3 border-2 border-[#575757] rounded-lg bg-[#C89090] text-black hover:bg-green-dark focus:outline-none my-1">
+                    className="mx-auto  text-center py-3 border-2 border-[#575757] rounded-lg bg-[#C89090] text-black hover:bg-green-dark focus:outline-none my-1"
+                  >
                     Create auction
                   </button>
                 )}
