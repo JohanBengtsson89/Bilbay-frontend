@@ -20,23 +20,41 @@ function App() {
     <AuthProvider>
       <AuctionsProvider>
         <BrowserRouter>
-          <NavBar />
-          <Routes>
-            <Route path="/" element={<HomePage />} />
-            <Route path="/register" element={<RegisterPage />} />
-            <Route path="/loginpage" element={<LoginPage />} />
-            <Route path="/favourite" element={<Favorite />} />
-            <Route path="/auctions" element={<AuctionsPage />} />
-            <Route
-              path="/auction/:auctionId"
-              element={<AuctionDetailsPage />}
-            />
-            <Route path="/about" element={<AboutUsPage />} />
-            <Route path="/bid" element={<BidComponent />} />
-            <Route path="/submit" element={<PrivateRoute><SubmitAuctionPage /></PrivateRoute>} />
-            <Route path="/userpage" element={<PrivateRoute><UserPage /></PrivateRoute>}/>
-          </Routes>
-          <Footer />
+          <div className="flex flex-col min-h-screen">
+            <div className="flex-grow bg-[#EFECEC]">
+              <NavBar />
+              <Routes>
+                <Route path="/" element={<HomePage />} />
+                <Route path="/register" element={<RegisterPage />} />
+                <Route path="/loginpage" element={<LoginPage />} />
+                <Route path="/favourite" element={<Favorite />} />
+                <Route path="/auctions" element={<AuctionsPage />} />
+                <Route
+                  path="/auction/:auctionId"
+                  element={<AuctionDetailsPage />}
+                />
+                <Route path="/about" element={<AboutUsPage />} />
+                <Route path="/bid" element={<BidComponent />} />
+                <Route
+                  path="/submit"
+                  element={
+                    <PrivateRoute>
+                      <SubmitAuctionPage />
+                    </PrivateRoute>
+                  }
+                />
+                <Route
+                  path="/userpage"
+                  element={
+                    <PrivateRoute>
+                      <UserPage />
+                    </PrivateRoute>
+                  }
+                />
+              </Routes>
+            </div>
+            <Footer />
+          </div>
         </BrowserRouter>
       </AuctionsProvider>
     </AuthProvider>

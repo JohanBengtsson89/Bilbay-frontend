@@ -25,7 +25,7 @@ export default function Favorite() {
           >
             <p>Auction ID: {favorite.id}</p>
 
-            <Link to={`/auction/${favorite.auctionId}`}>
+            <Link to={`/auction/${favorite.id}`}>
               <div
                 style={{
                   backgroundImage: `url(${matchingAuction.product.productSpecification.productPhoto})`,
@@ -38,8 +38,8 @@ export default function Favorite() {
               ></div>
             </Link>
             <div>
-              {console.log("Favorites: ", favorites)}
-              {console.log("Auctions: ", auctions)}
+              {/* {console.log("Favorites: ", favorites)}
+              {console.log("Auctions: ", auctions)} */}
 
               {matchingAuction && ( // Use && to conditionally render when matchingAuction is truthy
                 <div key={matchingAuction.id}>

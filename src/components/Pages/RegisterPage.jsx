@@ -13,8 +13,8 @@ export default function RegisterPage() {
     username: "",
     password: "",
     companyName: "",
-    orgNumber: "",
-    customerType: "Private",
+    organizationNumber: "",
+    roles: ["Private"],
   });
 
   const [error, setError] = useState("");
@@ -27,12 +27,18 @@ export default function RegisterPage() {
     username,
     password,
     companyName,
-    orgNumber,
-    customerType,
+    organizationNumber,
+    roles,
   } = register;
 
   const onInputChange = (e) => {
-    setRegister({ ...register, [e.target.name]: e.target.value });
+    const {name, value} = e.target;
+
+    if(name==="roles") {
+      setRegister ({...register, roles, roles: [value]});
+    }else {
+      setRegister({...register, [name]: value});
+    }
   };
 
   const onSubmit = async (e) => {
@@ -65,7 +71,7 @@ export default function RegisterPage() {
 
   return (
     <form onSubmit={(e) => onSubmit(e)}>
-      <div className="pt-28 h-[calc(100vh-theme(spacing.24))] bg-[#EFECEC] lg:pt-5">
+      <div className="pt-28 h-full lg:pt-25">
         <div className="container max-w-lg mx-auto flex-1 flex flex-col items-center justify-center lg:px-8">
           <div className="bg-[#BFC3CC] px-6 py-10 rounded-xl shadow-md text-black w-full">
             <h1 className="mb-8 text-3xl text-center">Sign up</h1>
@@ -133,22 +139,22 @@ export default function RegisterPage() {
             <input
               type="text"
               className="block border-2 border-[#575757] w-full p-1 rounded-lg mb-4"
-              name="orgNumber"
+              name="organizationNumber"
               placeholder="Org-nr"
-              value={orgNumber}
+              value={organizationNumber}
               onChange={(e) => onInputChange(e)}
               
             />
 
             <select
               className="block border-2 border-[#575757] w-full p-1 rounded-lg mb-4"
-              name="customerType"
-              value={customerType}
+              name="roles"
+              value={roles}
               onChange={(e) => onInputChange(e)}
               
             >
-              <option value="Private">Private</option>
-              <option value="Company">Company</option>
+              <option value="private">Private</option>
+              <option value="company">Company</option>
             </select>
 
             <div className="text-[#434343] inset-x-16">
