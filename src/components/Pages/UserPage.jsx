@@ -44,11 +44,21 @@ const UserPage = () => {
     expireDate: "",
     cvv: "",
   });
+  const cardTypes = ["Mastercard", "Visa card"];
 
   const [bankPayment, setBankPayment] = useState({
     bankName: "",
     bankAccountNr: "",
   });
+  const bankNames = [
+    "Swedbank",
+    "Nordea",
+    "Handelsbanken",
+    "Ica banken",
+    "SEB",
+    "Skandia",
+    "SBAB",
+  ];
 
   const [address, setAddress] = useState({
     address: "",
@@ -69,7 +79,14 @@ const UserPage = () => {
   ]);
 
   const onCardInputChange = (e) => {
-    setCardPayment({ ...cardPayment, [e.target.name]: e.target.value });
+    const { name, value } = e.target;
+
+    if (name === "cardType" && !cardTypes.includes(value)) {
+      console.error("Invalid card type");
+      return;
+    }
+
+    setCardPayment({ ...cardPayment, [name]: value });
   };
 
   const onInputChange = (e) => {
@@ -77,7 +94,14 @@ const UserPage = () => {
   };
 
   const onBankInputChange = (e) => {
-    setBankPayment({ ...bankPayment, [e.target.name]: e.target.value });
+    const { name, value } = e.target;
+
+    if (name === "bankName" && !bankNames.includes(value)) {
+      console.error("Invalid bank name");
+      return;
+    }
+
+    setBankPayment({ ...bankPayment, [name]: value });
   };
 
   const onAddressInputChange = (e) => {
@@ -366,14 +390,19 @@ const UserPage = () => {
               <div className="bg-[#BFC3CC] px-6 py-10 rounded-xl shadow-md text-black w-full">
                 <h1 className="mb-8 text-3xl text-center">Add Card Payment</h1>
 
-                <input
-                  type="text"
+                <select
                   className="block border-2 border-[#575757] w-full p-1 rounded-lg mb-4"
                   name="cardType"
-                  placeholder="Card Type"
                   value={cardPayment.cardType}
                   onChange={(e) => onCardInputChange(e)}
-                />
+                >
+                  <option value="">Select Card Type</option>
+                  {cardTypes.map((type) => (
+                    <option key={type} value={type}>
+                      {type}
+                    </option>
+                  ))}
+                </select>
 
                 <input
                   type="number"
@@ -440,14 +469,19 @@ const UserPage = () => {
               <div className="bg-[#BFC3CC] px-6 py-10 rounded-xl shadow-md text-black w-full">
                 <h1 className="mb-8 text-3xl text-center">Add Bank Payment</h1>
 
-                <input
-                  type="text"
+                <select
                   className="block border-2 border-[#575757] w-full p-1 rounded-lg mb-4"
                   name="bankName"
-                  placeholder="Bank Name"
                   value={bankPayment.bankName}
                   onChange={(e) => onBankInputChange(e)}
-                />
+                >
+                  <option value="">Select Bank Name</option>
+                  {bankNames.map((name) => (
+                    <option key={name} value={name}>
+                      {name}
+                    </option>
+                  ))}
+                </select>
 
                 <input
                   type="text"
