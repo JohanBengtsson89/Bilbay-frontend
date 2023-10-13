@@ -5,6 +5,7 @@ import picture from "/src/assets/robert-bye-tG36rvCeqng-unsplash.jpg";
 import { Button } from "@mui/base";
 import Axios from "axios";
 import { fontSize } from "@mui/system";
+import{ FavoriteButton }from "../FavoriteButton"
 
 const apiUrl = import.meta.env.VITE_API_URL;
 
@@ -43,7 +44,7 @@ const AuctionDetails = () => {
       })
       .catch((error) => {
         setError(error);
-        console.log("Halloj error");
+        console.log("Error fetching data");
       });
   };
 
@@ -58,7 +59,7 @@ const AuctionDetails = () => {
       bidAmount: parseInt(bidAmount),
     };
 
-    if (bids.length > 0 && newBid.bidAmount <= bids[0].bidAmount || isNaN(newBid.bidAmount)) {
+    if (bids.length > 0 && newBid.bidAmount <= bids[0].bidAmount || isNaN(newBid.bidAmount) || newBid.bidAmount <= product.originalPrice) {
       alert("OOOOPPPSS: Bid amount must be higher than the latest bid.");
       return;
     }
@@ -67,14 +68,14 @@ const AuctionDetails = () => {
     Axios.post(`${apiUrl}/api/bid`, newBid)
       .then((response) => {
         const sortedBids = [...bids, response.data].sort((bidA, bidB) => bidB.bidAmount - bidA.bidAmount)
-        .slice(0, 5);
+          .slice(0, 5);
         setBids(sortedBids);
         console.log(bids)
       })
       .catch((error) => {
         console.error("Error creating bid:", error);
       });
-
+      
     setBidAmount("");
   };
 
@@ -95,15 +96,30 @@ const AuctionDetails = () => {
             src={productSpecification.productPhoto}
             alt="Error loading picture"
           />
-          <div style={{ fontSize: "32px" }}>Name: {product.productName}</div>
+          <div className="price-favo">
+          <div style={{ fontSize: "36px", fontWeight: "bold", borderBottom: "1px solid black", paddingRight:"60%" }}> $ {product.originalPrice} </div>
+          <FavoriteButton className="favoBtn" auctionId={auction.id} />
+          </div>
+          <div style={{ fontSize: "32px" , fontWeight: "bold" }}>{product.productName}</div>
+          
+          
           <div style={{ width: "745px" }}>{product.productDescription}</div>
         </div>
         <div className="right-side">
           <div className="product-info">
+            <div className="highest-bid" style={{borderBottom: "1px solid black", fontWeight:"bold"}}>
+            <p style={{fontSize:"15px", marginLeft:"3%"}} >Highest bid</p>
+            <h1 style={{marginLeft:"3%", fontSize:"32px"}}> $ {bids.length > 0 ? bids[0].bidAmount : 0}</h1></div>
+
             <div style={{ fontSize: "24px" }}>Product specification:</div>
-            <div>HorsePower: {productSpecification.enginePower}</div>
-            <div>Mileage: {productSpecification.mileage}</div>
-            <div>Gear: {productSpecification.gear}</div>
+            
+            <li>Brand: {productSpecification.brand}</li>
+            <li>Model year: {productSpecification.modelYear} </li>
+            <li>Gear: {productSpecification.gear}</li>
+            <li>Engine power: {productSpecification.enginePower}</li>
+            <li>Mileage: {productSpecification.mileage}</li>
+            <li>Colour: {productSpecification.color} </li>
+            
           </div>
           <div className="bids-info">
             <div style={{ fontSize: "24px" }}>Bids:</div>

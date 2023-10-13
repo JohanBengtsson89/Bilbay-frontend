@@ -2,7 +2,6 @@ import { Link } from "react-router-dom";
 import { FavoriteButton } from "./FavoriteButton";
 
 export function Auctions({ filteredAuctions }) {
-
   return (
     <div className="auctionsMain m-0">
       {filteredAuctions.map((auction) => (
@@ -12,28 +11,33 @@ export function Auctions({ filteredAuctions }) {
           style={{
             margin: "15px",
             backgroundColor: "#BFC3CC",
+            display: "flex",
+            flexDirection: "column",
           }}
         >
           <Link to={`/auction/${auction.id}`}>
-            <div
+            <img
+              src={auction.product.productSpecification.productPhoto}
               style={{
-                backgroundImage: `url(${auction.product.productSpecification.productPhoto})`,
                 borderRadius: "10px",
-                backgroundSize: "cover",
-                backgroundRepeat: "no-repeat",
-                minHeight: "50%",
+                minHeight: "auto",
                 width: "100%",
               }}
-            ></div>
+            />
           </Link>
-          <p>ID: {auction.product.productSpecification.id}</p>
-          <p>Auction: {auction.id}</p>
-          <p>Gear: {auction.product.productSpecification.gear}</p>
-          <p>User: {auction.user}</p>
-          <p>Product: {auction.product.productName}</p>
-          <p>Model Year: {auction.product.productSpecification.modelYear}</p>
-          {/* <div>{favorites.includes(auction.id) ? "Favorit" : "Ej Favorit"}</div> */}
-          <FavoriteButton auctionId={auction.id} />
+          <div style={{ flex: 1 }}>
+            <p>Product: {auction.product.productName}</p>
+            <p>Model Year: {auction.product.productSpecification.modelYear}</p>
+            <p>Gearbox: {auction.product.productSpecification.gear}</p>
+            <p>
+              Engine Power: {auction.product.productSpecification.enginePower}
+            </p>
+            <p>Mileage: {auction.product.productSpecification.mileage}</p>
+            <p>Color: {auction.product.productSpecification.color}</p>
+          </div>
+          <div className="favoriteBtn">
+            <FavoriteButton auctionId={auction.id} />
+          </div>
         </div>
       ))}
     </div>

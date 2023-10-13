@@ -7,9 +7,11 @@ const PrivateRoute = ({children}) => {
         return <Navigate to ="/loginpage"/>
     }
 
-    if(user.roles?.includes("ROLE_PRIVATE")) {
-        return <>{children}</>
-    }
+    if (user.roles?.includes("ROLE_PRIVATE") || user.roles?.includes("ROLE_COMPANY")) {
+        return <>{children}</>;
+      } else {
+        return <Navigate to="/loginpage" />;
+      }
 };
 
 export default PrivateRoute;
