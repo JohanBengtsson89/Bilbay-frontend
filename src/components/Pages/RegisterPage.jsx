@@ -19,6 +19,7 @@ export default function RegisterPage() {
 
   const [error, setError] = useState("");
   const [successMessage, setSuccessMessage] = useState("");
+  const [isButtonHovered, setIsButtonHovered] = useState(false);
 
   const {
     firstName,
@@ -30,6 +31,18 @@ export default function RegisterPage() {
     organizationNumber,
     roles,
   } = register;
+
+  const buttonStyle = {
+    width: "100%",
+    textAlign: "center",
+    padding: "12px",
+    borderRadius: "8px",
+    backgroundColor: isButtonHovered ? "#E57C7C" : "#c89090",
+    color: "black",
+    cursor: "pointer",
+    transition: "background-color 0.3s ease-in-out",
+    marginTop: "1rem",
+  };
 
   const onInputChange = (e) => {
     const {name, value} = e.target;
@@ -170,7 +183,10 @@ export default function RegisterPage() {
 
             <button
               type="submit"
-              className="w-full text-center py-3 border-2 border-[#575757] rounded-lg bg-[#C89090] text-black hover:bg-green-dark focus:outline-none my-1"
+              className="w-full text-center py-3 rounded-lg bg-[#C89090] text-black hover:bg-green-dark focus:outline-none my-1"
+              style={buttonStyle}
+              onMouseOver={() => setIsButtonHovered(true)}
+              onMouseOut={() => setIsButtonHovered(false)}
             >
               Sign up
             </button>
