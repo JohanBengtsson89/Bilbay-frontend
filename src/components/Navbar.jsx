@@ -20,7 +20,6 @@ import AdbIcon from "@mui/icons-material/Adb";
 import DirectionsCarIcon from "@mui/icons-material/DirectionsCar";
 import { CssBaseline } from "@mui/material";
 
-
 /* const isLoggedIn = false; */
 const pages = [
   { name: "Home", page: "/" },
@@ -29,18 +28,19 @@ const pages = [
   { name: "About us", page: "/about" },
 ];
 
-
-
 // pages.map((page) => console.log(page.name, page.page));
 
 function NavBar() {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
-  const[isLoggedIn, setIsLoggedIn]  = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
 
-  const settings = ["Profile","Logout"];
-  
-  const { state: { user }, logout } = useContext(AuthContext);
+  const settings = ["Profile", "Logout"];
+
+  const {
+    state: { user },
+    logout,
+  } = useContext(AuthContext);
   const navigate = useNavigate();
 
   const handleOpenNavMenu = (event) => {
@@ -67,15 +67,13 @@ function NavBar() {
       logout();
       setTimeout(() => {
         navigate("loginpage");
-      }, 2000);
+      }, 1000);
 
       setIsLoggedIn(false);
-
     } else if (setting === "Login") {
-
-    setIsLoggedIn(true);
-    } else if (setting === "Profile"){
-      navigate("userpage")
+      setIsLoggedIn(true);
+    } else if (setting === "Profile") {
+      navigate("userpage");
     }
     handleCloseUserMenu();
   };
@@ -166,57 +164,117 @@ function NavBar() {
             </Typography>
             <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
               {pages.map((page) => (
-                <Link key={page.name} to={page.page}>
-                  <Button
+                <Link
+                  key={page.name}
+                  to={page.page}
+                  style={{ textDecoration: "none" }}
+                >
+                  <Typography
                     onClick={handleCloseNavMenu}
-                    sx={{ my: 2, color: "white", display: "block" }}
+                    variant="h8"
+                    component="div"
+                    sx={{
+                      color: "white",
+                      mr: 2,
+                      transition: "text-decoration 0.1s ease-in-out, color 0.1s ease-in-out",
+                      transitionDelay: "0.1s",
+                      "&:hover": {
+                        color: "#A3B8CB",
+                      },
+                    }}
                   >
                     {page.name}
-                  </Button>
+                  </Typography>
                 </Link>
               ))}
             </Box>
 
             {user ? (
               <Box sx={{ flexGrow: 0 }}>
-              <Tooltip title="Open settings">
-                <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                <Avatar alt={user.username} src="/static/images/avatar/2.jpg">
-                  {user.username && user.username.charAt(0).toUpperCase()}
-                </Avatar>
-                </IconButton>
-              </Tooltip>
-              <Menu
-                sx={{ mt: "45px" }}
-                id="menu-appbar"
-                anchorEl={anchorElUser}
-                anchorOrigin={{
-                  vertical: "top",
-                  horizontal: "right",
-                }}
-                keepMounted
-                transformOrigin={{
-                  vertical: "top",
-                  horizontal: "right",
-                }}
-                open={Boolean(anchorElUser)}
-                onClose={handleCloseUserMenu}
-              >
-                {settings.map((setting) => (
-                  <MenuItem key={setting} onClick={() => handleSettingsClick(setting)}>
-                    <Typography textAlign="center">{setting}</Typography>
-                  </MenuItem>
-                ))}
-              </Menu>
-            </Box>
+                <Tooltip title="Open settings">
+                  <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
+                    <Avatar
+                      alt={user.username}
+                      src="/static/images/avatar/2.jpg"
+                    >
+                      {user.username && user.username.charAt(0).toUpperCase()}
+                    </Avatar>
+                  </IconButton>
+                </Tooltip>
+                <Menu
+                  sx={{ mt: "45px" }}
+                  id="menu-appbar"
+                  anchorEl={anchorElUser}
+                  anchorOrigin={{
+                    vertical: "top",
+                    horizontal: "right",
+                  }}
+                  keepMounted
+                  transformOrigin={{
+                    vertical: "top",
+                    horizontal: "right",
+                  }}
+                  open={Boolean(anchorElUser)}
+                  onClose={handleCloseUserMenu}
+                >
+                  {settings.map((setting) => (
+                    <MenuItem
+                      key={setting}
+                      onClick={() => handleSettingsClick(setting)}
+                    >
+                      <Typography textAlign="center">{setting}</Typography>
+                    </MenuItem>
+                  ))}
+                </Menu>
+              </Box>
             ) : (
               <div className="flex gap-5">
-              <div><a href="/loginpage">Login</a></div>
-              <div><a href="/register">Register</a></div>
+                <div>
+                  <a
+                    href="/loginpage"
+                    style={{
+                      padding: "5px 10px",
+                      borderRadius: "5px",
+                      color: "black",
+                      backgroundColor: "#A3B8CB",
+                      transition: "background-color 0.3s",
+                      textDecoration: "none",
+                      display: "inline-block",
+                    }}
+                    onMouseOver={(e) =>
+                      (e.target.style.backgroundColor = "#7F98B7")
+                    }
+                    onMouseOut={(e) =>
+                      (e.target.style.backgroundColor = "#A3B8CB")
+                    }
+                  >
+                    Login
+                  </a>
+                </div>
+                <div>
+                  <a
+                    href="/register"
+                    style={{
+                      padding: "5px 10px",
+                      borderRadius: "5px",
+                      color: "black",
+                      backgroundColor: "#A3B8CB",
+                      transition: "background-color 0.3s",
+                      textDecoration: "none",
+                      display: "inline-block",
+                    }}
+                    onMouseOver={(e) =>
+                      (e.target.style.backgroundColor = "#7F98B7")
+                    }
+                    onMouseOut={(e) =>
+                      (e.target.style.backgroundColor = "#A3B8CB")
+                    }
+                  >
+                    Register
+                  </a>
+                </div>
               </div>
             )}
-
-            
           </Toolbar>
         </Container>
       </AppBar>
