@@ -272,20 +272,19 @@ const UserPage = () => {
         <div className={`user-left `}>
           {/* Update user detailes */}
           <div
-            className={`form-toggle ${isFormExpanded ? "expanded" : ""}`}
+            className="form-toggle"
             onClick={toggleFormExpansion}
             style={{
               cursor: "pointer",
               padding: "10px",
-              backgroundColor: "#f0f0f0",
               border: "1px solid #ccc",
               borderRadius: "5px",
               marginBottom: "10px",
-              backgroundColor: "#506081",
-              color: "white",
+              backgroundColor: isFormExpanded ? "#A3B8CB" : "#506081",
+              color: isFormExpanded ? "#000" : "white",
             }}
           >
-            Update user details{isFormExpanded}
+            Update user details
           </div>
           <form
             style={{ display: isFormExpanded ? "block" : "none" }}
@@ -386,20 +385,19 @@ const UserPage = () => {
 
           {/* addCardPayment form */}
           <div
-            className={`form-toggle ${isCardFormExpanded ? "expanded" : ""}`}
+            className="form-toggle"
             onClick={toggleCardFormExpansion}
             style={{
               padding: "10px",
-              backgroundColor: "#f0f0f0",
               border: "1px solid #ccc",
               borderRadius: "5px",
               marginBottom: "10px",
               cursor: "pointer",
-              backgroundColor: "#506081",
-              color: "white",
+              backgroundColor: isCardFormExpanded ? "#A3B8CB" : "#506081",
+              color: isCardFormExpanded ? "#000" : "white",
             }}
           >
-            Add debit or credit card {isCardFormExpanded}
+            Add debit or credit card
           </div>
           {isCardFormExpanded && (
             <form onSubmit={(e) => onSubmitCardPayment(e)}>
@@ -466,20 +464,19 @@ const UserPage = () => {
 
           {/* "Add bank payment form" */}
           <div
-            className={`form-toggle ${isBankFormExpanded ? "expanded" : ""}`}
+            className="form-toggle"
             onClick={toggleBankFormExpansion}
             style={{
               padding: "10px",
-              backgroundColor: "#f0f0f0",
               border: "1px solid #ccc",
               borderRadius: "5px",
               marginBottom: "10px",
               cursor: "pointer",
-              backgroundColor: "#506081",
-              color: "white",
+              backgroundColor: isBankFormExpanded ? "#A3B8CB" : "#506081",
+              color: isBankFormExpanded ? "#000" : "white",
             }}
           >
-            Add bank account{isBankFormExpanded}
+            Add bank account
           </div>
 
           {/* bankPayment form */}
@@ -529,20 +526,19 @@ const UserPage = () => {
           )}
           {/* Add address  */}
           <div
-            className={`form-toggle ${isAddressFormExpanded ? "expanded" : ""}`}
+            className="form-toggle"
             onClick={toggleAddressFormExpansion}
             style={{
               padding: "10px",
-              backgroundColor: "#f0f0f0",
               border: "1px solid #ccc",
               borderRadius: "5px",
               marginBottom: "10px",
               cursor: "pointer",
-              backgroundColor: "#506081",
-              color: "white",
+              backgroundColor: isAddressFormExpanded ? "#A3B8CB" : "#506081",
+              color: isAddressFormExpanded ? "#000" : "white",
             }}
           >
-            Add Address {isAddressFormExpanded}
+            Add Address
           </div>
           {isAddressFormExpanded && (
             <form onSubmit={(e) => onSubmitAddress(e)}>
