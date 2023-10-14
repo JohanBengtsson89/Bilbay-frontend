@@ -10,6 +10,7 @@ function LoginPage() {
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const [successMessage, setSuccessMessage] = useState("");
+  const [isButtonHovered, setIsButtonHovered] = useState(false);
 
   const navigate = useNavigate();
 
@@ -17,6 +18,18 @@ function LoginPage() {
     state: { user },
     dispatch,
   } = useContext(AuthContext);
+
+  const buttonStyle = {
+    width: "100%",
+    textAlign: "center",
+    padding: "12px",
+    borderRadius: "8px",
+    backgroundColor: isButtonHovered ? "#E57C7C" : "#c89090",
+    color: "black",
+    cursor: "pointer",
+    transition: "background-color 0.3s ease-in-out",
+    marginTop: "1rem",
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -78,7 +91,10 @@ function LoginPage() {
 
             <button
               type="submit"
-              className="w-full text-center py-3 border-2 border-[#575757] rounded-lg bg-[#C89090] text-black hover:bg-green-dark focus:outline-none my-2 mt-9"
+              className="w-full text-center py-3 rounded-lg bg-[#C89090] text-black hover:bg-green-dark focus:outline-none my-2 mt-9"
+              style={buttonStyle}
+              onMouseOver={() => setIsButtonHovered(true)}
+              onMouseOut={() => setIsButtonHovered(false)}
             >
               Login
             </button>
