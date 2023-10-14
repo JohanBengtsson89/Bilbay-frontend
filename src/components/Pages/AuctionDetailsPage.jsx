@@ -18,6 +18,7 @@ const AuctionDetails = () => {
   const [bids, setBids] = useState([]);
   const [error, setError] = useState(null);
   const [buyerId, setBuyerId] = useState("");
+  const [errorMessage, setErrorMessage] = useState(null);
 
   useEffect(() => {
     const storedUser = JSON.parse(localStorage.getItem("user"));
@@ -62,7 +63,7 @@ const AuctionDetails = () => {
       isNaN(newBid.bidAmount) ||
       newBid.bidAmount <= product.originalPrice
     ) {
-      alert("OOOOPPPSS: Bid amount must be higher than the latest bid.");
+      setErrorMessage("Bid amount must be higher than the latest bid");
       return;
     }
 
@@ -79,6 +80,7 @@ const AuctionDetails = () => {
       });
 
     setBidAmount("");
+    setErrorMessage(null);
   };
 
   useEffect(() => {}, [bids]);
@@ -170,6 +172,7 @@ const AuctionDetails = () => {
                 Place Bid
               </Button>
             </div>
+            <p className="text-red-500 text-sm pl-7">{errorMessage}</p>
           </div>
         </div>
       </div>
