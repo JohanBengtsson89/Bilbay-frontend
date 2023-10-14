@@ -16,6 +16,19 @@ export default function SubmitAuctionPage() {
   const [priceErrorMessage, setPriceErrorMessage] = useState("");
   const [user, setUser] = useState({});
   const [product, setProduct] = useState({});
+  const [isButtonHovered, setIsButtonHovered] = useState(false);
+
+  const buttonStyle = {
+    width: "100%",
+    textAlign: "center",
+    padding: "12px",
+    borderRadius: "8px",
+    backgroundColor: isButtonHovered ? "#E57C7C" : "#c89090",
+    color: "black",
+    cursor: "pointer",
+    transition: "background-color 0.3s ease-in-out",
+    marginTop: "1rem",
+  };
 
   useEffect(() => {
     const storedUser = JSON.parse(localStorage.getItem("user"));
@@ -36,14 +49,14 @@ export default function SubmitAuctionPage() {
       modelYear: "",
       gear: "",
       enginePower: "",
-      mileage: "",
+      mileage: 0,
       color: "",
       vinNr: "",
     },
 
     productName: "",
     productDescription: "",
-    originalPrice: "",
+    originalPrice: 0,
     isAvailable: true,
   });
 
@@ -226,7 +239,7 @@ export default function SubmitAuctionPage() {
 
               <div className="mb-4">
                 <label htmlFor="mileage" className="block mb-2">
-                  Mileage: {productDetails.productSpecification.mileage} miles
+                  Mileage
                 </label>
                 <div className="flex items-center">
                   <input
@@ -273,14 +286,14 @@ export default function SubmitAuctionPage() {
               />
               <div className="mb-4">
                 <label htmlFor="originalPrice" className="block mb-2">
-                  Original Price: ${productDetails.originalPrice}
+                  Original Price $
                 </label>
                 <div className="flex items-center">
                   <input
                     type="number"
                     className="block border-2 border-[#575757] w-1/2 p-1 rounded-lg mr-2"
                     name="originalPrice"
-                    placeholder="Original Price"
+                    placeholder="Original Price $"
                     value={productDetails.originalPrice}
                     onChange={(e) => onInputChange(e)}
                   />
@@ -288,7 +301,6 @@ export default function SubmitAuctionPage() {
                     type="range"
                     className="block w-1/2"
                     name="originalPrice"
-                    min="0"
                     max="100000"
                     step="1000"
                     value={productDetails.originalPrice}
@@ -310,7 +322,10 @@ export default function SubmitAuctionPage() {
 
               <button
                 type="submit"
-                className="w-full text-center py-3 border-2 border-[#575757] rounded-lg bg-[#C89090] text-black hover:bg-green-dark focus:outline-none my-1"
+                className="w-full text-center py-3 rounded-lg bg-[#C89090] text-black hover:bg-green-dark focus:outline-none my-1"
+                style={buttonStyle}
+                onMouseOver={() => setIsButtonHovered(true)}
+                onMouseOut={() => setIsButtonHovered(false)}
               >
                 Register
               </button>
@@ -374,7 +389,10 @@ export default function SubmitAuctionPage() {
                 {showCreateAuctionButton && (
                   <button
                     type="submit"
-                    className="mx-auto  text-center py-3 border-2 border-[#575757] rounded-lg bg-[#C89090] text-black hover:bg-green-dark focus:outline-none my-1"
+                    className="mx-auto  text-center py-3 rounded-lg bg-[#C89090] text-black hover:bg-green-dark focus:outline-none my-1"
+                    style={buttonStyle}
+                    onMouseOver={() => setIsButtonHovered(true)}
+                    onMouseOut={() => setIsButtonHovered(false)}
                   >
                     Create auction
                   </button>
