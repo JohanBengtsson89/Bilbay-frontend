@@ -28,6 +28,13 @@ const pages = [
   { name: "About us", page: "/about" },
 ];
 
+const colorStyleLogo = {
+  backgroundColor: "#D88D8D",
+  color: "white",
+  borderRadius:"5px",
+  padding:"4px"
+};
+
 // pages.map((page) => console.log(page.name, page.page));
 
 function NavBar() {
@@ -97,10 +104,12 @@ function NavBar() {
                 letterSpacing: ".3rem",
                 color: "inherit",
                 textDecoration: "none",
+                ...colorStyleLogo,
+                fontSize: "1.5rem",
               }}
             >
               <DirectionsCarIcon
-                sx={{ display: { xs: "none", md: "flex" }, mr: 1, mt: 0.5 }}
+                sx={{ display: { xs: "none", md: "flex" }, mr: 1, mt: 0.5, fontSize: "2rem", }}
               />
               Bilbay
             </Typography>
@@ -158,6 +167,7 @@ function NavBar() {
                 letterSpacing: ".3rem",
                 color: "inherit",
                 textDecoration: "none",
+                ...colorStyleLogo,
               }}
             >
               Bilbay
@@ -196,6 +206,11 @@ function NavBar() {
                     <Avatar
                       alt={user.username}
                       src="/static/images/avatar/2.jpg"
+                      sx={{
+                        backgroundColor: "#CAD7E3",
+                        color: "#506081",
+                        padding: "5px",
+                      }}
                     >
                       {user.username && user.username.charAt(0).toUpperCase()}
                     </Avatar>
