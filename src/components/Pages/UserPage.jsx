@@ -18,6 +18,19 @@ const UserPage = () => {
   const [isCardFormExpanded, setIsCardFormExpanded] = useState(false);
   const [isBankFormExpanded, setIsBankFormExpanded] = useState(false);
   const [isAddressFormExpanded, setIsAddressFormExpanded] = useState(false);
+  const [isButtonHovered, setIsButtonHovered] = useState(false);
+
+  const buttonStyle = {
+    width: "100%",
+    textAlign: "center",
+    padding: "12px",
+    borderRadius: "8px",
+    backgroundColor: isButtonHovered ? "#E57C7C" : "#c89090",
+    color: "black",
+    cursor: "pointer",
+    transition: "background-color 0.3s ease-in-out",
+    marginTop: "1rem",
+  };
 
   useEffect(() => {
     const storedUser = JSON.parse(localStorage.getItem("user"));
@@ -356,7 +369,10 @@ const UserPage = () => {
 
                 <button
                   type="submit"
-                  className="w-full text-center py-3 border-2 border-[#575757] rounded-lg bg-[#C89090] text-black hover:bg-green-dark focus:outline-none my-1"
+                  className="w-full text-center py-3 rounded-lg bg-[#C89090] text-black hover:bg-green-dark focus:outline-none my-1"
+                  style={buttonStyle}
+                  onMouseOver={() => setIsButtonHovered(true)}
+                  onMouseOut={() => setIsButtonHovered(false)}
                 >
                   Update
                 </button>
@@ -433,7 +449,10 @@ const UserPage = () => {
 
                 <button
                   type="submit"
-                  className="w-full text-center py-3 border-2 border-[#575757] rounded-lg bg-[#C89090] text-black hover:bg-green-dark focus:outline-none my-1"
+                  className="w-full text-center py-3 rounded-lg bg-[#C89090] text-black hover:bg-green-dark focus:outline-none my-1"
+                  style={buttonStyle}
+                  onMouseOver={() => setIsButtonHovered(true)}
+                  onMouseOut={() => setIsButtonHovered(false)}
                 >
                   Add Card Payment
                 </button>
@@ -494,7 +513,10 @@ const UserPage = () => {
 
                 <button
                   type="submit"
-                  className="w-full text-center py-3 border-2 border-[#575757] rounded-lg bg-[#C89090] text-black hover:bg-green-dark focus:outline-none my-1"
+                  className="w-full text-center py-3 rounded-lg bg-[#C89090] text-black hover:bg-green-dark focus:outline-none my-1"
+                  style={buttonStyle}
+                  onMouseOver={() => setIsButtonHovered(true)}
+                  onMouseOut={() => setIsButtonHovered(false)}
                 >
                   Add Bank Payment
                 </button>
@@ -574,7 +596,10 @@ const UserPage = () => {
 
                 <button
                   type="submit"
-                  className="w-full text-center py-3 border-2 border-[#575757] rounded-lg bg-[#C89090] text-black hover:bg-green-dark focus:outline-none my-1"
+                  className="w-full text-center py-3 rounded-lg bg-[#C89090] text-black hover:bg-green-dark focus:outline-none my-1"
+                  style={buttonStyle}
+                  onMouseOver={() => setIsButtonHovered(true)}
+                  onMouseOut={() => setIsButtonHovered(false)}
                 >
                   Add Address
                 </button>
