@@ -292,7 +292,7 @@ const UserPage = () => {
           >
             <div className="container max-w-lg mx-auto flex-1 flex flex-col items-center justify-center lg:px-8">
               <div className="bg-[#BFC3CC] px-6 py-10 rounded-xl shadow-md text-black w-full">
-                <h1 className="mb-8 text-3xl text-center">Update</h1>
+                <h1 className="mb-8 text-xl text-center">User details</h1>
 
                 <input
                   type="text"
@@ -402,7 +402,7 @@ const UserPage = () => {
           {isCardFormExpanded && (
             <form onSubmit={(e) => onSubmitCardPayment(e)}>
               <div className="bg-[#BFC3CC] px-6 py-10 rounded-xl shadow-md text-black w-full">
-                <h1 className="mb-8 text-3xl text-center">Add Card Payment</h1>
+                <h1 className="mb-8 text-xl text-center">Card Payment</h1>
 
                 <select
                   className="block border-2 border-[#575757] w-full p-1 rounded-lg mb-4"
@@ -483,7 +483,7 @@ const UserPage = () => {
           {isBankFormExpanded && (
             <form onSubmit={(e) => onSubmitBankPayment(e)}>
               <div className="bg-[#BFC3CC] px-6 py-10 rounded-xl shadow-md text-black w-full">
-                <h1 className="mb-8 text-3xl text-center">Add Bank Payment</h1>
+                <h1 className="mb-8 text-xl text-center">Bank Payment</h1>
 
                 <select
                   className="block border-2 border-[#575757] w-full p-1 rounded-lg mb-4"
@@ -543,7 +543,7 @@ const UserPage = () => {
           {isAddressFormExpanded && (
             <form onSubmit={(e) => onSubmitAddress(e)}>
               <div className="bg-[#BFC3CC] px-6 py-10 rounded-xl shadow-md text-black w-full">
-                <h1 className="mb-8 text-3xl text-center">Add Address</h1>
+                <h1 className="mb-8 text-xl text-center">Address</h1>
 
                 <input
                   type="text"
@@ -610,7 +610,7 @@ const UserPage = () => {
 
         {/* Favorite and Review */}
         <div className="user-right">
-          <div style={{ fontSize: "40px" }}>Favorites</div>
+          <div style={{ fontSize: "30px" }}>Favorites</div>
 
           <div className="favourites">
             <Favorite style={{ color: "red", height: "10px" }} />
@@ -625,7 +625,7 @@ const UserPage = () => {
             ))} */}
           </div>
 
-          <div style={{ fontSize: "40px" }}>Reviews</div>
+          <div style={{ fontSize: "30px" }}>Reviews</div>
           <div className="reviews">
             {reviews.map((review, index) => (
               <li key={index}>{review.comment}</li>

@@ -169,7 +169,7 @@ export default function SubmitAuctionPage() {
         <div>
           <div className="container max-w-lg mx-24 lg:px-8 lg:mx-0">
             <div className="bg-[#BFC3CC] px-6 py-8 rounded-xl shadow-md text-black">
-              <h1 className="mb-8 text-3xl text-center">Product details</h1>
+              <h1 className="mb-8 text-xl text-center">Product details</h1>
 
               <input
                 type="url"
