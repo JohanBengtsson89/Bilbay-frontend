@@ -613,7 +613,7 @@ const UserPage = () => {
           <div style={{ fontSize: "30px" }}>Favorites</div>
 
           <div className="favourites">
-            <Favorite style={{ color: "red", height: "10px" }} />
+            <Favorite />
             {/* {favourites.map((favourite, index) => (
               <div key={favourite.id}>
                 <Link>
