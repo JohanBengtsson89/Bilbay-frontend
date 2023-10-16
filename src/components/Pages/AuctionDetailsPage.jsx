@@ -116,7 +116,7 @@ const AuctionDetails = () => {
             {product.productName}
           </div>
 
-          <div style={{ width: "745px" }}>{product.productDescription}</div>
+          <div className="text">{product.productDescription}</div>
         </div>
         <div className="right-side">
           <div className="product-info">
