@@ -13,6 +13,13 @@ export function AuctionsProvider({ children }) {
   let userId = null;
   try {
     userId = JSON.parse(window.localStorage.getItem("user")).id;
+
+    //****This code works instead of verifying by userID****
+    // if (document.cookie.indexOf("your_cookie_name=") === -1) {
+    //   console.log("Cookie is not present. Stopping code execution.");
+      
+    //   return null;}
+
   } catch (error) {
     console.log("Not logged in: ", error);
   }
@@ -24,7 +31,7 @@ export function AuctionsProvider({ children }) {
 
   useEffect(() => {
     axios
-      .get(`${apiUrl}/api/auctions`)
+      .get(`${apiUrl}/api/auth/auctions`)
       .then((response) => {
         setAuctions(response.data);
         setLoading(false); // Set loading to false when data is fetched
@@ -35,7 +42,7 @@ export function AuctionsProvider({ children }) {
         setError(err); // Set the error message
       });
       axios
-      .get(`${apiUrl}/api/auth/favorite/${userId}`)
+      .get(`${apiUrl}/api/auth/favorite/${userId}`, { withCredentials: true })
       .then((response) => {
         const data = Array.isArray(response.data)
           ? response.data

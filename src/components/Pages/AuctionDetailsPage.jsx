@@ -29,7 +29,7 @@ const AuctionDetails = () => {
   }, []);
 
   const getAuction = () => {
-    Axios.get(`${apiUrl}/api/auction/${params.auctionId}`)
+    Axios.get(`${apiUrl}/api/auth/auction/${params.auctionId}`, { withCredentials: true })
       .then((response) => {
         setAuction(response.data);
         setProduct(response.data.product);
@@ -67,7 +67,7 @@ const AuctionDetails = () => {
       return;
     }
 
-    Axios.post(`${apiUrl}/api/bid`, newBid)
+    Axios.post(`${apiUrl}/api/auth/bid`, newBid, { withCredentials: true })
       .then((response) => {
         const sortedBids = [...bids, response.data]
           .sort((bidA, bidB) => bidB.bidAmount - bidA.bidAmount)

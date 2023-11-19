@@ -100,8 +100,8 @@ export default function SubmitAuctionPage() {
     productDetails.user = { id: user };
     try {
       const response = await axios.post(
-        `${apiUrl}/api/product`,
-        productDetails
+        `${apiUrl}/api/auth/product`,
+        productDetails, { withCredentials: true }
       );
       const createdProduct = response.data.id;
 
@@ -148,9 +148,9 @@ export default function SubmitAuctionPage() {
         setPriceErrorMessage("Reserved Price must be higher than Start Price");
         return;
       }
-      await axios.post(`${apiUrl}/api/post-auction`, {
+      await axios.post(`${apiUrl}/api/auth/post-auction`, {
         ...productAuction,
-      });
+      }, { withCredentials: true });
       // navigate("/auctions");
       setAuctionSuccessMessage("Auction created successfully!");
       setAuctionErrorMessage("");

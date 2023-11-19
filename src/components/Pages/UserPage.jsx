@@ -162,10 +162,10 @@ const UserPage = () => {
     setSuccessMessage("");
 
     try {
-      const res = await axios.post(`${apiUrl}/api/bankpayment`, {
+      const res = await axios.post(`${apiUrl}/api/bankpayment` ,{
         user: { id: user },
         ...bankPayment,
-      });
+      }, { withCredentials: true });
 
       console.log(res);
       setSuccessMessage("Bank payment information added successfully!");
@@ -181,10 +181,10 @@ const UserPage = () => {
     setSuccessMessage("");
 
     try {
-      const res = await axios.post(`${apiUrl}/api/cardpayment`, {
+      const res = await axios.post(`${apiUrl}/api/cardpayment`,{
         user: { id: user },
         ...cardPayment,
-      });
+      }, { withCredentials: true });
 
       console.log(res);
       setSuccessMessage("Card payment information added successfully!");
@@ -202,7 +202,7 @@ const UserPage = () => {
     try {
       const res = await axios.put(
         `${apiUrl}/api/auth/users/${user}`,
-        updateUser
+        updateUser, { withCredentials: true }
       );
       console.log(res);
       setSuccessMessage("User information updated successfully!");
@@ -218,7 +218,7 @@ const UserPage = () => {
     setSuccessMessage("");
 
     try {
-      const res = await axios.post(`${apiUrl}/api/address`, {
+      const res = await axios.post(`${apiUrl}/api/auth/address`,{ withCredentials: true }, {
         user: { id: user },
         ...address,
       });
@@ -241,7 +241,7 @@ const UserPage = () => {
   useEffect(() => {
     const getUserInfo = async () => {
       try {
-        const response = await axios.get(`${apiUrl}/api/test/user/${user}`);
+        const response = await axios.get(`${apiUrl}/api/test/user/${user}`, { withCredentials: true });
         const userInfo = response.data;
         setUpdate(userInfo);
         console.log(userInfo);
@@ -257,7 +257,7 @@ const UserPage = () => {
   }, [user]);
 
   const fetchReviews = async () => {
-    const response = await axios.get(`${apiUrl}/api/getAllReviews`);
+    const response = await axios.get(`${apiUrl}/api/auth/getAllReviews`, { withCredentials: true });
     setReviews(response.data);
   };
 

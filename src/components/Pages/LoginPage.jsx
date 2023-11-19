@@ -44,7 +44,7 @@ function LoginPage() {
       const { data } = await axios.post(`${apiUrl}/api/auth/signin`, {
         username,
         password,
-      });
+      }, {withCredentials: true});
 
       dispatch({
         type: "LOGIN",
