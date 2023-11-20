@@ -19,22 +19,32 @@ export function FavoriteButton({ auctionId }) {
     console.log("Not logged in: ", error);
   }
 
+  // const addToFavorites = async (auctionId) => {
+  //   await axios
+  //     .post(`${apiUrl}/api/auth/favorite/${userId}/${auctionId}`,{ withCredentials: true })
+  //     .then((response) => {
+  //       setFavorites((prevFavorites) => [...prevFavorites, { id: auctionId }]);
+  //       console.log(response);
+  //     })
+  //     .catch((err) => {
+  //       console.log(err);
+  //     });
+  // };
+
   const addToFavorites = async (auctionId) => {
-    await axios
-      .post(`${apiUrl}/api/favorite/${userId}/${auctionId}`)
-      .then((response) => {
-        setFavorites((prevFavorites) => [...prevFavorites, { id: auctionId }]);
-        console.log(response);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    try {
+  const response = await axios.post(`${apiUrl}/api/auth/favorite/${userId}/${auctionId}`, {}, { withCredentials: true });
+  setFavorites((prevFavorites) => [...prevFavorites, { id: auctionId }]);
+  console.log(response);
+} catch (error) {
+  console.log(error);
+}
   };
 
   const removeFromFavorites = async (auctionId) => {
     console.log("Before Removal:", favorites);
     await axios
-      .delete(`${apiUrl}/api/delete-favorite/${userId}/${auctionId}`)
+      .delete(`${apiUrl}/api/auth/delete-favorite/${userId}/${auctionId}`, { withCredentials: true })
       .then(() => {
         // Create a shallow copy of the array
         const newFavorites = favorites.filter((fav) => fav.id !== auctionId);

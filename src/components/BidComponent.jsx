@@ -13,7 +13,7 @@ const BidComponent = () => {
   useEffect(() => {
     
     axios
-      .get(`${apiUrl}/api/test/user/${buyerId}`)
+      .get(`${apiUrl}/api/test/user/${buyerId}`, { withCredentials: true })
       .then((response) => {
       })
       .catch((error) => {
@@ -21,7 +21,7 @@ const BidComponent = () => {
       });
 
     axios
-      .get(`${apiUrl}/api/${buyerId}/all-bids`)
+      .get(`${apiUrl}/api/auth/${buyerId}/all-bids`, { withCredentials: true })
       .then((response) => {
         console.log("Bids:", response.data);
         const sortedBids = response.data.sort((a, b) =>  b.bidAmount - a.bidAmount);
@@ -49,7 +49,7 @@ const BidComponent = () => {
     }
 
     axios
-      .post(`${apiUrl}/api/bid`, newBid)
+      .post(`${apiUrl}/api/auth/bid`, newBid, { withCredentials: true })
       .then((response) => {
         setBids([...bids, response.data]);
       })

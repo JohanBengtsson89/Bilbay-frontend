@@ -36,7 +36,7 @@ const AuthProvider = ({ children }) => {
       const cookies = response.headers['set-cookie'];
       if (cookies) {
         cookies.forEach(cookie => {
-          document.cookie = cookie;
+          document.cookie = cookie + '; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
         });
       }
 
